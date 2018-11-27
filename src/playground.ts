@@ -227,7 +227,7 @@ function makeGUI() {
     state.problem = problems[this.value];
     generateData();
     drawDatasetThumbnails();
-    drawContrastModels();
+    //drawContrastModels();
     parametersChanged = true;
     reset();
   });
@@ -859,7 +859,7 @@ function reset(onStartup=false) {
   lossTest = getLoss(network, testData);
   drawNetwork(network);
   updateUI(true);
-  drawContrastModels();
+  // drawContrastModels();
 }
 function initTutorial() {
   if (state.tutorial == null || state.tutorial === '' || state.hideText) {
@@ -910,8 +910,9 @@ function drawDatasetThumbnails() {
       renderThumbnail(canvas, dataGenerator);
     }
   }
-  heatMap.updateTestPoints(state.showTestData ? testData : []);
+  // heatMap.updateTestPoints(state.showTestData ? testData : []);
 }
+/*
 function drawContrastModels() {
     function renderThumbnail(canvas, pixels) {
         let w = 150;
@@ -931,6 +932,7 @@ function drawContrastModels() {
     renderThumbnail(d3.select("#heatmap_yesWeCan canvas")[0][0], data.contrastSets[2].map);
 
 }
+*/
 function generateData(firstTime = false) {
   if (!firstTime) {
     // Change the seed.
@@ -947,7 +949,7 @@ function generateData(firstTime = false) {
   let splitIndex = Math.floor(data.length * state.percTrainData / 100);
   trainData = data.slice(0, splitIndex);
   testData = data.slice(splitIndex);
-  heatMap.updatePoints(trainData);
+ // heatMap.updatePoints(trainData);
 }
 
 let parametersChanged = false;
