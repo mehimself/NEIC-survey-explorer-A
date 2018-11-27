@@ -1,9 +1,8 @@
-import * as d3 from "d3";
-
 let data = {
+    squareSize: 10,
     headers: ['Organization', 'Practices addressing ethical challenges', 'Practice supporting communication/publication', 'Share resources (which)', 'CD at MA-level', 'Part of Curriculum', 'General/specialized', 'Other', 'DRM part of existing or separate course', 'Developed own material', 'Who developed it', 'Willingness to share course material', 'Support for DM', 'Online DH training', 'Awareness of following initiative ', 'Willingness to collaborate on resources', 'CD: EDA', 'CD: Statistics', 'CD: Ethics', 'CD: Data rights and protection', 'CD: Interdisciplinary dialogue', 'Interest in HPC', 'Course integrated/separate', 'DRM – Department', 'DRM – Faculty'],
-    cardinalities:      [5, 2, 3, 5, 2, 2, 2, 2, 2, 2, 4, 4, 11, 5, 6, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5],
-    testSet:            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    cardinalities: [5, 2, 3, 5, 2, 2, 2, 2, 2, 2, 4, 4, 11, 5, 6, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5],
+    testSet: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     contrastSets: [
         {
             name: 'Bland',
@@ -21,7 +20,45 @@ let data = {
             map: []
         }
     ],
-    packedVariableSets: [
+    researchQuestionFeeds: [
+        {
+            label: "Sandbox",
+            info: "Would you recommend the provision of a sandbox environment?",
+            variableIndexes: [
+                0, 10, 12, 20, 22
+            ],
+            map: []
+        }, {
+            label: "B",
+            info: '',
+            variableIndexes: [
+                1, 3, 5
+            ],
+            map: []
+        }, {
+            label: "C",
+            info: '',
+            variableIndexes: [
+                2, 13, 17
+            ],
+            map: []
+        }, {
+            label: "D",
+            info: '',
+            variableIndexes: [
+                8, 16, 34
+            ],
+            map: []
+        }, {
+            label: "E",
+            info: '',
+            variableIndexes: [
+                7, 9, 19
+            ],
+            map: []
+        }
+    ],
+    sets: [
         [0.5, 0.0, 0.5, 0.25, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.3333333333333333, 1.0, 0.3, 1.0, 0.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.3036287280956326, 0.44464498554508874],
         [0.5, 0.0, 0.0, 0.75, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.5, 0.5, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0948030984650643, 0.5082781561389029],
         [0.5, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.6666666666666666, 0.6, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.09276498005029198, 0.15531593983271266],
@@ -75,173 +112,6 @@ let data = {
         [0.0, 0.0, 0.5, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.8, 0.75, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.19045350786821155, 0.0790042188859228],
         [1.0, 0.0, 0.5, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.5, 1.0, 0.8, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.32491842296217344, 0.588270161246332],
         [0.25, 0.0, 1.0, 0.75, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.6666666666666666, 0.0, 0.4, 0.5, 0.2, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.23149743888223406, 0.485806163195778],
-
-    ],
-    meanResponseSet: [],
-    meanBitMap: [],
-    pixelCoordinates: [],
-    bitmaps: [],
-    researchQuestionFeeds: [
-        // todo: add RQ feeds here
-        {
-            label: "Sandbox",
-            info: "Would you recommend the provision of a sandbox environment?",
-            variableIndexes: [
-                0, 10, 12, 20, 22
-            ],
-            map: []
-        }, {
-            label: "B",
-            info: '',
-            variableIndexes: [
-                1, 3, 5
-            ],
-            map: []
-        }, {
-            label: "C",
-            info: '',
-            variableIndexes: [
-                2, 13, 17
-            ],
-            map: []
-        }, {
-            label: "D",
-            info: '',
-            variableIndexes: [
-                8, 16, 34
-            ],
-            map: []
-        }, {
-            label: "E",
-            info: '',
-            variableIndexes: [
-                7, 9, 19
-            ],
-            map: []
-        }
-    ],
-    squareSize: 10,
-    variableOffsets: []
-};
-function mapResultsMean() {
-    data.packedVariableSets[0].forEach((v, i) => {
-        let sum = 0;
-        data.packedVariableSets.forEach(set => sum += set[i]);
-        data.meanResponseSet[i] = sum / data.packedVariableSets.length;
-    });
-    console.log('response mean', data.meanResponseSet);
-}
-function mapMeanResponseSet() {
-    data.meanBitMap = [];
-    for (let idx = 0; idx < data.pixelCoordinates.length; idx++) {
-        for (let p = 0; p < data.cardinalities[idx]; p++) {
-            let pixel = {
-                x: data.pixelCoordinates[idx][p].x,
-                y: data.pixelCoordinates[idx][p].y,
-                value: data.meanResponseSet[idx]
-            };
-            data.meanBitMap.push(pixel);
-        }
-    }
-    console.log('mean bitmao', data.meanBitMap);
-}
-function mapResearchQuestions() {
-    data.researchQuestionFeeds.forEach((feed) => {
-        feed.map = [];
-        for (let idx = 0; idx < data.pixelCoordinates.length; idx++) {
-            const isActivePixel = feed.variableIndexes.indexOf(idx) >= 0;
-            const pixelValue = isActivePixel ? 1 : 0; //1-data.meanBitMap[idx].value;
-            for (let p = 0; p < data.cardinalities[idx]; p++) {
-                let pixel = {
-                    x: data.pixelCoordinates[idx][p].x,
-                    y: data.pixelCoordinates[idx][p].y,
-                    value: pixelValue
-                };
-                feed.map.push(pixel);
-            }
-        }
-    })
-}
-function mapVariablePixels() {
-    data.cardinalities.forEach((cardinality, v) => {
-        const variableOffset = data.variableOffsets[v];
-        const pixels = [];
-        for (let c = 0; c < cardinality; c++) {
-            const pixelOffset = variableOffset + c;
-            const coordinates = {
-                x: pixelOffset % data.squareSize + 1,
-                y: Math.floor(pixelOffset / data.squareSize) + 1
-            };
-            pixels.push(coordinates);
-        }
-        data.pixelCoordinates.push(pixels);
-    })
-}
-function mapVariableOffsets() {
-    let variableOffset = 0;
-    for (let i = 0; i < data.cardinalities.length; i++) {
-        data.variableOffsets.push(variableOffset);
-        variableOffset = data.variableOffsets[i] + data.cardinalities[i];
-    }
-}
-function getAbsolutePixelValue(cardinality, value, index) {
-    const variableValue = Math.round(value * 100) / 100;
-    let pixelValue = (1 + index) / cardinality;
-    pixelValue = Math.round(pixelValue  * 100) / 100;
-    return pixelValue == variableValue ? 1 : 0;
-}
-function getProportionalPixelValue(cardinality, value, index) {
-    const pixelValueProportion = 1 / cardinality;
-    const valueThreshold = index * pixelValueProportion;
-    let pixelValue = (value - valueThreshold) * cardinality;
-    pixelValue = Math.round(pixelValue * 100) / 100;
-    if (pixelValue < 0) {
-        pixelValue = 0;
-    }
-    return pixelValue;
-}
-function unpackVariables() {
-    function mapSet(set, map) {
-        set.forEach((value, v) => {
-            const cardinality = data.cardinalities[v];
-            const isUnpackable = [2, 5].indexOf(cardinality) >= 0;
-            const isQualitativeValue = !isUnpackable;
-            for (let c = 0; c < cardinality; c++) {
-                let pixel = {
-                    x: data.pixelCoordinates[v][c].x,
-                    y: data.pixelCoordinates[v][c].y,
-                    value: 0
-                };
-                if (isUnpackable) {
-                    pixel.value = getProportionalPixelValue(cardinality, value, c);
-                } else if (isQualitativeValue) {
-                    pixel.value = getProportionalPixelValue(cardinality, value, c); //getAbsolutePixelValue(cardinality, value, c);
-                }
-                map.push(pixel);
-            }
-        })
-    }
-    data.bitmaps = [];
-    data.packedVariableSets.forEach((set) => {
-        let map = [];
-        data.bitmaps.push(map);
-        mapSet(set, map);
-    });
-    data.contrastSets.forEach(contrast => {
-        mapSet(contrast.set, contrast.map);
-        console.log('contrast', contrast.name, contrast.map);
-    });
-}
-
-mapVariableOffsets();
-mapVariablePixels();
-unpackVariables();
-mapResultsMean();
-mapMeanResponseSet();
-mapResearchQuestions();
-export type Pixel = {
-    x: number,
-    y: number,
-    value: number
+    ]
 };
 export default data;

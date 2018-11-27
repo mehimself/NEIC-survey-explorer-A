@@ -14,7 +14,8 @@ limitations under the License.
 ==============================================================================*/
 
 import * as nn from "./nn";
-import data, {Pixel} from './data';
+import workingdata, { Pixel, shuffle } from './preprocessing';
+import data from '../config/data';
 import {HeatMap, reduceMatrix} from "./heatmap";
 import {
   State,
@@ -26,7 +27,7 @@ import {
   Problem,
   colorRanges
 } from "./state";
-import {Example2D, shuffle} from "./dataset";
+import {Example2D} from "./classifier";
 import {AppendingLineChart} from "./linechart";
 import * as d3 from 'd3';
 
@@ -79,8 +80,6 @@ let INPUTS: {[name: string]: InputFeature} = {
     "B": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[1], x, y), label: "B"},
     "C": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[2], x, y), label: "C"},
     "D": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[3], x, y), label: "D"},
-    //"sinX": {f: (x, y) => Math.sin(x), label: "sin(X_1)"},
-    //"sinY": {f: (x, y) => Math.sin(y), label: "sin(X_2)"}
 };
 
 class Player {
@@ -122,11 +121,12 @@ class Player {
 
   private start(localTimerIndex: number) {
     d3.timer(() => {
-      if (localTimerIndex < this.timerIndex) {
-        return true;  // Done.
+      const done = localTimerIndex < this.timerIndex
+      if (done) {
+        return true;
       }
       oneStep();
-      return false;  // Not done.
+      return false;
     }, 0);
   }
 }
@@ -143,18 +143,21 @@ let heatMap_bland = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatm
 let heatMap_results = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_results"),{showAxes: false});
 let heatMap_nightmare = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_nightmare"),{showAxes: false});
 let heatMap_yesWeCan = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_yesWeCan"),{showAxes: false});
-let linkWidthScale = d3.scale.linear()
-                  .domain([0, 5])
-                  .range([1, 10])
-                  .clamp(true);
-const neuronColorScale = d3.scale.linear<string, number>()
-                     .domain(colorRanges.neurons.range)
-                     .range(colorRanges.neurons.colors)
-                     .clamp(true);
-const valueColorScale = d3.scale.linear<string, number>()
-                     .domain(colorRanges.values.range)
-                     .range(colorRanges.values.colors)
-                     .clamp(true);
+let linkWidthScale = d3.scale
+	.linear()
+	.domain([0, 5])
+	.range([1, 10])
+	.clamp(true);
+const neuronColorScale = d3.scale
+	.linear<string, number>()
+	.domain(colorRanges.neurons.range)
+	.range(colorRanges.neurons.colors)
+	.clamp(true);
+const valueColorScale = d3.scale
+	.linear<string, number>()
+	.domain(colorRanges.values.range)
+	.range(colorRanges.values.colors)
+	.clamp(true);
 let iter = 0;
 let trainData: Example2D[] = [];
 let testData: Example2D[] = [];
@@ -291,7 +294,6 @@ function renderColorRanges() {
                 .call(xAxis);
         }
 
-        // todo: render linear gradient svg
         appendScaleToValueGradient();
     }
 
@@ -923,7 +925,7 @@ function drawContrastModels() {
         });
         d3.select(canvas.parentNode).style("display", null);
     }
-    renderThumbnail(d3.select("#heatmap_results canvas")[0][0], data.meanBitMap);
+    renderThumbnail(d3.select("#heatmap_results canvas")[0][0], workingdata.meanBitMap);
     renderThumbnail(d3.select("#heatmap_bland canvas")[0][0], data.contrastSets[0].map);
     renderThumbnail(d3.select("#heatmap_nightmare canvas")[0][0], data.contrastSets[1].map);
     renderThumbnail(d3.select("#heatmap_yesWeCan canvas")[0][0], data.contrastSets[2].map);
@@ -946,7 +948,6 @@ function generateData(firstTime = false) {
   trainData = data.slice(0, splitIndex);
   testData = data.slice(splitIndex);
   heatMap.updatePoints(trainData);
-  console.log('trainData', trainData);
 }
 
 let parametersChanged = false;
