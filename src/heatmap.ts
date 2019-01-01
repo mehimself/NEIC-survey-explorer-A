@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-import {Example2D} from "./classifier";
-import data from "./preprocessing";
+import {Example2D} from "./dataset";
+import data from "./data";
 import {colorRanges} from "./state";
 import * as d3 from 'd3';
 
