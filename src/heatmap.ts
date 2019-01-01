@@ -15,7 +15,7 @@ limitations under the License.
 
 import {Example2D} from "./dataset";
 import data from "./data";
-import {colorRanges} from "./state";
+import {colorRange} from "./state";
 import * as d3 from 'd3';
 
 export interface HeatMapSettings {
@@ -69,8 +69,8 @@ export class HeatMap {
 
     // Get a range of colors.
     let tmpScale = d3.scale.linear<string, number>()
-        .domain([0, .5, 1])
-        .range(colorRanges.values.colors)
+        .domain([-1, 0, 1])
+        .range(colorRange.colors)
         .clamp(true);
     // Due to numerical error, we need to specify
     // d3.range(0, end + small_epsilon, step)
@@ -80,7 +80,7 @@ export class HeatMap {
       return tmpScale(a);
     });
     this.color = d3.scale.quantize()
-                     .domain(colorRanges.values.range)
+                     .domain(colorRange.range)
                      .range(colors);
 
     container = container.append("div")

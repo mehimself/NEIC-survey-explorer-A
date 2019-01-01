@@ -65,15 +65,9 @@ export enum Problem {
 export let problems = {
   "classification": Problem.CLASSIFICATION
 };
-export let colorRanges = {
-    neurons: {
-        colors: ["#f59322", "#ffffff", "#0877bd"],
-        range: [-1, 0, 1]
-    },
-    values: {
-        colors: ["#ffffff", "#08a4fd", "#033858"],
-        range: [0, 0.5, 1]
-    }
+export let colorRange = {
+  colors: ["#f59322", "#ffffff", "#0877bd"],
+  range: [-1, 0, 1]
 };
 export interface Property {
   name: string;

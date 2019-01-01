@@ -24,7 +24,7 @@ import {
   regularizations,
   getKeyFromValue,
   Problem,
-  colorRanges
+  colorRange
 } from "./state";
 import {Example2D, shuffle} from "./dataset";
 import {AppendingLineChart} from "./linechart";
@@ -147,13 +147,9 @@ let linkWidthScale = d3.scale.linear()
                   .domain([0, 5])
                   .range([1, 10])
                   .clamp(true);
-const neuronColorScale = d3.scale.linear<string, number>()
-                     .domain(colorRanges.neurons.range)
-                     .range(colorRanges.neurons.colors)
-                     .clamp(true);
-const valueColorScale = d3.scale.linear<string, number>()
-                     .domain(colorRanges.values.range)
-                     .range(colorRanges.values.colors)
+const colorScale = d3.scale.linear<string, number>()
+                     .domain(colorRange.range)
+                     .range(colorRange.colors)
                      .clamp(true);
 let iter = 0;
 let trainData: Example2D[] = [];
@@ -230,7 +226,7 @@ function makeGUI() {
   });
   problem.property("value", getKeyFromValue(problems, state.problem));
 
-  renderColorRanges();
+  renderColorRange();
 
   // Listen for css-responsive changes and redraw the svg network.
   window.addEventListener("resize", () => {
@@ -254,54 +250,24 @@ function makeGUI() {
     d3.select("header")
 }
 
-function renderColorRanges() {
-    function renderNeuronColorRange() {
-        function appendScaleToNeuronGradient() {
-            let x = d3.scale.linear()
-                .domain([-1, 1])
-                .range([0, 144]);
-            let xAxis = d3.svg.axis()
-                .scale(x)
-                .orient("bottom")
-                .tickValues(colorRanges.neurons.range)
-                .tickFormat(d3.format("d"));
-            d3.select("#neuronColormap g.core").append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0,10)")
-                .call(xAxis);
-        }
-
-        // todo: render linear gradient svg
-        appendScaleToNeuronGradient();
-    }
-
-    function renderValueColorRange() {
-        function appendScaleToValueGradient() {
-            let x = d3.scale.linear()
-                .domain([0, 1])
-                .range([0, 144]);
-            let xAxis = d3.svg.axis()
-                .scale(x)
-                .orient("bottom")
-                .tickValues(colorRanges.values.range)
-                .tickFormat(d3.format("d"));
-            d3.select("#valueColormap g.core").append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0,10)")
-                .call(xAxis);
-        }
-
-        // todo: render linear gradient svg
-        appendScaleToValueGradient();
-    }
-
-   renderNeuronColorRange();
-   renderValueColorRange();
+function renderColorRange() {
+  let x = d3.scale.linear()
+      .domain([-1, 1])
+      .range([0, 144]);
+  let xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom")
+      .tickValues(colorRange.range)
+      .tickFormat(d3.format("d"));
+  d3.select("#colormap g.core").append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0,10)")
+      .call(xAxis);
 }
 
 function updateBiasesUI(network: nn.Node[][]) {
   nn.forEachNode(network, true, node => {
-    d3.select(`rect#bias-${node.id}`).style("fill", neuronColorScale(node.bias));
+    d3.select(`rect#bias-${node.id}`).style("fill", colorScale(node.bias));
   });
 }
 
@@ -317,7 +283,7 @@ function updateWeightsUI(network: nn.Node[][], container) {
             .style({
               "stroke-dashoffset": -iter / 3,
               "stroke-width": linkWidthScale(Math.abs(link.weight)),
-              "stroke": neuronColorScale(link.weight)
+              "stroke": colorScale(link.weight)
             })
             .datum(link);
       }
@@ -894,7 +860,7 @@ function drawDatasetThumbnails() {
     let context = canvas.getContext("2d");
     let data = dataGenerator(200, 0);
     data.forEach(function(d) {
-      context.fillStyle = valueColorScale(d.label);
+      context.fillStyle = colorScale(d.label);
       context.fillRect(w * (d.x + 6) / 12, h * (d.y + 6) / 12, 4, 4);
     });
     d3.select(canvas.parentNode).style("display", null);
@@ -918,7 +884,7 @@ function drawContrastModels() {
         canvas.setAttribute("height", h);
         let context = canvas.getContext("2d");
         pixels.forEach(function (p) {
-            context.fillStyle = valueColorScale(p.value);
+            context.fillStyle = colorScale(p.value);
             context.fillRect((w * p.x) / 10 - 15, h - (h * (p.y) / 10), 15, 15);
         });
         d3.select(canvas.parentNode).style("display", null);

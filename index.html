@@ -168,36 +168,16 @@ limitations under the License.
                   <div class="label" style="width:105px; margin-right: 10px">
                       Color range for neuron bias.
                   </div>
-                  <svg width="150" height="30" id="neuronColormap">
+                  <svg width="150" height="30" id="colormap">
                       <defs>
-                          <linearGradient id="neuronGradient" x1="0%" y1="100%" x2="100%" y2="100%">
+                          <linearGradient id="gradient" x1="0%" y1="100%" x2="100%" y2="100%">
                               <stop offset="0%" stop-color="#f59322" stop-opacity="1"></stop>
                               <stop offset="50%" stop-color="#e8eaeb" stop-opacity="1"></stop>
                               <stop offset="100%" stop-color="#0877bd" stop-opacity="1"></stop>
                           </linearGradient>
                       </defs>
                       <g class="core" transform="translate(3, 0)">
-                          <rect width="144" height="10" style="fill: url('#neuronGradient');"></rect>
-                      </g>
-                  </svg>
-              </div>
-          </div>
-          <div class="column" style="margin-top:10px">
-              <div style="display:flex; align-items:center;">
-                  <div class="label" style="width:105px; margin-right: 10px">
-                      Color range for data pixel weight.
-                  </div>
-                  <svg width="150" height="30" id="valueColormap">
-                      <defs>
-                          <linearGradient id="valueGradient" x1="0%" y1="100%" x2="100%" y2="100%">
-                              <!-- todo: sync color range colors here -->
-                              <stop offset="0%" stop-color="#ffffff" stop-opacity="1"></stop>
-                              <stop offset="50%" stop-color="#08a4fd" stop-opacity="1"></stop>
-                              <stop offset="100%" stop-color="#033858" stop-opacity="1"></stop>
-                          </linearGradient>
-                      </defs>
-                      <g class="core" transform="translate(3, 0)">
-                          <rect width="144" height="10" style="fill: url('#valueGradient');"></rect>
+                          <rect width="144" height="10" style="fill: url('#gradient');"></rect>
                       </g>
                   </svg>
               </div>
