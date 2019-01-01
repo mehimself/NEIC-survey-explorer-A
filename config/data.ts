@@ -1,8 +1,8 @@
 let data = {
     squareSize: 10,
-    headers: ['Organization', 'Practices addressing ethical challenges', 'Practice supporting communication/publication', 'Share resources (which)', 'CD at MA-level', 'Part of Curriculum', 'General/specialized', 'Other', 'DRM part of existing or separate course', 'Developed own material', 'Who developed it', 'Willingness to share course material', 'Support for DM', 'Online DH training', 'Awareness of following initiative ', 'Willingness to collaborate on resources', 'Interest in a Sandbox', 'CD: EDA', 'CD: Statistics', 'CD: Ethics', 'CD: Data rights and protection', 'CD: Interdisciplinary dialogue', 'Interest in HPC', 'Course integrated/separate', 'DRM – Department', 'DRM – Faculty'],
-    cardinalities: [5, 2, 3, 5, 2, 2, 2, 2, 2, 2, 4, 4, 11, 5, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5],
-    testSet: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    headers: ['Organization', 'Practices addressing ethical challenges', 'Practice supporting communication/publication', 'Share resources (which)', 'CD at MA-level', 'Part of Curriculum', 'General/specialized', 'Other', 'DRM part of existing or separate course', 'Developed own material', 'Who developed it', 'Willingness to share course material', 'Support for DM', 'Online DH training', 'Awareness of following initiative ', 'Willingness to collaborate on resources', 'CD: EDA', 'CD: Statistics', 'CD: Ethics', 'CD: Data rights and protection', 'CD: Interdisciplinary dialogue', 'Interest in HPC', 'Course integrated/separate', 'DRM – Department', 'DRM – Faculty'],
+    cardinalities: [5, 2, 3, 5, 2, 2, 2, 2, 2, 2, 4, 4, 11, 5, 6, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5],
+    testSet: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     contrastSets: [
         {
             name: 'Bland',
@@ -21,39 +21,44 @@ let data = {
         }
     ],
     researchQuestionFeeds: [
-			{
-				title: 'Interest in HPC',
-				variableIndex: 22,
-				outputMask: [1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-				map: []
-			},
-			{
-				title: 'Interest in sandbox environment',
-				variableIndex: 16,
-				outputMask: [-1, -1, -1, -1, 1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1],
-				map: []
-			},
-			{
-				title: 'Willingness to collaborate on resources',
-				index: 15,
-				outputMask: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, -1],
-				map: []
-			},
-			{
-				title: 'Online DH training',
-				index: 13,
-				outputMask: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, 1, -1, -1, -1, -1],
-				map: []
-			},
-			{
-				title: 'Practices addressing ethics',
-				index: 1,
-				outputMask: [-1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, 1],
-				map: []
-			}
-		],
+        {
+            label: "Sandbox",
+            info: "Would you recommend the provision of a sandbox environment?",
+            variableIndexes: [
+                0, 10, 12, 20, 22
+            ],
+            map: []
+        }, {
+            label: "B",
+            info: '',
+            variableIndexes: [
+                1, 3, 5
+            ],
+            map: []
+        }, {
+            label: "C",
+            info: '',
+            variableIndexes: [
+                2, 13, 17
+            ],
+            map: []
+        }, {
+            label: "D",
+            info: '',
+            variableIndexes: [
+                8, 16, 34
+            ],
+            map: []
+        }, {
+            label: "E",
+            info: '',
+            variableIndexes: [
+                7, 9, 19
+            ],
+            map: []
+        }
+    ],
     sets: [
-    	// todo: insert 17th column (use input output data)
         [0.5, 0.0, 0.5, 0.25, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.3333333333333333, 1.0, 0.3, 1.0, 0.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.3036287280956326, 0.44464498554508874],
         [0.5, 0.0, 0.0, 0.75, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.5, 0.5, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0948030984650643, 0.5082781561389029],
         [0.5, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.6666666666666666, 0.6, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.09276498005029198, 0.15531593983271266],

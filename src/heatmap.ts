@@ -136,7 +136,7 @@ export class HeatMap {
         .call(yAxis);
     }
   }
-/*
+
   updateTestPoints(points: Example2D[]): void {
     if (this.settings.noSvg) {
       throw Error("Can't add points since noSvg=true");
@@ -150,7 +150,7 @@ export class HeatMap {
     }
     this.updateCircles(this.svg.select("g.train"), points);
   }
-*/
+
   updateBackground(data: number[][], discretize: boolean): void {
     let dx = data[0].length;
     let dy = data.length;
@@ -180,7 +180,7 @@ export class HeatMap {
     }
     context.putImageData(image, 0, 0);
   }
-/*
+
   private updateCircles(container, points: Example2D[]) {
     // Keep only points that are inside the bounds.
     let xDomain = this.xScale.domain();
@@ -210,8 +210,8 @@ export class HeatMap {
     // Remove points if the length has gone down.
     selection.exit().remove();
   }
-*/
 }
+
 export function reduceMatrix(matrix: number[][], factor: number): number[][] {
   if (matrix.length !== matrix[0].length) {
     throw new Error("The provided matrix must be a square matrix");

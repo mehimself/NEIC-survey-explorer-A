@@ -5,10 +5,9 @@ let workingData = {
     pixelCoordinates: [],
     variableOffsets: [],
     bitmaps: [],
-//    meanResponseSet: [],
-//    meanBitMap: []
+    meanResponseSet: [],
+    meanBitMap: []
 };
-/*
 function mapResultsMean() {
     data.sets[0].forEach((v, i) => {
         let sum = 0;
@@ -29,12 +28,11 @@ function mapMeanResponseSet() {
         }
     }
 }
-*/
 function mapResearchQuestions() {
     data.researchQuestionFeeds.forEach((feed) => {
         feed.map = [];
         for (let idx = 0; idx < workingData.pixelCoordinates.length; idx++) {
-            const isActivePixel = idx === feed.variableIndex;
+            const isActivePixel = feed.variableIndexes.indexOf(idx) >= 0;
             const pixelValue = isActivePixel ? 1 : 0; // 1-data.meanBitMap[idx].value;
             for (let p = 0; p < data.cardinalities[idx]; p++) {
                 let pixel = {
@@ -138,8 +136,8 @@ export function shuffle(array: any[]): void {
 mapVariableOffsets();
 mapVariablePixels();
 unpackVariables();
-// mapResultsMean();
-// mapMeanResponseSet();
+mapResultsMean();
+mapMeanResponseSet();
 mapResearchQuestions();
 export type Pixel = {
     x: number,
