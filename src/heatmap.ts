@@ -69,14 +69,13 @@ export class HeatMap {
 
     // Get a range of colors.
     let tmpScale = d3.scale.linear<string, number>()
-        .domain([-1, 0, 1])
+        .domain(colorRange.range)
         .range(colorRange.colors)
         .clamp(true);
     // Due to numerical error, we need to specify
     // d3.range(0, end + small_epsilon, step)
     // in order to guarantee that we will have end/step entries with
     // the last element being equal to end.
-    let colors = d3.range(0, 1 + 1E-9, 1 / NUM_SHADES).map(a => {
       return tmpScale(a);
     });
     this.color = d3.scale.quantize()
@@ -168,9 +167,6 @@ export class HeatMap {
     for (let y = 0, p = -1; y < dy; ++y) {
       for (let x = 0; x < dx; ++x) {
         let value = data[x][y];
-        if (discretize) {
-          value = (value >= 0 ? 1 : -1);
-        }
         let c = d3.rgb(this.color(value));
         image.data[++p] = c.r;
         image.data[++p] = c.g;
