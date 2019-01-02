@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 import * as nn from "./nn";
-import * as dataset from "./dataset";
+import * as dataset from "./preformatting";
 
 /** A map between names and activation functions. */
 export let activations: {[key: string]: nn.ActivationFunction} = {

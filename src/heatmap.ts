@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-import {Example2D} from "./dataset";
+import {TwoD} from "./preformatting";
 import data from "./data";
 import {colorRange} from "./state";
 import * as d3 from 'd3';
@@ -137,14 +137,14 @@ export class HeatMap {
     }
   }
 
-  updateTestPoints(points: Example2D[]): void {
+  updateTestPoints(points: TwoD[]): void {
     if (this.settings.noSvg) {
       throw Error("Can't add points since noSvg=true");
     }
     this.updateCircles(this.svg.select("g.test"), points);
   }
 
-  updatePoints(points: Example2D[]): void {
+  updatePoints(points: TwoD[]): void {
     if (this.settings.noSvg) {
       throw Error("Can't add points since noSvg=true");
     }
@@ -178,7 +178,7 @@ export class HeatMap {
     context.putImageData(image, 0, 0);
   }
 
-  private updateCircles(container, points: Example2D[]) {
+  private updateCircles(container, points: TwoD[]) {
     // Keep only points that are inside the bounds.
     let xDomain = this.xScale.domain();
     let yDomain = this.yScale.domain();
@@ -199,8 +199,8 @@ export class HeatMap {
     // Update points to be in the correct position.
     selection
       .attr({
-        cx: (d: Example2D) => this.xScale(d.x) + xOffset,
-        cy: (d: Example2D) => this.yScale(d.y) + yOffset,
+        cx: (d: TwoD) => this.xScale(d.x) + xOffset,
+        cy: (d: TwoD) => this.yScale(d.y) + yOffset,
       })
       .style("fill", d => this.color(d.value)); // label));
 

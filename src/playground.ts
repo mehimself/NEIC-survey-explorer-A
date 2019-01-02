@@ -14,19 +14,18 @@ limitations under the License.
 ==============================================================================*/
 
 import * as nn from "./nn";
-import data, {Pixel} from './data';
+import data from './data';
 import {HeatMap, reduceMatrix} from "./heatmap";
 import {
   State,
   datasets,
   activations,
-  problems,
   regularizations,
   getKeyFromValue,
   Problem,
   colorRange
 } from "./state";
-import {Example2D, shuffle} from "./dataset";
+import {TwoD, shuffle} from "./preformatting";
 import {AppendingLineChart} from "./linechart";
 import * as d3 from 'd3';
 
@@ -49,7 +48,6 @@ function scrollTween(offset) {
 
 const RECT_SIZE = 30;
 const BIAS_SIZE = 5;
-const NUM_SAMPLES_CLASSIFY = 500;
 const DENSITY = 100;
 
 enum HoverType {
@@ -79,8 +77,7 @@ let INPUTS: {[name: string]: InputFeature} = {
     "B": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[1], x, y), label: "B"},
     "C": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[2], x, y), label: "C"},
     "D": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[3], x, y), label: "D"},
-    //"sinX": {f: (x, y) => Math.sin(x), label: "sin(X_1)"},
-    //"sinY": {f: (x, y) => Math.sin(y), label: "sin(X_2)"}
+    "E": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[3], x, y), label: "E"},
 };
 
 class Player {
@@ -152,8 +149,8 @@ const colorScale = d3.scale.linear<string, number>()
                      .range(colorRange.colors)
                      .clamp(true);
 let iter = 0;
-let trainData: Example2D[] = [];
-let testData: Example2D[] = [];
+let trainData: TwoD[] = [];
+let testData: TwoD[] = [];
 let network: nn.Node[][] = null;
 let lossTrain = 0;
 let lossTest = 0;
@@ -696,7 +693,7 @@ function updateDecisionBoundary(network: nn.Node[][], firstTime: boolean) {
   }
 }
 
-function getLoss(network: nn.Node[][], dataPoints: Example2D[]): number {
+function getLoss(network: nn.Node[][], dataPoints: TwoD[]): number {
   let loss = 0;
   for (let i = 0; i < dataPoints.length; i++) {
     let dataPoint = dataPoints[i];
@@ -781,22 +778,7 @@ function oneStep(): void {
   updateUI();
 }
 
-export function getOutputWeights(network: nn.Node[][]): number[] {
-  let weights: number[] = [];
-  for (let layerIdx = 0; layerIdx < network.length - 1; layerIdx++) {
-    let currentLayer = network[layerIdx];
-    for (let i = 0; i < currentLayer.length; i++) {
-      let node = currentLayer[i];
-      for (let j = 0; j < node.outputs.length; j++) {
-        let output = node.outputs[j];
-        weights.push(output.weight);
-      }
-    }
-  }
-  return weights;
-}
-
-function reset(onStartup=false) {
+function reset() {
   lineChart.reset();
   state.serialize();
   player.pause();
@@ -814,31 +796,6 @@ function reset(onStartup=false) {
   drawNetwork(network);
   updateUI(true);
   drawContrastModels();
-}
-function drawDatasetThumbnails() {
-  function renderThumbnail(canvas, dataGenerator) {
-    let w = 100;
-    let h = 100;
-    canvas.setAttribute("width", w);
-    canvas.setAttribute("height", h);
-    let context = canvas.getContext("2d");
-    let data = dataGenerator(200, 0);
-    data.forEach(function(d) {
-      context.fillStyle = colorScale(d.label);
-      context.fillRect(w * (d.x + 6) / 12, h * (d.y + 6) / 12, 4, 4);
-    });
-    d3.select(canvas.parentNode).style("display", null);
-  }
-  d3.selectAll(".dataset").style("display", "none");
-  if (state.problem === Problem.CLASSIFICATION) {
-    for (let dataset in datasets) {
-      let canvas: any =
-          document.querySelector(`canvas[data-dataset=${dataset}]`);
-      let dataGenerator = datasets[dataset];
-      renderThumbnail(canvas, dataGenerator);
-    }
-  }
-  heatMap.updateTestPoints(state.showTestData ? testData : []);
 }
 function drawContrastModels() {
     function renderThumbnail(canvas, pixels) {
@@ -866,21 +823,18 @@ function generateData(firstTime = false) {
     state.serialize();
   }
   Math.seedrandom(state.seed);
-  let numSamples = NUM_SAMPLES_CLASSIFY;
   let generator = state.dataset;
-  let data = generator(numSamples, state.noise / 100);
-  // Shuffle the data in-place.
+  let data = generator();
   shuffle(data);
   // Split into train and test data.
   let splitIndex = Math.floor(data.length * state.percTrainData / 100);
   trainData = data.slice(0, splitIndex);
   testData = data.slice(splitIndex);
   heatMap.updatePoints(trainData);
-  console.log('trainData', trainData);
 }
 
 let parametersChanged = false;
 
 makeGUI();
 generateData(true);
-reset(true);
+reset();

@@ -1,5 +1,3 @@
-import * as d3 from "d3";
-
 let data = {
     headers: ['Organization', 'Practices addressing ethical challenges', 'Practice supporting communication/publication', 'Share resources (which)', 'CD at MA-level', 'Part of Curriculum', 'General/specialized', 'Other', 'DRM part of existing or separate course', 'Developed own material', 'Who developed it', 'Willingness to share course material', 'Support for DM', 'Online DH training', 'Awareness of following initiative ', 'Willingness to collaborate on resources', 'CD: EDA', 'CD: Statistics', 'CD: Ethics', 'CD: Data rights and protection', 'CD: Interdisciplinary dialogue', 'Interest in HPC', 'Course integrated/separate', 'DRM – Department', 'DRM – Faculty'],
     cardinalities:      [5, 2, 3, 5, 2, 2, 2, 2, 2, 2, 4, 4, 11, 5, 6, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5],
@@ -81,7 +79,6 @@ let data = {
     pixelCoordinates: [],
     bitmaps: [],
     researchQuestionFeeds: [
-        // todo: add RQ feeds here
         {
             label: "Sandbox",
             info: "Would you recommend the provision of a sandbox environment?",
@@ -129,7 +126,6 @@ function mapResultsMean() {
         data.packedVariableSets.forEach(set => sum += set[i]);
         data.meanResponseSet[i] = sum / data.packedVariableSets.length;
     });
-    console.log('response mean', data.meanResponseSet);
 }
 function mapMeanResponseSet() {
     data.meanBitMap = [];
@@ -143,7 +139,6 @@ function mapMeanResponseSet() {
             data.meanBitMap.push(pixel);
         }
     }
-    console.log('mean bitmao', data.meanBitMap);
 }
 function mapResearchQuestions() {
     data.researchQuestionFeeds.forEach((feed) => {
@@ -229,9 +224,50 @@ function unpackVariables() {
     });
     data.contrastSets.forEach(contrast => {
         mapSet(contrast.set, contrast.map);
-        console.log('contrast', contrast.name, contrast.map);
     });
 }
+
+export type twoD = {
+  x: number,
+  y: number,
+  label: number
+};
+
+export function shuffle(array: any[]): void {
+  /**
+   * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
+   * library as the random generator.
+   */
+  let counter = array.length;
+  let temp = 0;
+  let index = 0;
+  // While there are elements in the array
+  while (counter > 0) {
+    // Pick a random index
+    index = Math.floor(Math.random() * counter);
+    // Decrease counter by 1
+    counter--;
+    // And swap the last element with it
+    temp = array[counter];
+    array[counter] = array[index];
+    array[index] = temp;
+  }
+}
+
+export function classifySurveyData(numSamples: number, noise: number): twoD[] {
+  let points: twoD[] = [];
+  for (let m = 0; m < data.bitmaps.length; m++) {
+    for (let p = 0; p < data.bitmaps[m].length; p++) {
+      points.push({
+        x: data.bitmaps[m][p].x - 0.5,
+        y: data.bitmaps[m][p].y + 0.5,
+        label: data.bitmaps[m][p].value
+      })
+    }
+  }
+  return points;
+}
+
 
 mapVariableOffsets();
 mapVariablePixels();
