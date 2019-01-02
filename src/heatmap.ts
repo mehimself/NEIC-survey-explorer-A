@@ -76,6 +76,7 @@ export class HeatMap {
     // d3.range(0, end + small_epsilon, step)
     // in order to guarantee that we will have end/step entries with
     // the last element being equal to end.
+    let colors = d3.range(colorRange.range[0], colorRange.range[colorRange.range.length -1] + 1E-9, 1 / NUM_SHADES).map(a => {
       return tmpScale(a);
     });
     this.color = d3.scale.quantize()
