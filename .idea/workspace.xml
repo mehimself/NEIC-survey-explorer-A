@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a75aee0-cdf7-4410-8f57-e91522981b84" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataset.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/preformatting.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/heatmap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/heatmap.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/playground.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/playground.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/state.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,7 +18,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/playground.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="649">
+            <state relative-caret-position="879">
               <caret line="779" selection-start-line="779" selection-end-line="779" />
               <folding>
                 <element signature="e#658#685#0" expanded="true" />
@@ -42,16 +37,17 @@
                 <element signature="e#23850#24014#0" />
                 <element signature="e#24041#24488#0" />
                 <element signature="e#24985#25726#0" />
+                <element signature="e#27432#28262#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1053">
-              <caret line="100" column="37" selection-start-line="100" selection-start-column="37" selection-end-line="100" selection-end-column="37" />
+            <state relative-caret-position="1141">
+              <caret line="178" column="33" selection-start-line="178" selection-start-column="33" selection-end-line="178" selection-end-column="33" />
               <folding>
                 <element signature="e#658#700#0" expanded="true" />
                 <element signature="e#2818#2977#0" />
@@ -60,7 +56,6 @@
                 <element signature="e#3807#4294#0" />
                 <element signature="n#!!block;n#updateTestPoints#0;n#HeatMap#0" />
                 <element signature="n#!!block;n#updatePoints#0;n#HeatMap#0" />
-                <element signature="n#!!block;n#updateBackground#0;n#HeatMap#0" />
                 <element signature="n#!!block;n#updateCircles#0;n#HeatMap#0" />
                 <element signature="n#!!block;n#reduceMatrix#0" />
               </folding>
@@ -80,11 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/data.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="80" column="28" selection-start-line="80" selection-start-column="28" selection-end-line="80" selection-end-column="28" />
+            <state relative-caret-position="767">
+              <caret line="113" column="24" selection-start-line="113" selection-start-column="24" selection-end-line="113" selection-end-column="24" />
               <folding>
                 <element signature="e#1469#10203#0" />
               </folding>
@@ -162,11 +157,11 @@
         <option value="$PROJECT_DIR$/src/state.ts" />
         <option value="$PROJECT_DIR$/styles.css" />
         <option value="$PROJECT_DIR$/src/dataset.ts" />
-        <option value="$PROJECT_DIR$/src/heatmap.ts" />
         <option value="$PROJECT_DIR$/src/preformatting.ts" />
         <option value="$PROJECT_DIR$/dist/bundle.js" />
         <option value="$PROJECT_DIR$/src/data.ts" />
         <option value="$PROJECT_DIR$/src/playground.ts" />
+        <option value="$PROJECT_DIR$/src/heatmap.ts" />
       </list>
     </option>
   </component>
@@ -300,7 +295,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162053000" />
+    <option name="totallyTimeSpent" value="163283000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -466,9 +461,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/data.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="767">
+          <caret line="113" column="24" selection-start-line="113" selection-start-column="24" selection-end-line="113" selection-end-column="24" />
+          <folding>
+            <element signature="e#1469#10203#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/playground.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="649">
+        <state relative-caret-position="879">
           <caret line="779" selection-start-line="779" selection-end-line="779" />
           <folding>
             <element signature="e#658#685#0" expanded="true" />
@@ -487,6 +492,7 @@
             <element signature="e#23850#24014#0" />
             <element signature="e#24041#24488#0" />
             <element signature="e#24985#25726#0" />
+            <element signature="e#27432#28262#0" />
           </folding>
         </state>
       </provider>
@@ -503,8 +509,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1053">
-          <caret line="100" column="37" selection-start-line="100" selection-start-column="37" selection-end-line="100" selection-end-column="37" />
+        <state relative-caret-position="1141">
+          <caret line="178" column="33" selection-start-line="178" selection-start-column="33" selection-end-line="178" selection-end-column="33" />
           <folding>
             <element signature="e#658#700#0" expanded="true" />
             <element signature="e#2818#2977#0" />
@@ -513,19 +519,8 @@
             <element signature="e#3807#4294#0" />
             <element signature="n#!!block;n#updateTestPoints#0;n#HeatMap#0" />
             <element signature="n#!!block;n#updatePoints#0;n#HeatMap#0" />
-            <element signature="n#!!block;n#updateBackground#0;n#HeatMap#0" />
             <element signature="n#!!block;n#updateCircles#0;n#HeatMap#0" />
             <element signature="n#!!block;n#reduceMatrix#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/data.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="80" column="28" selection-start-line="80" selection-start-column="28" selection-end-line="80" selection-end-column="28" />
-          <folding>
-            <element signature="e#1469#10203#0" />
           </folding>
         </state>
       </provider>
