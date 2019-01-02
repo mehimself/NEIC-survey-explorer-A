@@ -69,9 +69,9 @@ export class HeatMap {
 
     // Get a range of colors.
     let tmpScale = d3.scale.linear<string, number>()
-        .domain(colorRange.range)
-        .range(colorRange.colors)
-        .clamp(true);
+      .domain(colorRange.range)
+      .range(colorRange.colors)
+      .clamp(true);
     // Due to numerical error, we need to specify
     // d3.range(0, end + small_epsilon, step)
     // in order to guarantee that we will have end/step entries with
@@ -79,9 +79,10 @@ export class HeatMap {
     let colors = d3.range(colorRange.range[0], colorRange.range[colorRange.range.length -1] + 1E-9, 1 / NUM_SHADES).map(a => {
       return tmpScale(a);
     });
-    this.color = d3.scale.quantize()
-                     .domain(colorRange.range)
-                     .range(colors);
+    this.color = d3.scale
+      .quantize()
+      .domain(colorRange.range)
+      .range(colors);
 
     container = container.append("div")
       .style({
