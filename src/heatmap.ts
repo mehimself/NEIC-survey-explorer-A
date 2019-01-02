@@ -20,6 +20,7 @@ import * as d3 from 'd3';
 
 export interface HeatMapSettings {
   [key: string]: any;
+
   showAxes?: boolean;
   noSvg?: boolean;
 }
@@ -45,9 +46,9 @@ export class HeatMap {
   private svg;
 
   constructor(
-      width: number, numSamples: number, xDomain: [number, number],
-      yDomain: [number, number], container,
-      userSettings?: HeatMapSettings) {
+    width: number, numSamples: number, xDomain: [number, number],
+    yDomain: [number, number], container,
+    userSettings?: HeatMapSettings) {
     this.numSamples = numSamples;
     let height = width;
     let padding = userSettings.showAxes ? 20 : 0;
@@ -76,7 +77,7 @@ export class HeatMap {
     // d3.range(0, end + small_epsilon, step)
     // in order to guarantee that we will have end/step entries with
     // the last element being equal to end.
-    let colors = d3.range(colorRange.range[0], colorRange.range[colorRange.range.length -1] + 1E-9, 1 / NUM_SHADES).map(a => {
+    let colors = d3.range(colorRange.range[0], colorRange.range[colorRange.range.length - 1] + 1E-9, 1 / NUM_SHADES).map(a => {
       return tmpScale(a);
     });
     this.color = d3.scale
@@ -103,8 +104,8 @@ export class HeatMap {
 
     if (!this.settings.noSvg) {
       this.svg = container.append("svg").attr({
-          "width": width,
-          "height": height
+        "width": width,
+        "height": height
       }).style({
         // Overlay the svg on top of the canvas.
         "position": "absolute",
@@ -158,8 +159,8 @@ export class HeatMap {
 
     if (dx !== this.numSamples || dy !== this.numSamples) {
       throw new Error(
-          "The provided data matrix must be of size " +
-          "numSamples X numSamples");
+        "The provided data matrix must be of size " +
+        "numSamples X numSamples");
     }
 
     // Compute the pixel colors; scaled by CSS.
@@ -189,7 +190,7 @@ export class HeatMap {
     yOffset = 12;
     points = points.filter(p => {
       return xDomain[0] <= p.x && p.x < xDomain[1]
-          && yDomain[0] <= p.y && p.y < yDomain[1];
+        && yDomain[0] <= p.y && p.y < yDomain[1];
     });
     // Attach data to initially empty selection.
     let selection = container.selectAll("circle").data(data.meanBitMap);//points);
@@ -216,7 +217,7 @@ export function reduceMatrix(matrix: number[][], factor: number): number[][] {
   }
   if (matrix.length % factor !== 0) {
     throw new Error("The width/height of the matrix must be divisible by " +
-        "the reduction factor");
+      "the reduction factor");
   }
   let result: number[][] = new Array(matrix.length / factor);
   for (let i = 0; i < matrix.length; i += factor) {

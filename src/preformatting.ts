@@ -48,17 +48,17 @@ export function shuffle(array: any[]): void {
 export type DataGenerator = () => TwoD[];
 
 export function classifySurveyData():
-    TwoD[] {
-    let points: TwoD[] = [];
-    for (let m = 0; m < data.bitmaps.length; m++) {
-        for (let p = 0; p < data.bitmaps[m].length; p++) {
-            points.push({
-                x: data.bitmaps[m][p].x - 0.5,
-                y: data.bitmaps[m][p].y + 0.5,
-                label: data.bitmaps[m][p].value
-            })
-        }
+  TwoD[] {
+  let points: TwoD[] = [];
+  for (let m = 0; m < data.bitmaps.length; m++) {
+    for (let p = 0; p < data.bitmaps[m].length; p++) {
+      points.push({
+        x: data.bitmaps[m][p].x - 0.5,
+        y: data.bitmaps[m][p].y + 0.5,
+        label: data.bitmaps[m][p].value
+      })
     }
-    return points;
+  }
+  return points;
 }
 
