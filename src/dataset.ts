@@ -154,7 +154,7 @@ export function classifySurveyData(numSamples: number, noise: number):
             })
         }
     }
-    console.log('pints',points)
+    console.log('points', points)
     return points;
 }
 
