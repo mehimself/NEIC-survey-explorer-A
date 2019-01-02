@@ -25,7 +25,7 @@ export interface HeatMapSettings {
 }
 
 /** Number of different shades (colors) when drawing a gradient heatmap */
-const NUM_SHADES = 30;
+const NUM_SHADES = 120;
 
 /**
  * Draws a heatmap using canvas. Used for showing the learned decision
