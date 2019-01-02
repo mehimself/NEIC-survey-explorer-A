@@ -187,8 +187,8 @@ export class HeatMap {
     let yDomain = this.yScale.domain();
     let xOffset;
     let yOffset;
-    xOffset = -10;
-    yOffset = 10;
+    xOffset = -12;
+    yOffset = 12;
     points = points.filter(p => {
       return xDomain[0] <= p.x && p.x < xDomain[1]
           && yDomain[0] <= p.y && p.y < yDomain[1];

@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a75aee0-cdf7-4410-8f57-e91522981b84" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/heatmap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/heatmap.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/playground.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/playground.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/state.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,50 +20,80 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/playground.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1044">
-              <caret line="315" column="38" lean-forward="true" selection-start-line="315" selection-start-column="38" selection-end-line="315" selection-end-column="38" />
+            <state relative-caret-position="660">
+              <caret line="842" column="27" selection-start-line="842" selection-start-column="9" selection-end-line="842" selection-end-column="27" />
               <folding>
                 <element signature="e#658#685#0" expanded="true" />
+                <element signature="e#7512#7868#0" />
+                <element signature="e#7916#8043#0" />
+                <element signature="e#8103#8749#0" />
+                <element signature="e#8854#11970#0" />
+                <element signature="e#12021#16310#0" />
+                <element signature="e#16350#16450#0" />
+                <element signature="e#16510#17668#0" />
+                <element signature="e#17776#19156#0" />
+                <element signature="e#19341#20305#0" />
+                <element signature="e#20692#21970#0" />
+                <element signature="e#22044#22353#0" />
+                <element signature="e#22392#23600#0" />
+                <element signature="e#23641#23792#0" />
+                <element signature="e#23850#24014#0" />
+                <element signature="e#24041#24488#0" />
+                <element signature="e#24555#24951#0" />
+                <element signature="e#24985#25726#0" />
+                <element signature="e#26542#27401#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/dataset.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="598">
+              <caret line="156" column="31" selection-start-line="156" selection-start-column="31" selection-end-line="156" selection-end-column="31" />
+              <folding>
+                <element signature="n#!!block;n#shuffle#0" />
+                <element signature="n#!!block;n#classifyTwoGaussData#0" />
+                <element signature="n#!!block;n#classifySpiralData#0" />
+                <element signature="n#!!block;n#classifyCircleData#0" />
+                <element signature="n#!!block;n#classifyXORData#0" />
+                <element signature="n#!!block;n#normalRandom#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/data.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="910">
+              <caret line="124" selection-start-line="124" selection-end-line="124" />
+              <folding>
+                <element signature="e#1469#10203#0" />
+                <element signature="n#!!block;n#mapResultsMean#0" />
+                <element signature="n#!!block;n#mapMeanResponseSet#0" />
+                <element signature="n#!!block;n#mapResearchQuestions#0" />
+                <element signature="n#!!block;n#mapVariablePixels#0" />
+                <element signature="n#!!block;n#mapVariableOffsets#0" />
+                <element signature="n#!!block;n#getAbsolutePixelValue#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="613">
-              <caret line="71" column="15" selection-start-line="71" selection-start-column="9" selection-end-line="71" selection-end-column="15" />
+            <state relative-caret-position="879">
+              <caret line="190" column="16" selection-start-line="190" selection-start-column="16" selection-end-line="190" selection-end-column="16" />
               <folding>
                 <element signature="e#658#694#0" expanded="true" />
+                <element signature="n#!!block;n#updateBackground#0;n#HeatMap#0" />
                 <element signature="n#!!block;n#reduceMatrix#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="160" column="14" lean-forward="true" selection-start-line="160" selection-start-column="14" selection-end-line="160" selection-end-column="14" />
-              <folding>
-                <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#5;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#rect#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#div#2;n#body#0;n#html#0;n#!!top" />
               </folding>
             </state>
           </provider>
@@ -70,7 +102,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/state.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="607">
+            <state relative-caret-position="419">
               <caret line="68" column="34" selection-start-line="68" selection-start-column="34" selection-end-line="68" selection-end-column="34" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -79,15 +111,6 @@
                 <element signature="n#!!block;n#deserializeState#0;n#State#0" />
                 <element signature="n#!!block;n#serialize#0;n#State#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
             </state>
           </provider>
         </entry>
@@ -104,9 +127,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>contrastSet</find>
-      <find>colors shows</find>
-      <find>neuronColorScale</find>
       <find>perc</find>
       <find>lossTest</find>
       <find>0877bd</find>
@@ -131,9 +151,12 @@
       <find>], [</find>
       <find>colorScale</find>
       <find>colorRanges</find>
-      <find>color</find>
       <find>displa</find>
       <find>range</find>
+      <find>colormap</find>
+      <find>return 0</find>
+      <find>= 0</find>
+      <find>color</find>
     </findStrings>
     <replaceStrings>
       <replace>'$1': 0</replace>
@@ -157,14 +180,14 @@
         <option value="$PROJECT_DIR$/styles.css" />
         <option value="$PROJECT_DIR$/dist/bundle.js" />
         <option value="$PROJECT_DIR$/src/config.js" />
-        <option value="$PROJECT_DIR$/src/dataset.ts" />
         <option value="$PROJECT_DIR$/surveyEx1.service" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/data.ts" />
-        <option value="$PROJECT_DIR$/src/heatmap.ts" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/state.ts" />
+        <option value="$PROJECT_DIR$/src/dataset.ts" />
+        <option value="$PROJECT_DIR$/src/data.ts" />
         <option value="$PROJECT_DIR$/src/playground.ts" />
+        <option value="$PROJECT_DIR$/src/heatmap.ts" />
       </list>
     </option>
   </component>
@@ -174,10 +197,10 @@
     <annotation-enable>false</annotation-enable>
     <other-services-enabled>false</other-services-enabled>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="-1669" />
-    <option name="width" value="1973" />
-    <option name="height" value="1669" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="y" value="-1692" />
+    <option name="width" value="1502" />
+    <option name="height" value="1692" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -213,22 +236,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="surveyExplorer" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="surveyExplorer" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -240,6 +247,22 @@
               <item name="surveyExplorer" type="b2602c69:ProjectViewProjectNode" />
               <item name="surveyExplorer" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="surveyExplorer" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="surveyExplorer" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -292,11 +315,13 @@
       <workItem from="1541866457596" duration="597000" />
       <workItem from="1542011062531" duration="40261000" />
       <workItem from="1542221202647" duration="209000" />
+      <workItem from="1546370960487" duration="67000" />
+      <workItem from="1546431413094" duration="3551000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153817000" />
+    <option name="totallyTimeSpent" value="157435000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -308,10 +333,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-1669" width="1973" height="1669" extended-state="0" />
+    <frame x="0" y="-1692" width="1502" height="1692" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.14044605" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15665092" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -321,13 +346,13 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" visible="true" weight="0.15974441" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.09384908" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Serial Monitor" order="9" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.16804059" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="12" visible="true" weight="0.16337855" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -418,49 +443,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/config.js" />
-    <entry file="file://$PROJECT_DIR$/src/dataset.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="155" column="5" selection-start-line="155" selection-start-column="5" selection-end-line="155" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!block;n#shuffle#0" />
-            <element signature="n#!!block;n#classifyTwoGaussData#0" />
-            <element signature="n#!!block;n#classifySpiralData#0" />
-            <element signature="n#!!block;n#classifyCircleData#0" />
-            <element signature="n#!!block;n#classifyXORData#0" />
-            <element signature="n#!!block;n#normalRandom#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/surveyEx1.service" />
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/data.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="975">
-          <caret line="75" column="25" lean-forward="true" selection-start-line="75" selection-start-column="25" selection-end-line="75" selection-end-column="25" />
-          <folding>
-            <element signature="e#11174#12048#0" />
-            <element signature="n#!!block;n#mapResultsMean#0" />
-            <element signature="n#!!block;n#mapMeanResponseSet#0" />
-            <element signature="n#!!block;n#mapResearchQuestions#0" />
-            <element signature="n#!!block;n#mapVariablePixels#0" />
-            <element signature="n#!!block;n#mapVariableOffsets#0" />
-            <element signature="n#!!block;n#getAbsolutePixelValue#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="160" column="14" lean-forward="true" selection-start-line="160" selection-start-column="14" selection-end-line="160" selection-end-column="14" />
+        <state relative-caret-position="1027">
+          <caret line="160" column="14" selection-start-line="160" selection-start-column="14" selection-end-line="160" selection-end-column="14" />
           <folding>
             <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
@@ -479,9 +466,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/state.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
+        <state relative-caret-position="419">
           <caret line="68" column="34" selection-start-line="68" selection-start-column="34" selection-end-line="68" selection-end-column="34" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -493,23 +487,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
+    <entry file="file://$PROJECT_DIR$/src/dataset.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="613">
-          <caret line="71" column="15" selection-start-line="71" selection-start-column="9" selection-end-line="71" selection-end-column="15" />
+        <state relative-caret-position="598">
+          <caret line="156" column="31" selection-start-line="156" selection-start-column="31" selection-end-line="156" selection-end-column="31" />
           <folding>
-            <element signature="e#658#694#0" expanded="true" />
-            <element signature="n#!!block;n#reduceMatrix#0" />
+            <element signature="n#!!block;n#shuffle#0" />
+            <element signature="n#!!block;n#classifyTwoGaussData#0" />
+            <element signature="n#!!block;n#classifySpiralData#0" />
+            <element signature="n#!!block;n#classifyCircleData#0" />
+            <element signature="n#!!block;n#classifyXORData#0" />
+            <element signature="n#!!block;n#normalRandom#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="910">
+          <caret line="124" selection-start-line="124" selection-end-line="124" />
+          <folding>
+            <element signature="e#1469#10203#0" />
+            <element signature="n#!!block;n#mapResultsMean#0" />
+            <element signature="n#!!block;n#mapMeanResponseSet#0" />
+            <element signature="n#!!block;n#mapResearchQuestions#0" />
+            <element signature="n#!!block;n#mapVariablePixels#0" />
+            <element signature="n#!!block;n#mapVariableOffsets#0" />
+            <element signature="n#!!block;n#getAbsolutePixelValue#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/playground.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1044">
-          <caret line="315" column="38" lean-forward="true" selection-start-line="315" selection-start-column="38" selection-end-line="315" selection-end-column="38" />
+        <state relative-caret-position="660">
+          <caret line="842" column="27" selection-start-line="842" selection-start-column="9" selection-end-line="842" selection-end-column="27" />
           <folding>
             <element signature="e#658#685#0" expanded="true" />
+            <element signature="e#7512#7868#0" />
+            <element signature="e#7916#8043#0" />
+            <element signature="e#8103#8749#0" />
+            <element signature="e#8854#11970#0" />
+            <element signature="e#12021#16310#0" />
+            <element signature="e#16350#16450#0" />
+            <element signature="e#16510#17668#0" />
+            <element signature="e#17776#19156#0" />
+            <element signature="e#19341#20305#0" />
+            <element signature="e#20692#21970#0" />
+            <element signature="e#22044#22353#0" />
+            <element signature="e#22392#23600#0" />
+            <element signature="e#23641#23792#0" />
+            <element signature="e#23850#24014#0" />
+            <element signature="e#24041#24488#0" />
+            <element signature="e#24555#24951#0" />
+            <element signature="e#24985#25726#0" />
+            <element signature="e#26542#27401#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="879">
+          <caret line="190" column="16" selection-start-line="190" selection-start-column="16" selection-end-line="190" selection-end-column="16" />
+          <folding>
+            <element signature="e#658#694#0" expanded="true" />
+            <element signature="n#!!block;n#updateBackground#0;n#HeatMap#0" />
+            <element signature="n#!!block;n#reduceMatrix#0" />
           </folding>
         </state>
       </provider>

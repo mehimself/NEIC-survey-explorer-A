@@ -216,16 +216,6 @@ function makeGUI() {
   });
   regularRate.property("value", state.regularizationRate);
 
-  let problem = d3.select("#problem").on("change", function() {
-    state.problem = problems[this.value];
-    generateData();
-    drawDatasetThumbnails();
-    drawContrastModels();
-    parametersChanged = true;
-    reset();
-  });
-  problem.property("value", getKeyFromValue(problems, state.problem));
-
   renderColorRange();
 
   // Listen for css-responsive changes and redraw the svg network.
@@ -825,32 +815,6 @@ function reset(onStartup=false) {
   updateUI(true);
   drawContrastModels();
 }
-function initTutorial() {
-  if (state.tutorial == null || state.tutorial === '' || state.hideText) {
-    return;
-  }
-  // Remove all other text.
-  d3.selectAll("article div.l--body").remove();
-  let tutorial = d3.select("article").append("div")
-    .attr("class", "l--body");
-  // Insert tutorial text.
-  d3.html(`tutorials/${state.tutorial}.html`, (err, htmlFragment) => {
-    if (err) {
-      throw err;
-    }
-    tutorial.node().appendChild(htmlFragment);
-    // If the tutorial has a <title> tag, set the page title to that.
-    let title = tutorial.select("title");
-    if (title.size()) {
-      d3.select("header h1").style({
-        "margin-top": "20px",
-        "margin-bottom": "20px",
-      })
-      .text(title.text());
-      document.title = title.text();
-    }
-  });
-}
 function drawDatasetThumbnails() {
   function renderThumbnail(canvas, dataGenerator) {
     let w = 100;
@@ -917,7 +881,6 @@ function generateData(firstTime = false) {
 
 let parametersChanged = false;
 
-initTutorial();
 makeGUI();
 generateData(true);
 reset(true);

@@ -149,7 +149,7 @@ export function classifySurveyData(numSamples: number, noise: number):
         for (let p = 0; p < data.bitmaps[m].length; p++) {
             points.push({
                 x: data.bitmaps[m][p].x - 0.5,
-                y: data.bitmaps[m][p].y - 0.5,
+                y: data.bitmaps[m][p].y + 0.5,
                 label: data.bitmaps[m][p].value
             })
         }
