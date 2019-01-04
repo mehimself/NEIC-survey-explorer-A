@@ -182,6 +182,7 @@ export class HeatMap {
         image.data[++p] = opacity;
       }
     }
+    // todo: #10 (conditional to main rendering
     context.putImageData(image, 0, 0);
   }
 

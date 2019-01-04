@@ -890,9 +890,10 @@ function generateData(firstTime = false) {
   let generator = state.dataset;
   let data = generator(config.bitmaps);
   shuffle(data);
-  // Split into train and test data.
+  // todo: #8
   let splitIndex = Math.floor(data.length * state.percTrainData / 100);
   trainData = data.slice(0, splitIndex);
+  // todo: #9
   testData = data.slice(splitIndex);
   heatMap.updatePoints(trainData);
 }
