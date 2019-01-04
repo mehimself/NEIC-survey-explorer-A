@@ -1,25 +1,17 @@
 let config = {
+  /*
+    feeds:
+      variable cardinalities
+      variable value proportion (-1 - 1)
+      (future feature: value range)
+      (future feature: color range)
+  */
   headers: ['Organization', 'Practices addressing ethical challenges', 'Practice supporting communication/publication', 'Share resources (which)', 'CD at MA-level', 'Part of Curriculum', 'General/specialized', 'Other', 'DRM part of existing or separate course', 'Developed own material', 'Who developed it', 'Willingness to share course material', 'Support for DM', 'Online DH training', 'Awareness of following initiative ', 'Willingness to collaborate on resources', 'CD: EDA', 'CD: Statistics', 'CD: Ethics', 'CD: Data rights and protection', 'CD: Interdisciplinary dialogue', 'Interest in HPC', 'Course integrated/separate', 'DRM – Department', 'DRM – Faculty'],
   cardinalities: [5, 2, 3, 5, 2, 2, 2, 2, 2, 2, 4, 4, 11, 5, 6, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5],
-  testSet: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  contrastSets: [
-    {
-      name: 'Bland',
-      set: [0.3, 1, 2, 0, 1, 0, 1, 0, 1, 0, 2, 2, 5, 1, 4, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0],
-      map: []
-    },
-    {
-      name: 'Nightmare',
-      set: [0.2, 0, 1, 0.2, 0, 0, 0, 0, 0, 0, 1, 2, 3, 0.2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0.3, 0.2],
-      map: []
-    },
-    {
-      name: 'YesWeCan',
-      set: [1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 3, 3, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      map: []
-    }
+  trainData: [
+    // todo: issue #9
   ],
-  packedVariableSets: [
+  testData: [
     [0, -1, 0, -0.5, -1, -1, 1, -1, -1, 1, -0.33333333333333337, 1, -0.4, 1, 0.19999999999999996, -1, -1, -1, -1, -1, -1, 1, -1, -0.39274254380873475, -0.11071002890982251],
     [0, -1, -1, 0.5, 1, 1, 1, -1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, -1, 1, -1, 1, -1, -0.8103938030698714, 0.01655631227780585],
     [0, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, 0.33333333333333326, 0.19999999999999996, -1, 1, 1, 1, 1, 1, 1, 1, -1, 1, -0.814470039899416, -0.6893681203345747],
@@ -74,11 +66,9 @@ let config = {
     [1, -1, 0, -1, -1, 1, 1, 1, 1, -1, 1, -1, 0, 1, 0.6000000000000001, 1, 1, 1, -1, 1, -1, -1, 1, -0.3501631540756531, 0.17654032249266405],
     [-0.5, -1, 1, 0.5, -1, 1, -1, -1, 1, -1, 0.33333333333333326, -1, -0.19999999999999996, 0, -0.6, 1, -1, -1, -1, -1, -1, 1, 1, -0.5370051222355319, -0.028387673608443964]
   ],
-  meanResponseSet: [],
-  meanBitMap: [], // todo: remove
-  pixelCoordinates: [],
+  variablePixels: [],
   bitmaps: [],
-  researchQuestionFeeds: [
+  feeds: [
     {
       label: "Sandbox",
       info: "Would you recommend the provision of a sandbox environment?",
@@ -129,156 +119,5 @@ let config = {
   squareSize: 10,
   variableOffsets: []
 };
-
-function mapResultsMean() { // todo: remove
-  config.packedVariableSets[0].forEach((v, i) => {
-    let sum = 0;
-    config.packedVariableSets.forEach(set => sum += set[i]);
-    config.meanResponseSet[i] = sum / config.packedVariableSets.length;
-  });
-}
-
-function mapMeanResponseSet() {
-  config.meanBitMap = [];
-  for (let idx = 0; idx < config.pixelCoordinates.length; idx++) {
-    for (let p = 0; p < config.cardinalities[idx]; p++) {
-      let pixel = {
-        x: config.pixelCoordinates[idx][p].x,
-        y: config.pixelCoordinates[idx][p].y,
-        value: config.meanResponseSet[idx]
-      };
-      config.meanBitMap.push(pixel);
-    }
-  }
-}
-
-function mapResearchQuestions() {
-  config.researchQuestionFeeds.forEach((feed) => {
-    feed.map = [];
-    for (let idx = 0; idx < config.pixelCoordinates.length; idx++) {
-      const isActivePixel = feed.inputMask.indexOf(idx) >= 0;
-      const pixelValue = isActivePixel ? 1 : 0; //1 - data.meanBitMap[idx].value; // todo: review this weighting
-      for (let p = 0; p < config.cardinalities[idx]; p++) {
-        let pixel = {
-          x: config.pixelCoordinates[idx][p].x,
-          y: config.pixelCoordinates[idx][p].y,
-          value: pixelValue
-        };
-        feed.map.push(pixel);
-      }
-    }
-  })
-}
-
-function mapVariablePixels() {
-  config.cardinalities.forEach((cardinality, v) => {
-    const variableOffset = config.variableOffsets[v];
-    const pixels = [];
-    for (let c = 0; c < cardinality; c++) {
-      const pixelOffset = variableOffset + c;
-      const coordinates = {
-        x: pixelOffset % config.squareSize + 1,
-        y: Math.floor(pixelOffset / config.squareSize) + 1
-      };
-      pixels.push(coordinates);
-    }
-    config.pixelCoordinates.push(pixels);
-  })
-}
-
-function mapVariableOffsets() {
-  let variableOffset = 0;
-  for (let i = 0; i < config.cardinalities.length; i++) {
-    config.variableOffsets.push(variableOffset);
-    variableOffset = config.variableOffsets[i] + config.cardinalities[i];
-  }
-}
-
-function mapPixelMasks() {
-  function isPixelIncluded(x: number, y: number, pixels: any[]): boolean {
-    let found = false;
-    for (let c = 0; c < pixels.length; c++) { // variable pixel coordinates (c)
-      let variablePixel = pixels[c];
-      found = variablePixel.x === x + 1 && variablePixel.y === y + 1; // todo: stinks 0- and 1-based indexes
-      if (found) break
-    }
-    return found;
-  }
-  config.researchQuestionFeeds.forEach(feed => {
-    feed.pixelMask = [];
-    for (let y = 0; y < config.squareSize; y++) { // row (y)
-      feed.pixelMask[y] = [];
-      for (let x = 0; x < config.squareSize; x++) { // column (x)
-        feed.pixelMask[y][x] = 0;
-        for (let v = 0; v < feed.outputs.length; v++) {
-          const variableIndex = feed.outputs[v];
-          feed.pixelMask[y][x] = isPixelIncluded(x, y, config.pixelCoordinates[variableIndex]) ? 1 : 0;
-          if (feed.pixelMask[y][x] === 1) {
-            break;
-          }
-        }
-      }
-    }
-    // console.log(feed.label, feed.pixelMask)
-  })
-}
-
-function getAbsolutePixelValue(cardinality, value, index) {
-  const variableValue = Math.round(value * 100) / 100;
-  let pixelValue = (1 + index) / cardinality;
-  pixelValue = Math.round(pixelValue * 100) / 100;
-  return pixelValue == variableValue ? 1 : 0;
-}
-
-function getProportionalPixelValue(cardinality, value, index) {
-  const pixelValueProportion = 1 / cardinality;
-  const valueThreshold = index * pixelValueProportion;
-  let pixelValue = (value - valueThreshold) * cardinality;
-  pixelValue = Math.round(pixelValue * 100) / 100;
-  if (pixelValue < 0) {
-    pixelValue = 0;
-  }
-  return pixelValue;
-}
-
-function unpackVariables() {
-  function mapSet(set, map) {
-    set.forEach((value, v) => {
-      const cardinality = config.cardinalities[v];
-      const isUnpackable = [2, 5].indexOf(cardinality) >= 0;
-      const isQualitativeValue = !isUnpackable;
-      for (let c = 0; c < cardinality; c++) {
-        let pixel = {
-          x: config.pixelCoordinates[v][c].x,
-          y: config.pixelCoordinates[v][c].y,
-          value: 0
-        };
-        if (isUnpackable) {
-          pixel.value = getProportionalPixelValue(cardinality, value, c);
-        } else if (isQualitativeValue) {
-          pixel.value = getProportionalPixelValue(cardinality, value, c); //getAbsolutePixelValue(cardinality, value, c);
-        }
-        map.push(pixel);
-      }
-    })
-  }
-  config.bitmaps = [];
-  config.packedVariableSets.forEach((set) => {
-    let map = [];
-    config.bitmaps.push(map);
-    mapSet(set, map);
-  });
-  config.contrastSets.forEach(contrast => {
-    mapSet(contrast.set, contrast.map);
-  });
-}
-
-mapVariableOffsets();
-mapVariablePixels();
-unpackVariables();
-mapResultsMean();
-mapMeanResponseSet();
-mapResearchQuestions();
-mapPixelMasks();
 
 export default config;
