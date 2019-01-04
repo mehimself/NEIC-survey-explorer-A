@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a75aee0-cdf7-4410-8f57-e91522981b84" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/heatmap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/heatmap.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/playground.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/playground.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/preformatting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/preformatting.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/playground.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1169">
-              <caret line="734" column="35" selection-start-line="734" selection-start-column="35" selection-end-line="734" selection-end-column="35" />
+            <state relative-caret-position="481">
+              <caret line="126" column="9" selection-start-line="126" selection-end-line="127" />
               <folding>
                 <element signature="e#658#685#0" expanded="true" />
                 <element signature="e#1112#1220#0" />
@@ -50,6 +47,26 @@
                 <element signature="e#24985#25726#0" />
                 <element signature="e#27432#28262#0" />
                 <element signature="e#28304#28891#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="689">
+              <caret line="165" column="5" lean-forward="true" selection-start-line="165" selection-start-column="5" selection-end-line="165" selection-end-column="5" />
+              <folding>
+                <element signature="e#658#695#0" expanded="true" />
+                <element signature="n#!!block;n#constructor#0;n#HeatMap#0" />
+                <element signature="e#1721#1891#0" />
+                <element signature="e#2596#2629#0" />
+                <element signature="e#3769#4256#0" />
+                <element signature="n#!!block;n#updateTestPoints#0;n#HeatMap#0" />
+                <element signature="n#!!block;n#updatePoints#0;n#HeatMap#0" />
+                <element signature="n#!!block;n#updateCircles#0;n#HeatMap#0" />
+                <element signature="n#!!block;n#reduceMatrix#0" />
               </folding>
             </state>
           </provider>
@@ -149,9 +166,9 @@
         <option value="$PROJECT_DIR$/dist/bundle.js" />
         <option value="$PROJECT_DIR$/src/data.ts" />
         <option value="$PROJECT_DIR$/src/preformatting.ts" />
-        <option value="$PROJECT_DIR$/src/heatmap.ts" />
         <option value="$PROJECT_DIR$/src/config.ts" />
         <option value="$PROJECT_DIR$/src/playground.ts" />
+        <option value="$PROJECT_DIR$/src/heatmap.ts" />
       </list>
     </option>
   </component>
@@ -285,7 +302,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="186061000" />
+    <option name="totallyTimeSpent" value="186536000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -300,7 +317,7 @@
     <frame x="0" y="-1692" width="1502" height="1692" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15665092" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15665092" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -316,7 +333,7 @@
       <window_info anchor="bottom" id="Serial Monitor" order="9" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="12" visible="true" weight="0.16337855" />
+      <window_info anchor="bottom" id="Terminal" order="12" visible="true" weight="0.16337855" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -461,24 +478,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
-          <caret line="155" column="99" selection-start-line="155" selection-start-column="99" selection-end-line="155" selection-end-column="99" />
-          <folding>
-            <element signature="e#658#695#0" expanded="true" />
-            <element signature="e#2818#2977#0" />
-            <element signature="e#3388#3450#0" />
-            <element signature="e#3458#3588#0" />
-            <element signature="e#3807#4294#0" />
-            <element signature="n#!!block;n#updateTestPoints#0;n#HeatMap#0" />
-            <element signature="n#!!block;n#updatePoints#0;n#HeatMap#0" />
-            <element signature="n#!!block;n#updateCircles#0;n#HeatMap#0" />
-            <element signature="n#!!block;n#reduceMatrix#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/config.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="291">
@@ -499,8 +498,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/playground.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1169">
-          <caret line="734" column="35" selection-start-line="734" selection-start-column="35" selection-end-line="734" selection-end-column="35" />
+        <state relative-caret-position="481">
+          <caret line="126" column="9" selection-start-line="126" selection-end-line="127" />
           <folding>
             <element signature="e#658#685#0" expanded="true" />
             <element signature="e#1112#1220#0" />
@@ -527,6 +526,24 @@
             <element signature="e#24985#25726#0" />
             <element signature="e#27432#28262#0" />
             <element signature="e#28304#28891#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="689">
+          <caret line="165" column="5" lean-forward="true" selection-start-line="165" selection-start-column="5" selection-end-line="165" selection-end-column="5" />
+          <folding>
+            <element signature="e#658#695#0" expanded="true" />
+            <element signature="n#!!block;n#constructor#0;n#HeatMap#0" />
+            <element signature="e#1721#1891#0" />
+            <element signature="e#2596#2629#0" />
+            <element signature="e#3769#4256#0" />
+            <element signature="n#!!block;n#updateTestPoints#0;n#HeatMap#0" />
+            <element signature="n#!!block;n#updatePoints#0;n#HeatMap#0" />
+            <element signature="n#!!block;n#updateCircles#0;n#HeatMap#0" />
+            <element signature="n#!!block;n#reduceMatrix#0" />
           </folding>
         </state>
       </provider>

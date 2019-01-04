@@ -68,14 +68,10 @@ function feedBitMap(feed: any, x: number, y: number) {
   return value;
 }
 
-let INPUTS: { [name: string]: InputFeature } = {
-  // todo: add survey seed functions here
-  "A": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[0], x, y), label: "A"},
-  "B": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[1], x, y), label: "B"},
-  "C": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[2], x, y), label: "C"},
-  "D": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[3], x, y), label: "D"},
-  "E": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[3], x, y), label: "E"},
-};
+let INPUTS: { [name: string]: InputFeature } = {};
+config.researchQuestionFeeds.forEach(feed => {
+  INPUTS[feed.label] = {f: (x, y) => feedBitMap(feed, x, y), label: feed.label}
+});
 
 class Player {
   private timerIndex = 0;
@@ -128,6 +124,7 @@ class Player {
 let state = State.deserializeState();
 
 let boundary: { [id: string]: number[][] } = {};
+let mask = [];
 let selectedNodeId: string = null;
 // Plot the heatmaps
 let xDomain: [number, number] = [0, config.squareSize];
@@ -361,15 +358,36 @@ function drawNode(cx: number, cy: number, nodeId: string, isInput: boolean, cont
       div.classed("hovered", true);
       nodeGroup.classed("hovered", true);
       updateDecisionBoundary(network, false);
-      heatMap.updateBackground(boundary[nodeId], state.discretize);
+      let options = {
+        discretize: state.discretize,
+        pixelMask: null,
+        id: nodeId
+      };
+      if (config.researchQuestionFeeds[nodeId] !== undefined && config.researchQuestionFeeds[nodeId].pixelMask) {
+        options.pixelMask = config.researchQuestionFeeds[nodeId].pixelMask;
+      }
+      heatMap.updateBackground(
+        boundary[nodeId],
+        options
+      )
     })
     .on("mouseleave", function () {
       selectedNodeId = null;
       div.classed("hovered", false);
       nodeGroup.classed("hovered", false);
       updateDecisionBoundary(network, false);
-      heatMap.updateBackground(boundary[nn.getOutputNode(network).id],
-        state.discretize);
+      let options = {
+        discretize: state.discretize,
+        pixelMask: null,
+        id: nodeId
+      };
+      if (config.researchQuestionFeeds[nodeId] !== undefined && config.researchQuestionFeeds[nodeId].pixelMask) {
+        options.pixelMask = config.researchQuestionFeeds[nodeId].pixelMask;
+      }
+      heatMap.updateBackground(
+        boundary[nn.getOutputNode(network).id],
+        options
+      );
     });
   if (isInput) {
     div.on("click", function () {
@@ -640,6 +658,28 @@ function drawLink(
   return line;
 }
 
+function compileOutputMask() {
+  function getFeedByName(name: string) {
+    let feed;
+    for (let f = 0; f < config.researchQuestionFeeds.length; f++) {
+      if (config.researchQuestionFeeds[f].label === name) {
+        feed = config.researchQuestionFeeds[f];
+        break;
+      }
+    }
+    return feed;
+  }
+  mask = Array(config.squareSize);
+  for (let nodeId in INPUTS) {
+    let feed = getFeedByName(nodeId);
+    for (let y = 0; y < config.squareSize; y++) {
+      if (mask[y] === undefined) mask[y] = Array(config.squareSize);
+      for (let x = 0; x < config.squareSize; x++) {
+        mask[y][x] = mask[y][x] || feed.pixelMask[y][x];
+      }
+    }
+  }
+}
 /**
  * Given a neural network, it asks the network for the output (prediction)
  * of every node in the network using inputs sampled on a square grid.
@@ -647,18 +687,18 @@ function drawLink(
  * matrix of the outputs of the network for each input in the grid respectively.
  */
 function updateDecisionBoundary(network: nn.Node[][], firstTime: boolean) {
+  let xScale = d3.scale.linear().domain([0, DENSITY - 1]).range(xDomain);
+  let yScale = d3.scale.linear().domain([DENSITY - 1, 0]).range(xDomain);
   if (firstTime) {
     boundary = {};
     nn.forEachNode(network, true, node => {
       boundary[node.id] = new Array(DENSITY);
     });
-    // Go through all predefined inputs.
     for (let nodeId in INPUTS) {
       boundary[nodeId] = new Array(DENSITY);
     }
+    compileOutputMask();
   }
-  let xScale = d3.scale.linear().domain([0, DENSITY - 1]).range(xDomain);
-  let yScale = d3.scale.linear().domain([DENSITY - 1, 0]).range(xDomain);
 
   let i = 0, j = 0;
   for (i = 0; i < DENSITY; i++) {
@@ -672,17 +712,26 @@ function updateDecisionBoundary(network: nn.Node[][], firstTime: boolean) {
       }
     }
     for (j = 0; j < DENSITY; j++) {
-      // 1 for points inside the circle, and 0 for points outside the circle.
       let x = xScale(i);
       let y = yScale(j);
+      let y0 = Math.floor(y);
+      let x0 = Math.floor(x);
       let input = constructInput(x, y);
+
       nn.forwardProp(network, input);
       nn.forEachNode(network, true, node => {
+        /*
+          input mask: let isMasked = masks[node.id] && masks[node.id][y0][x0];
+          boundary[node.id][i][j] = isMasked ? node.output : 0;
+        */
         boundary[node.id][i][j] = node.output;
       });
       if (firstTime) {
-        // Go through all predefined inputs.
         for (let nodeId in INPUTS) {
+          /*
+            let isMasked = masks[nodeId] && (y > 9 || x > 9 || masks[nodeId][y0][x0]);
+            boundary[nodeId][i][j] = isMasked ? INPUTS[nodeId].f(x, y) : 0;
+          */
           boundary[nodeId][i][j] = INPUTS[nodeId].f(x, y);
         }
       }
@@ -708,15 +757,35 @@ function updateUI(firstStep = false) {
   updateBiasesUI(network);
   // Get the decision boundary of the network.
   updateDecisionBoundary(network, firstStep);
-  let selectedId = selectedNodeId != null ?
-    selectedNodeId : nn.getOutputNode(network).id;
-  heatMap.updateBackground(boundary[selectedId], state.discretize);
+  let selectedId = selectedNodeId != null ? selectedNodeId : nn.getOutputNode(network).id;
+  let options = {
+    discretize: state.discretize,
+    pixelMask: null,
+    id: selectedId
+  };
+  if (config.researchQuestionFeeds[selectedId] !== undefined && config.researchQuestionFeeds[selectedId].pixelMask) {
+    options.pixelMask = config.researchQuestionFeeds[selectedId].pixelMask;
+  }
+  heatMap.updateBackground(
+    boundary[selectedId],
+    options
+  );
 
   // Update all decision boundaries.
   d3.select("#network").selectAll("div.canvas")
     .each(function (data: { heatmap: HeatMap, id: string }) {
-      data.heatmap.updateBackground(reduceMatrix(boundary[data.id], 10),
-        state.discretize);
+      let options = {
+        discretize: state.discretize,
+        pixelMask: null,
+        id: data.id
+      };
+      if (config.researchQuestionFeeds[data.id] !== undefined && config.researchQuestionFeeds[data.id].pixelMask) {
+        options.pixelMask = config.researchQuestionFeeds[data.id].pixelMask;
+      }
+      data.heatmap.updateBackground(
+        reduceMatrix(boundary[data.id], 10),
+        options
+      );
     });
 
   function zeroPad(n: number): string {
