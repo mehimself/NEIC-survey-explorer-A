@@ -178,7 +178,7 @@ export class HeatMap {
         image.data[++p] = opacity;
       }
     }
-    context.putImageData(image, 1, 0);
+    context.putImageData(image, 0, 0);
   }
 
   private updateCircles(container, points: TwoD[]) {
