@@ -156,6 +156,7 @@ export class HeatMap {
   updateBackground(data: number[][], discretize: boolean): void {
     let dx = data[0].length;
     let dy = data.length;
+    const opacity = 255;
 
     if (dx !== this.numSamples || dy !== this.numSamples) {
       throw new Error(
@@ -174,7 +175,7 @@ export class HeatMap {
         image.data[++p] = c.r;
         image.data[++p] = c.g;
         image.data[++p] = c.b;
-        image.data[++p] = 160;
+        image.data[++p] = opacity;
       }
     }
     context.putImageData(image, 1, 0);
