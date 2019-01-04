@@ -129,11 +129,6 @@ let selectedNodeId: string = null;
 // Plot the heatmaps
 let xDomain: [number, number] = [0, config.squareSize];
 let heatMap = new HeatMap(300, DENSITY, xDomain, xDomain, d3.select("#heatmap"), {showAxes: true});
-// todo: add contrast model visualisations here
-let heatMap_bland = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_bland"), {showAxes: false});
-let heatMap_results = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_results"), {showAxes: false});
-let heatMap_nightmare = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_nightmare"), {showAxes: false});
-let heatMap_yesWeCan = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_yesWeCan"), {showAxes: false});
 let linkWidthScale = d3.scale.linear()
   .domain([0, 5])
   .range([1, 10])
