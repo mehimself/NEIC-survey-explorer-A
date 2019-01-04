@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 import * as nn from "./nn";
-import data from './data';
+import config from './config';
 import {HeatMap, reduceMatrix} from "./heatmap";
 import {activations, colorRange, getKeyFromValue, regularizations, State} from "./state";
 import {shuffle, TwoD} from "./preformatting";
@@ -130,7 +130,7 @@ let state = State.deserializeState();
 let boundary: { [id: string]: number[][] } = {};
 let selectedNodeId: string = null;
 // Plot the heatmaps
-let xDomain: [number, number] = [0, data.squareSize];
+let xDomain: [number, number] = [0, config.squareSize];
 let heatMap = new HeatMap(300, DENSITY, xDomain, xDomain, d3.select("#heatmap"), {showAxes: true});
 // todo: add contrast model visualisations here
 let heatMap_bland = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_bland"), {showAxes: false});
@@ -809,10 +809,10 @@ function drawContrastModels() {
     d3.select(canvas.parentNode).style("display", null);
   }
 
-  renderThumbnail(d3.select("#heatmap_results canvas")[0][0], data.meanBitMap);
-  renderThumbnail(d3.select("#heatmap_bland canvas")[0][0], data.contrastSets[0].map);
-  renderThumbnail(d3.select("#heatmap_nightmare canvas")[0][0], data.contrastSets[1].map);
-  renderThumbnail(d3.select("#heatmap_yesWeCan canvas")[0][0], data.contrastSets[2].map);
+  renderThumbnail(d3.select("#heatmap_results canvas")[0][0], config.meanBitMap);
+  renderThumbnail(d3.select("#heatmap_bland canvas")[0][0], config.contrastSets[0].map);
+  renderThumbnail(d3.select("#heatmap_nightmare canvas")[0][0], config.contrastSets[1].map);
+  renderThumbnail(d3.select("#heatmap_yesWeCan canvas")[0][0], config.contrastSets[2].map);
 
 }
 
@@ -824,7 +824,7 @@ function generateData(firstTime = false) {
   }
   Math.seedrandom(state.seed);
   let generator = state.dataset;
-  let data = generator();
+  let data = generator(config.bitmaps);
   shuffle(data);
   // Split into train and test data.
   let splitIndex = Math.floor(data.length * state.percTrainData / 100);

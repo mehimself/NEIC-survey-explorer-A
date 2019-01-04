@@ -13,8 +13,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-import data from "./data";
-
 /**
  * A two dimensional example: x and y coordinates with the label.
  */
@@ -45,17 +43,17 @@ export function shuffle(array: any[]): void {
   }
 }
 
-export type DataGenerator = () => TwoD[];
+export type DataGenerator = (bitmaps: TwoD[][]) => TwoD[];
 
-export function classifySurveyData():
+export function classifySurveyData(bitmaps: TwoD[][]):
   TwoD[] {
   let points: TwoD[] = [];
-  for (let m = 0; m < data.bitmaps.length; m++) {
-    for (let p = 0; p < data.bitmaps[m].length; p++) {
+  for (let m = 0; m < bitmaps.length; m++) {
+    for (let p = 0; p < bitmaps[m].length; p++) {
       points.push({
-        x: data.bitmaps[m][p].x - 0.5,
-        y: data.bitmaps[m][p].y + 0.5,
-        label: data.bitmaps[m][p].value
+        x: bitmaps[m][p].x - 0.5,
+        y: bitmaps[m][p].y + 0.5,
+        value: bitmaps[m][p].value
       })
     }
   }

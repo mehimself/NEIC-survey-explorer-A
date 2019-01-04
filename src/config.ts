@@ -1,4 +1,4 @@
-let data = {
+let config = {
   headers: ['Organization', 'Practices addressing ethical challenges', 'Practice supporting communication/publication', 'Share resources (which)', 'CD at MA-level', 'Part of Curriculum', 'General/specialized', 'Other', 'DRM part of existing or separate course', 'Developed own material', 'Who developed it', 'Willingness to share course material', 'Support for DM', 'Online DH training', 'Awareness of following initiative ', 'Willingness to collaborate on resources', 'CD: EDA', 'CD: Statistics', 'CD: Ethics', 'CD: Data rights and protection', 'CD: Interdisciplinary dialogue', 'Interest in HPC', 'Course integrated/separate', 'DRM – Department', 'DRM – Faculty'],
   cardinalities: [5, 2, 3, 5, 2, 2, 2, 2, 2, 2, 4, 4, 11, 5, 6, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5],
   testSet: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -122,37 +122,37 @@ let data = {
 };
 
 function mapResultsMean() {
-  data.packedVariableSets[0].forEach((v, i) => {
+  config.packedVariableSets[0].forEach((v, i) => {
     let sum = 0;
-    data.packedVariableSets.forEach(set => sum += set[i]);
-    data.meanResponseSet[i] = sum / data.packedVariableSets.length;
+    config.packedVariableSets.forEach(set => sum += set[i]);
+    config.meanResponseSet[i] = sum / config.packedVariableSets.length;
   });
 }
 
 function mapMeanResponseSet() {
-  data.meanBitMap = [];
-  for (let idx = 0; idx < data.pixelCoordinates.length; idx++) {
-    for (let p = 0; p < data.cardinalities[idx]; p++) {
+  config.meanBitMap = [];
+  for (let idx = 0; idx < config.pixelCoordinates.length; idx++) {
+    for (let p = 0; p < config.cardinalities[idx]; p++) {
       let pixel = {
-        x: data.pixelCoordinates[idx][p].x,
-        y: data.pixelCoordinates[idx][p].y,
-        value: data.meanResponseSet[idx]
+        x: config.pixelCoordinates[idx][p].x,
+        y: config.pixelCoordinates[idx][p].y,
+        value: config.meanResponseSet[idx]
       };
-      data.meanBitMap.push(pixel);
+      config.meanBitMap.push(pixel);
     }
   }
 }
 
 function mapResearchQuestions() {
-  data.researchQuestionFeeds.forEach((feed) => {
+  config.researchQuestionFeeds.forEach((feed) => {
     feed.map = [];
-    for (let idx = 0; idx < data.pixelCoordinates.length; idx++) {
-      const isActivePixel = feed.variableIndexes.indexOf(idx) >= 0;
-      const pixelValue = isActivePixel ? 1 : 0; //1-data.meanBitMap[idx].value;
-      for (let p = 0; p < data.cardinalities[idx]; p++) {
+    for (let idx = 0; idx < config.pixelCoordinates.length; idx++) {
+      const isActivePixel = feed.inputMask.indexOf(idx) >= 0;
+      const pixelValue = isActivePixel ? 1 : 0; //1 - data.meanBitMap[idx].value; // todo: review this weighting
+      for (let p = 0; p < config.cardinalities[idx]; p++) {
         let pixel = {
-          x: data.pixelCoordinates[idx][p].x,
-          y: data.pixelCoordinates[idx][p].y,
+          x: config.pixelCoordinates[idx][p].x,
+          y: config.pixelCoordinates[idx][p].y,
           value: pixelValue
         };
         feed.map.push(pixel);
@@ -162,26 +162,29 @@ function mapResearchQuestions() {
 }
 
 function mapVariablePixels() {
-  data.cardinalities.forEach((cardinality, v) => {
-    const variableOffset = data.variableOffsets[v];
+  config.cardinalities.forEach((cardinality, v) => {
+    const variableOffset = config.variableOffsets[v];
     const pixels = [];
     for (let c = 0; c < cardinality; c++) {
       const pixelOffset = variableOffset + c;
       const coordinates = {
-        x: pixelOffset % data.squareSize + 1,
-        y: Math.floor(pixelOffset / data.squareSize) + 1
+        x: pixelOffset % config.squareSize + 1,
+        y: Math.floor(pixelOffset / config.squareSize) + 1
       };
       pixels.push(coordinates);
     }
-    data.pixelCoordinates.push(pixels);
+    config.pixelCoordinates.push(pixels);
   })
 }
 
 function mapVariableOffsets() {
   let variableOffset = 0;
-  for (let i = 0; i < data.cardinalities.length; i++) {
-    data.variableOffsets.push(variableOffset);
-    variableOffset = data.variableOffsets[i] + data.cardinalities[i];
+  for (let i = 0; i < config.cardinalities.length; i++) {
+    config.variableOffsets.push(variableOffset);
+    variableOffset = config.variableOffsets[i] + config.cardinalities[i];
+  }
+}
+
   }
 }
 
@@ -206,13 +209,13 @@ function getProportionalPixelValue(cardinality, value, index) {
 function unpackVariables() {
   function mapSet(set, map) {
     set.forEach((value, v) => {
-      const cardinality = data.cardinalities[v];
+      const cardinality = config.cardinalities[v];
       const isUnpackable = [2, 5].indexOf(cardinality) >= 0;
       const isQualitativeValue = !isUnpackable;
       for (let c = 0; c < cardinality; c++) {
         let pixel = {
-          x: data.pixelCoordinates[v][c].x,
-          y: data.pixelCoordinates[v][c].y,
+          x: config.pixelCoordinates[v][c].x,
+          y: config.pixelCoordinates[v][c].y,
           value: 0
         };
         if (isUnpackable) {
@@ -224,69 +227,24 @@ function unpackVariables() {
       }
     })
   }
-
-  data.bitmaps = [];
-  data.packedVariableSets.forEach((set) => {
+  config.bitmaps = [];
+  config.packedVariableSets.forEach((set) => {
     let map = [];
-    data.bitmaps.push(map);
+    config.bitmaps.push(map);
     mapSet(set, map);
   });
-  data.contrastSets.forEach(contrast => {
+  config.contrastSets.forEach(contrast => {
     mapSet(contrast.set, contrast.map);
   });
 }
 
-export type twoD = {
   x: number,
-  y: number,
-  label: number
-};
-
-export function shuffle(array: any[]): void {
-  /**
-   * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
-   * library as the random generator.
-   */
-  let counter = array.length;
-  let temp = 0;
-  let index = 0;
-  // While there are elements in the array
-  while (counter > 0) {
-    // Pick a random index
-    index = Math.floor(Math.random() * counter);
-    // Decrease counter by 1
-    counter--;
-    // And swap the last element with it
-    temp = array[counter];
-    array[counter] = array[index];
-    array[index] = temp;
-  }
-}
-
-export function classifySurveyData(numSamples: number, noise: number): twoD[] {
-  let points: twoD[] = [];
-  for (let m = 0; m < data.bitmaps.length; m++) {
-    for (let p = 0; p < data.bitmaps[m].length; p++) {
-      points.push({
-        x: data.bitmaps[m][p].x - 0.5,
-        y: data.bitmaps[m][p].y + 0.5,
-        label: data.bitmaps[m][p].value
-      })
-    }
-  }
-  return points;
-}
-
-
 mapVariableOffsets();
 mapVariablePixels();
 unpackVariables();
 mapResultsMean();
 mapMeanResponseSet();
 mapResearchQuestions();
-export type Pixel = {
-  x: number,
-  y: number,
-  value: number
-};
-export default data;
+mapPixelMasks();
+
+export default config;
