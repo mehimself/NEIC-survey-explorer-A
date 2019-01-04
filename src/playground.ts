@@ -696,7 +696,7 @@ function getLoss(network: nn.Node[][], dataPoints: TwoD[]): number {
     let dataPoint = dataPoints[i];
     let input = constructInput(dataPoint.x, dataPoint.y);
     let output = nn.forwardProp(network, input);
-    loss += nn.Errors.SQUARE.error(output, dataPoint.label);
+    loss += nn.Errors.SQUARE.error(output, dataPoint.value);
   }
   return loss / dataPoints.length;
 }
@@ -764,7 +764,7 @@ function oneStep(): void {
   trainData.forEach((point, i) => {
     let input = constructInput(point.x, point.y);
     nn.forwardProp(network, input);
-    nn.backProp(network, point.label, nn.Errors.SQUARE);
+    nn.backProp(network, point.value, nn.Errors.SQUARE);
     if ((i + 1) % state.batchSize === 0) {
       nn.updateWeights(network, state.learningRate, state.regularizationRate);
     }

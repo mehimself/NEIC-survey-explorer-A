@@ -19,7 +19,7 @@ limitations under the License.
 export type TwoD = {
   x: number,
   y: number,
-  label: number
+  value: number
 };
 
 /**

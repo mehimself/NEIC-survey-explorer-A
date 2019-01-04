@@ -82,38 +82,47 @@ let config = {
     {
       label: "Sandbox",
       info: "Would you recommend the provision of a sandbox environment?",
-      variableIndexes: [
-        0, 10, 12, 20, 22
+      inputMask: [
+        0, 10, 20, 22, 24
       ],
+      outputs: [0, 10],
+      pixelMask: null,
       map: []
     }, {
       label: "B",
       info: '',
-      variableIndexes: [
+      inputMask: [
         1, 3, 5
       ],
+      outputs: [1],
+      pixelMask: null,
       map: []
     }, {
       label: "C",
       info: '',
-      variableIndexes: [
+      inputMask: [
         2, 13, 17
       ],
+      outputs: [2],
+      pixelMask: null,
       map: []
     }, {
       label: "D",
       info: '',
-      variableIndexes: [
-        8, 16, 34
+      inputMask: [
+        8, 16, 25
       ],
+      outputs: [4],
+      pixelMask: null,
       map: []
     }, {
       label: "E",
       info: '',
-      variableIndexes: [
-        7, 9, 19
-
+      inputMask: [
+        7, 9,
       ],
+      outputs: [6],
+      pixelMask: null,
       map: []
     }
   ],
@@ -185,7 +194,33 @@ function mapVariableOffsets() {
   }
 }
 
+function mapPixelMasks() {
+  function isPixelIncluded(x: number, y: number, pixels: any[]): boolean {
+    let found = false;
+    for (let c = 0; c < pixels.length; c++) { // variable pixel coordinates (c)
+      let variablePixel = pixels[c];
+      found = variablePixel.x === x + 1 && variablePixel.y === y + 1; // todo: stinks 0- and 1-based indexes
+      if (found) break
+    }
+    return found;
   }
+  config.researchQuestionFeeds.forEach(feed => {
+    feed.pixelMask = [];
+    for (let y = 0; y < config.squareSize; y++) { // row (y)
+      feed.pixelMask[y] = [];
+      for (let x = 0; x < config.squareSize; x++) { // column (x)
+        feed.pixelMask[y][x] = 0;
+        for (let v = 0; v < feed.outputs.length; v++) {
+          const variableIndex = feed.outputs[v];
+          feed.pixelMask[y][x] = isPixelIncluded(x, y, config.pixelCoordinates[variableIndex]) ? 1 : 0;
+          if (feed.pixelMask[y][x] === 1) {
+            break;
+          }
+        }
+      }
+    }
+    // console.log(feed.label, feed.pixelMask)
+  })
 }
 
 function getAbsolutePixelValue(cardinality, value, index) {
@@ -238,7 +273,6 @@ function unpackVariables() {
   });
 }
 
-  x: number,
 mapVariableOffsets();
 mapVariablePixels();
 unpackVariables();
