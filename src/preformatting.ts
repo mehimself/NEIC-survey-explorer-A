@@ -13,8 +13,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// modified by Max Roald Eckardt mr.eckardt@gmail.com mehimself@github.com
-
 /**
  * A two dimensional example: x and y coordinates with the label.
  */
@@ -45,33 +43,10 @@ export function shuffle(array: any[]): void {
   }
 }
 
-// todo: issue #11
 export type DataGenerator = (bitmaps: TwoD[][]) => TwoD[];
 
-// todo: issue #11
-/*
-  functions to determine variable cardinality, squareSize, mapping input array to heatmap, generating pixelmap, ...
-*/
-
-export function getTrainingData(bitmaps: TwoD[][]):
+export function classifySurveyData(bitmaps: TwoD[][]):
   TwoD[] {
-  let points: TwoD[] = [];
-  // todo: issue #11
-  for (let m = 0; m < bitmaps.length; m++) {
-    for (let p = 0; p < bitmaps[m].length; p++) {
-      points.push({
-        x: bitmaps[m][p].x - 0.5,
-        y: bitmaps[m][p].y + 0.5,
-        value: bitmaps[m][p].value
-      })
-    }
-  }
-  return points;
-}
-
-export function getTestData(bitmaps: TwoD[][]):
-  TwoD[] {
-  // todo: issue #11
   let points: TwoD[] = [];
   for (let m = 0; m < bitmaps.length; m++) {
     for (let p = 0; p < bitmaps[m].length; p++) {

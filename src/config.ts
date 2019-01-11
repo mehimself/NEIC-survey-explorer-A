@@ -75,7 +75,7 @@ let config = {
     [-0.5, -1, 1, 0.5, -1, 1, -1, -1, 1, -1, 0.33333333333333326, -1, -0.19999999999999996, 0, -0.6, 1, -1, -1, -1, -1, -1, 1, 1, -0.5370051222355319, -0.028387673608443964]
   ],
   meanResponseSet: [],
-  meanBitMap: [], // todo: remove
+  meanBitMap: [],
   pixelCoordinates: [],
   bitmaps: [],
   researchQuestionFeeds: [
@@ -130,7 +130,7 @@ let config = {
   variableOffsets: []
 };
 
-function mapResultsMean() { // todo: remove
+function mapResultsMean() {
   config.packedVariableSets[0].forEach((v, i) => {
     let sum = 0;
     config.packedVariableSets.forEach(set => sum += set[i]);

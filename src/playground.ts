@@ -13,8 +13,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// modified by Max Roald Eckardt mr.eckardt@gmail.com mehimself@github.com
-
 import * as nn from "./nn";
 import config from './config';
 import {HeatMap, reduceMatrix} from "./heatmap";
@@ -892,17 +890,11 @@ function generateData(firstTime = false) {
   let generator = state.dataset;
   let data = generator(config.bitmaps);
   shuffle(data);
-  if (!state.trainData) {
-    console.log('splitting test data for training');
-    let splitIndex = Math.floor(data.length * state.percTrainData / 100);
-    trainData = data.slice(0, splitIndex);
-    testData = data.slice(splitIndex);
-  } else {
-    console.log('training and testing network');
-    // todo: #8
-
-    testData = data;
-  }
+  // todo: #8
+  let splitIndex = Math.floor(data.length * state.percTrainData / 100);
+  trainData = data.slice(0, splitIndex);
+  // todo: #9
+  testData = data.slice(splitIndex);
   heatMap.updatePoints(trainData);
 }
 

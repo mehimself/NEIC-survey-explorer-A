@@ -13,8 +13,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// modified by Max Roald Eckardt mr.eckardt@gmail.com mehimself@github.com
-
 import * as nn from "./nn";
 import * as dataset from "./preformatting";
 
@@ -33,14 +31,9 @@ export let regularizations: {[key: string]: nn.RegularizationFunction} = {
   "L2": nn.RegularizationFunction.L2
 };
 
-/** A map between trainData names and functions that generate classification data. */
-export let trainData: { [key: string]: dataset.DataGenerator } = {
-  "survey": dataset.getTrainingData,
-};
-
-/** A map between testData names and functions that generate classification data. */
-export let testData: {[key: string]: dataset.DataGenerator} = {
-  "survey": dataset.getTestData,
+/** A map between dataset names and functions that generate classification data. */
+export let datasets: {[key: string]: dataset.DataGenerator} = {
+  "survey": dataset.classifySurveyData,
 };
 
 export function getKeyFromValue(obj: any, value: any): string {
@@ -89,8 +82,7 @@ export class State {
     {name: "activation", type: Type.OBJECT, keyMap: activations},
     {name: "regularization", type: Type.OBJECT, keyMap: regularizations},
     {name: "batchSize", type: Type.NUMBER},
-    {name: "testData", type: Type.OBJECT, keyMap: testData},
-    {name: "trainData", type: Type.OBJECT, keyMap: trainData},
+    {name: "dataset", type: Type.OBJECT, keyMap: datasets},
     {name: "learningRate", type: Type.NUMBER},
     {name: "regularizationRate", type: Type.NUMBER},
     {name: "noise", type: Type.NUMBER},
@@ -137,7 +129,7 @@ export class State {
   D = false;
   E = false;
   // todo: set up default data source here
-  testData: dataset.DataGenerator = dataset.classifySurveyData;
+  dataset: dataset.DataGenerator = dataset.classifySurveyData;
   seed: string;
 
   /**
