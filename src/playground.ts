@@ -19,7 +19,7 @@ import * as nn from "./nn";
 import config from './config';
 import {HeatMap, reduceMatrix} from "./heatmap";
 import {activations, colorRange, getKeyFromValue, regularizations, State} from "./state";
-import {shuffle, TwoD} from "./processing";
+import {shuffle, getSquareSize, getTestData, getTrainData, getFeedPixelValue, TwoD, generateTrainData} from "./processing";
 import {AppendingLineChart} from "./linechart";
 import * as d3 from 'd3';
 
@@ -56,23 +56,9 @@ interface InputFeature {
   label?: string;
 }
 
-function feedBitMap(feed: any, x: number, y: number) {
-  let value = 0;
-  for (let p = 0; p < feed.map.length; p++) {
-    const pixel = feed.map[p];
-    const sameRow = pixel.y - 1 <= y && y < pixel.y;
-    const sameCol = pixel.x - 1 <= x && x < pixel.x;
-    if (sameRow && sameCol) {
-      value = pixel.value;
-      break;
-    }
-  }
-  return value;
-}
-
 let INPUTS: { [name: string]: InputFeature } = {};
-config.feeds.forEach(feed => {
-  INPUTS[feed.label] = {f: (x, y) => feedBitMap(feed, x, y), label: feed.label}
+config.feeds.forEach((feed, index) => {
+  INPUTS[feed.label] = {f: (x, y) => getFeedPixelValue(index, x, y), label: feed.label}
 });
 
 class Player {
@@ -128,8 +114,10 @@ let state = State.deserializeState();
 let boundary: { [id: string]: number[][] } = {};
 let mask = [];
 let selectedNodeId: string = null;
+
 // Plot the heatmaps
-let xDomain: [number, number] = [0, config.squareSize];
+const squareSize = getSquareSize();
+let xDomain: [number, number] = [0, squareSize];
 let heatMap = new HeatMap(300, DENSITY, xDomain, xDomain, d3.select("#heatmap"), {showAxes: true});
 let linkWidthScale = d3.scale.linear()
   .domain([0, 5])
@@ -150,6 +138,7 @@ let lineChart = new AppendingLineChart(d3.select("#linechart"),
   ["#777", "black"]);
 
 function makeGUI() {
+  if (config.debug.names) console.log('playground.makeGUI');
   d3.select("#reset-button").on("click", () => {
     reset();
     d3.select("#play-pause-button");
@@ -229,6 +218,7 @@ function makeGUI() {
 }
 
 function renderColorRange() {
+  if (config.debug.names) console.log('playground.renderColorRange');
   let x = d3.scale.linear()
     .domain([-1, 1])
     .range([0, 144]);
@@ -244,12 +234,14 @@ function renderColorRange() {
 }
 
 function updateBiasesUI(network: nn.Node[][]) {
+  if (config.debug.names) console.log('playground.updateBiasesUI');
   nn.forEachNode(network, true, node => {
     d3.select(`rect#bias-${node.id}`).style("fill", colorScale(node.bias));
   });
 }
 
 function updateWeightsUI(network: nn.Node[][], container) {
+  if (config.debug.names) console.log('playground.updateWeightsUI');
   for (let layerIdx = 1; layerIdx < network.length; layerIdx++) {
     let currentLayer = network[layerIdx];
     // Update all the nodes in this layer.
@@ -270,6 +262,7 @@ function updateWeightsUI(network: nn.Node[][], container) {
 }
 
 function drawNode(cx: number, cy: number, nodeId: string, isInput: boolean, container, node?: nn.Node) {
+  if (config.debug.names) console.log('playground.drawNode');
   let x = cx - RECT_SIZE / 2;
   let y = cy - RECT_SIZE / 2;
 
@@ -404,6 +397,7 @@ function drawNode(cx: number, cy: number, nodeId: string, isInput: boolean, cont
 }
 
 function drawNetwork(network: nn.Node[][]): void {
+  if (config.debug.names) console.log('playground.drawNetwork');
   let svg = d3.select("#svg");
   // Remove all svg elements.
   svg.select("g.core").remove();
@@ -524,11 +518,13 @@ function drawNetwork(network: nn.Node[][]): void {
 }
 
 function getRelativeHeight(selection) {
+  if (config.debug.names) console.log('playground.getRelativeHeight');
   let node = selection.node() as HTMLAnchorElement;
   return node.offsetHeight + node.offsetTop;
 }
 
 function addPlusMinusControl(x: number, layerIdx: number) {
+  if (config.debug.names) console.log('playground.addPlusMinusControl');
   let div = d3.select("#network").append("div")
     .classed("plus-minus-neurons", true)
     .style("left", `${x - 10}px`);
@@ -572,6 +568,7 @@ function addPlusMinusControl(x: number, layerIdx: number) {
 }
 
 function updateHoverCard(type: HoverType, nodeOrLink?: nn.Node | nn.Link, coordinates?: [number, number]) {
+  if (config.debug.names) console.log('playground.updateHoverCard');
   let hovercard = d3.select("#hovercard");
   if (type == null) {
     hovercard.style("display", "none");
@@ -621,6 +618,8 @@ function drawLink(
   input: nn.Link, node2coord: { [id: string]: { cx: number, cy: number } },
   network: nn.Node[][], container,
   isFirst: boolean, index: number, length: number) {
+  if (config.debug.names) console.log('playground.drawLink');
+
   let line = container.insert("path", ":first-child");
   let source = node2coord[input.source.id];
   let dest = node2coord[input.dest.id];
@@ -655,28 +654,6 @@ function drawLink(
   return line;
 }
 
-function compileOutputMask() {
-  function getFeedByName(name: string) {
-    let feed;
-    for (let f = 0; f < config.feeds.length; f++) {
-      if (config.feeds[f].label === name) {
-        feed = config.feeds[f];
-        break;
-      }
-    }
-    return feed;
-  }
-  mask = Array(config.squareSize);
-  for (let nodeId in INPUTS) {
-    let feed = getFeedByName(nodeId);
-    for (let y = 0; y < config.squareSize; y++) {
-      if (mask[y] === undefined) mask[y] = Array(config.squareSize);
-      for (let x = 0; x < config.squareSize; x++) {
-        mask[y][x] = mask[y][x] || feed.pixelMask[y][x];
-      }
-    }
-  }
-}
 /**
  * Given a neural network, it asks the network for the output (prediction)
  * of every node in the network using feeds sampled on a square grid.
@@ -684,6 +661,7 @@ function compileOutputMask() {
  * matrix of the outputs of the network for each input in the grid respectively.
  */
 function updateDecisionBoundary(network: nn.Node[][], firstTime: boolean) {
+  if (config.debug.names) console.log('playground.updateDecisionBoundary');
   let xScale = d3.scale.linear().domain([0, DENSITY - 1]).range(xDomain);
   let yScale = d3.scale.linear().domain([DENSITY - 1, 0]).range(xDomain);
   if (firstTime) {
@@ -694,7 +672,7 @@ function updateDecisionBoundary(network: nn.Node[][], firstTime: boolean) {
     for (let nodeId in INPUTS) {
       boundary[nodeId] = new Array(DENSITY);
     }
-    compileOutputMask();
+    // compileOutputMask();
   }
 
   let i = 0, j = 0;
@@ -737,6 +715,7 @@ function updateDecisionBoundary(network: nn.Node[][], firstTime: boolean) {
 }
 
 function getLoss(network: nn.Node[][], dataPoints: TwoD[]): number {
+  if (config.debug.names) console.log('playground.getLoss');
   let loss = 0;
   for (let i = 0; i < dataPoints.length; i++) {
     let dataPoint = dataPoints[i];
@@ -748,6 +727,7 @@ function getLoss(network: nn.Node[][], dataPoints: TwoD[]): number {
 }
 
 function updateUI(firstStep = false) {
+  if (config.debug.names) console.log('playground.updateUI');
   // Update the links visually.
   updateWeightsUI(network, d3.select("g.core"));
   // Update the bias values visually.
@@ -800,12 +780,15 @@ function updateUI(firstStep = false) {
 
   // Update loss and iteration number.
   d3.select("#loss-train").text(humanReadable(lossTrain));
+  console.log(lossTrain)
   d3.select("#loss-test").text(humanReadable(lossTest));
+  console.log(lossTest)
   d3.select("#iter-number").text(addCommas(zeroPad(iter)));
   lineChart.addDataPoint([lossTrain, lossTest]);
 }
 
 function constructInputIds(): string[] {
+  if (config.debug.names) console.log('playground.constructInputIds');
   let result: string[] = [];
   for (let inputName in INPUTS) {
     if (state[inputName]) {
@@ -816,6 +799,7 @@ function constructInputIds(): string[] {
 }
 
 function constructInput(x: number, y: number): number[] {
+  if (config.debug.names) console.log('playground.constructInput');
   let input: number[] = [];
   for (let inputName in INPUTS) {
     if (state[inputName]) {
@@ -842,6 +826,7 @@ function oneStep(): void {
 }
 
 function reset() {
+  if (config.debug.names) console.log('playground.reset');
   lineChart.reset();
   state.serialize();
   player.pause();
@@ -851,6 +836,7 @@ function reset() {
   // Make a simple network.
   iter = 0;
   let numInputs = constructInput(0, 0).length;
+  generateTrainData();
   let shape = [numInputs].concat(state.networkShape).concat([1]);
   let outputActivation = nn.Activations.RELU; // good alternative: tanh
   network = nn.buildNetwork(shape, state.activation, outputActivation, state.regularization, constructInputIds(), state.initZero);
@@ -858,52 +844,31 @@ function reset() {
   lossTest = getLoss(network, testData);
   drawNetwork(network);
   updateUI(true);
-  drawContrastModels();
-}
-
-function drawContrastModels() {
-  function renderThumbnail(canvas, pixels) {
-    let w = 150;
-    let h = 150;
-    canvas.setAttribute("width", w);
-    canvas.setAttribute("height", h);
-    let context = canvas.getContext("2d");
-    pixels.forEach(function (p) {
-      context.fillStyle = colorScale(p.value);
-      context.fillRect((w * p.x) / 10 - 15, h - (h * (p.y) / 10), 15, 15);
-    });
-    d3.select(canvas.parentNode).style("display", null);
-  }
-
-  renderThumbnail(d3.select("#heatmap_results canvas")[0][0], config.meanBitMap);
-  renderThumbnail(d3.select("#heatmap_bland canvas")[0][0], config.contrastSets[0].map);
-  renderThumbnail(d3.select("#heatmap_nightmare canvas")[0][0], config.contrastSets[1].map);
-  renderThumbnail(d3.select("#heatmap_yesWeCan canvas")[0][0], config.contrastSets[2].map);
-
 }
 
 function generateData(firstTime = false) {
+  if (config.debug.names) console.log('playground.generateData');
   if (!firstTime) {
     // Change the seed.
     state.seed = Math.random().toFixed(5);
     state.serialize();
   }
   Math.seedrandom(state.seed);
-  let generator = state.dataset;
-  let data = generator(config.bitmaps);
-  shuffle(data);
-  if (!state.trainData) {
+  let testData = getTestData();
+  let trainData = getTrainData();
+  if (!trainData.length) {
     console.log('splitting test data for training');
-    let splitIndex = Math.floor(data.length * state.percTrainData / 100);
-    trainData = data.slice(0, splitIndex);
-    testData = data.slice(splitIndex);
-  } else {
-    console.log('training and testing network');
-    // todo: #8
+    shuffle(testData);
+    let splitIndex = Math.floor(testData.length * state.percTrainData / 100);
+    trainData = testData.slice(0, splitIndex);
+    testData = testData.slice(splitIndex);
 
-    testData = data;
+    heatMap.updatePoints(trainData);
+  } else {
+    console.log('training and testing network', testData);
+    // todo: #8
+    heatMap.updatePoints(testData);
   }
-  heatMap.updatePoints(trainData);
 }
 
 let parametersChanged = false;

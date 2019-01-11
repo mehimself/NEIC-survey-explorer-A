@@ -5,9 +5,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/heatmap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/heatmap.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nn.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/nn.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/playground.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/playground.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/preformatting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/processing.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/processing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/processing.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/state.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -21,62 +20,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/playground.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="835">
-              <caret line="903" column="4" selection-start-line="903" selection-start-column="4" selection-end-line="903" selection-end-column="4" />
+            <state relative-caret-position="373">
+              <caret line="682" column="9" lean-forward="true" selection-start-line="682" selection-start-column="9" selection-end-line="682" selection-end-column="9" />
               <folding>
-                <element signature="e#658#685#0" expanded="true" />
-                <element signature="e#1112#1220#0" />
-                <element signature="e#1252#1437#0" />
-                <element signature="e#1538#1571#0" />
-                <element signature="e#1596#1656#0" />
-                <element signature="e#1710#2049#0" />
-                <element signature="e#2606#3540#0" />
-                <element signature="e#4952#7482#0" />
-                <element signature="e#7512#7868#0" />
-                <element signature="e#7916#8043#0" />
-                <element signature="e#8103#8749#0" />
-                <element signature="e#7927#11365#0" />
-                <element signature="e#12021#16310#0" />
-                <element signature="e#16350#16450#0" />
-                <element signature="e#16510#17668#0" />
-                <element signature="e#17776#19156#0" />
-                <element signature="e#19341#20305#0" />
-                <element signature="e#22044#22353#0" />
-                <element signature="e#22392#23600#0" />
-                <element signature="e#23641#23792#0" />
-                <element signature="e#23850#24014#0" />
-                <element signature="e#24041#24488#0" />
-                <element signature="e#24985#25726#0" />
-                <element signature="e#27432#28262#0" />
+                <element signature="e#734#761#0" expanded="true" />
+                <element signature="e#1215#1323#0" />
+                <element signature="e#1356#1551#0" />
+                <element signature="e#1922#2856#0" />
+                <element signature="e#5946#6284#0" />
+                <element signature="e#6332#6459#0" />
+                <element signature="e#6519#7153#0" />
+                <element signature="e#7258#10918#0" />
+                <element signature="e#10969#15240#0" />
+                <element signature="e#15280#15380#0" />
+                <element signature="e#15440#16550#0" />
+                <element signature="e#16658#18039#0" />
+                <element signature="e#18222#19184#0" />
+                <element signature="e#21783#22092#0" />
+                <element signature="e#22479#22558#0" />
+                <element signature="e#22644#22709#0" />
+                <element signature="e#22927#23308#0" />
+                <element signature="e#23350#23420#0" />
+                <element signature="e#23462#23519#0" />
+                <element signature="e#23565#23595#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/state.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="37" column="36" selection-start-line="37" selection-start-column="36" selection-end-line="37" selection-end-column="36" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#660#687#0" expanded="true" />
-                <element signature="n#!!block;n#getKeyFromValue#0" />
-                <element signature="n#!!block;n#deserializeState#0;n#State#0" />
-                <element signature="n#!!block;n#serialize#0;n#State#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/config.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -84,15 +54,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/processing.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="32" lean-forward="true" selection-start-column="32" selection-end-column="32" />
+            <state relative-caret-position="639">
+              <caret line="214" column="68" selection-start-line="214" selection-start-column="68" selection-end-line="214" selection-end-column="68" />
               <folding>
-                <element signature="n#!!block;n#mapVariableOffsets#0" />
-                <element signature="n#!!block;n#mapVariablePixels#0" />
-                <element signature="n#!!block;n#mapTestDataToPixels#0" />
-                <element signature="n#!!block;n#mapPixelMasks#0" />
-                <element signature="n#!!block;n#getProportionalPixelValue#0" />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/config.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="78">
+              <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -109,20 +84,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.train circle</find>
-      <find>stroke</find>
-      <find>color</find>
-      <find>seedrandom</find>
-      <find>2D</find>
-      <find>Point</find>
-      <find>Example2D</find>
-      <find>Example2</find>
-      <find>contrast</find>
-      <find>console.log</find>
-      <find>console.lo</find>
-      <find>datasets</find>
-      <find>\.value</find>
-      <find>label</find>
       <find>\.label</find>
       <find>shuffle</find>
       <find>DataGenerator</find>
@@ -137,15 +98,30 @@
       <find>boundary\[[^\]]+\] =</find>
       <find>heatMap_bland</find>
       <find>xDomain</find>
-      <find>trainData</find>
       <find>traindata</find>
+      <find>trainBitmaps</find>
+      <find>mean</find>
+      <find>trainData</find>
+      <find>INPUTS</find>
+      <find>feed.map</find>
+      <find>train</find>
+      <find>gettrainingdata</find>
+      <find>generateTrain</find>
+      <find>8</find>
+      <find>lineChart</find>
+      <find>lossTest</find>
+      <find>trainBitmaps =</find>
+      <find>generateTrainD</find>
+      <find>getLoss</find>
+      <find>debug.names</find>
     </findStrings>
     <replaceStrings>
       <replace>'$1': 0</replace>
       <replace>$1'$2': 0,</replace>
       <replace>TwoD</replace>
-      <replace>testData</replace>
       <replace>config</replace>
+      <replace>testData</replace>
+      <replace>config.debug.names</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src</dir>
@@ -170,12 +146,12 @@
         <option value="$PROJECT_DIR$/src/dataset.ts" />
         <option value="$PROJECT_DIR$/dist/bundle.js" />
         <option value="$PROJECT_DIR$/src/data.ts" />
-        <option value="$PROJECT_DIR$/src/heatmap.ts" />
-        <option value="$PROJECT_DIR$/src/playground.ts" />
-        <option value="$PROJECT_DIR$/src/state.ts" />
         <option value="$PROJECT_DIR$/src/preformatting.ts" />
-        <option value="$PROJECT_DIR$/src/processing.ts" />
+        <option value="$PROJECT_DIR$/src/heatmap.ts" />
+        <option value="$PROJECT_DIR$/src/state.ts" />
         <option value="$PROJECT_DIR$/src/config.ts" />
+        <option value="$PROJECT_DIR$/src/processing.ts" />
+        <option value="$PROJECT_DIR$/src/playground.ts" />
       </list>
     </option>
   </component>
@@ -185,8 +161,9 @@
     <annotation-enable>false</annotation-enable>
     <other-services-enabled>false</other-services-enabled>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="y" value="-1692" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-801" />
+    <option name="y" value="-2046" />
     <option name="width" value="1502" />
     <option name="height" value="1692" />
   </component>
@@ -264,7 +241,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
+    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="typescript-compiler-editor-notification" value="false" />
   </component>
@@ -305,11 +282,14 @@
       <workItem from="1542221202647" duration="209000" />
       <workItem from="1546370960487" duration="67000" />
       <workItem from="1546431413094" duration="3551000" />
+      <workItem from="1546779369056" duration="861000" />
+      <workItem from="1546782761214" duration="6105000" />
+      <workItem from="1547025006471" duration="19340000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192850000" />
+    <option name="totallyTimeSpent" value="226647000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -321,10 +301,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-1692" width="1502" height="1692" extended-state="0" />
+    <frame x="-801" y="-2046" width="1502" height="1692" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15665092" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.32883188" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -340,7 +320,7 @@
       <window_info anchor="bottom" id="Serial Monitor" order="9" />
       <window_info anchor="bottom" id="TypeScript" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.16337855" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="12" visible="true" weight="0.213125" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -425,28 +405,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="168" column="49" selection-start-line="168" selection-start-column="49" selection-end-line="168" selection-end-column="49" />
-          <folding>
-            <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#5;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#rect#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/seedrandom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="78">
@@ -461,28 +419,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="936">
-          <caret line="184" column="13" selection-start-line="184" selection-start-column="13" selection-end-line="184" selection-end-column="13" />
-          <folding>
-            <element signature="e#658#695#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#HeatMap#0" />
-            <element signature="e#1721#1891#0" />
-            <element signature="e#2596#2629#0" />
-            <element signature="e#3769#4256#0" />
-            <element signature="n#!!block;n#updateTestPoints#0;n#HeatMap#0" />
-            <element signature="n#!!block;n#updatePoints#0;n#HeatMap#0" />
-            <element signature="n#!!block;n#updateCircles#0;n#HeatMap#0" />
-            <element signature="n#!!block;n#reduceMatrix#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/state.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="37" column="36" selection-start-line="37" selection-start-column="36" selection-end-line="37" selection-end-column="36" />
+        <state relative-caret-position="704">
+          <caret line="91" column="20" selection-start-line="91" selection-start-column="12" selection-end-line="91" selection-end-column="20" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#660#687#0" expanded="true" />
@@ -493,57 +433,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/playground.ts">
+    <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="835">
-          <caret line="903" column="4" selection-start-line="903" selection-start-column="4" selection-end-line="903" selection-end-column="4" />
+        <state relative-caret-position="741">
+          <caret line="200" column="61" selection-start-line="200" selection-start-column="55" selection-end-line="200" selection-end-column="61" />
           <folding>
-            <element signature="e#658#685#0" expanded="true" />
-            <element signature="e#1112#1220#0" />
-            <element signature="e#1252#1437#0" />
-            <element signature="e#1538#1571#0" />
-            <element signature="e#1596#1656#0" />
-            <element signature="e#1710#2049#0" />
-            <element signature="e#2606#3540#0" />
-            <element signature="e#4952#7482#0" />
-            <element signature="e#7512#7868#0" />
-            <element signature="e#7916#8043#0" />
-            <element signature="e#8103#8749#0" />
-            <element signature="e#7927#11365#0" />
-            <element signature="e#12021#16310#0" />
-            <element signature="e#16350#16450#0" />
-            <element signature="e#16510#17668#0" />
-            <element signature="e#17776#19156#0" />
-            <element signature="e#19341#20305#0" />
-            <element signature="e#22044#22353#0" />
-            <element signature="e#22392#23600#0" />
-            <element signature="e#23641#23792#0" />
-            <element signature="e#23850#24014#0" />
-            <element signature="e#24041#24488#0" />
-            <element signature="e#24985#25726#0" />
-            <element signature="e#27432#28262#0" />
+            <element signature="e#658#692#0" expanded="true" />
+            <element signature="n#!!block;n#constructor#0;n#HeatMap#0" />
+            <element signature="n#!!block;n#updateTestPoints#0;n#HeatMap#0" />
+            <element signature="n#!!block;n#updatePoints#0;n#HeatMap#0" />
+            <element signature="n#!!block;n#updateBackground#0;n#HeatMap#0" />
+            <element signature="n#!!block;n#reduceMatrix#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/processing.ts">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="32" lean-forward="true" selection-start-column="32" selection-end-column="32" />
+        <state relative-caret-position="671">
+          <caret line="161" column="26" selection-start-line="161" selection-start-column="17" selection-end-line="161" selection-end-column="26" />
           <folding>
-            <element signature="n#!!block;n#mapVariableOffsets#0" />
-            <element signature="n#!!block;n#mapVariablePixels#0" />
-            <element signature="n#!!block;n#mapTestDataToPixels#0" />
-            <element signature="n#!!block;n#mapPixelMasks#0" />
-            <element signature="n#!!block;n#getProportionalPixelValue#0" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#5;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#rect#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/config.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+        <state relative-caret-position="78">
+          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/processing.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="639">
+          <caret line="214" column="68" selection-start-line="214" selection-start-column="68" selection-end-line="214" selection-end-column="68" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/playground.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="682" column="9" lean-forward="true" selection-start-line="682" selection-start-column="9" selection-end-line="682" selection-end-column="9" />
+          <folding>
+            <element signature="e#734#761#0" expanded="true" />
+            <element signature="e#1215#1323#0" />
+            <element signature="e#1356#1551#0" />
+            <element signature="e#1922#2856#0" />
+            <element signature="e#5946#6284#0" />
+            <element signature="e#6332#6459#0" />
+            <element signature="e#6519#7153#0" />
+            <element signature="e#7258#10918#0" />
+            <element signature="e#10969#15240#0" />
+            <element signature="e#15280#15380#0" />
+            <element signature="e#15440#16550#0" />
+            <element signature="e#16658#18039#0" />
+            <element signature="e#18222#19184#0" />
+            <element signature="e#21783#22092#0" />
+            <element signature="e#22479#22558#0" />
+            <element signature="e#22644#22709#0" />
+            <element signature="e#22927#23308#0" />
+            <element signature="e#23350#23420#0" />
+            <element signature="e#23462#23519#0" />
+            <element signature="e#23565#23595#0" />
+          </folding>
         </state>
       </provider>
     </entry>
