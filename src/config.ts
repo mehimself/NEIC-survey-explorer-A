@@ -3,18 +3,14 @@ let config = {
     feeds:
       variable cardinalities
       variable value proportion (-1 - 1)
+      (future feature: value range)
+      (future feature: color range)
   */
-  debug: {names: true},
   headers: ['Organization', 'Practices addressing ethical challenges', 'Practice supporting communication/publication', 'Share resources (which)', 'CD at MA-level', 'Part of Curriculum', 'General/specialized', 'Other', 'DRM part of existing or separate course', 'Developed own material', 'Who developed it', 'Willingness to share course material', 'Support for DM', 'Online DH training', 'Awareness of following initiative ', 'Willingness to collaborate on resources', 'CD: EDA', 'CD: Statistics', 'CD: Ethics', 'CD: Data rights and protection', 'CD: Interdisciplinary dialogue', 'Interest in HPC', 'Course integrated/separate', 'DRM – Department', 'DRM – Faculty'],
   cardinalities: [5, 2, 3, 5, 2, 2, 2, 2, 2, 2, 4, 4, 11, 5, 6, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5],
-  /**
-   *  testData and trainData expects an array of arrays with values ranging from -1 to 1
-   */
   trainData: [
     // todo: issue #9
-
   ],
-  // todo: issue #13
   testData: [
     [0, -1, 0, -0.5, -1, -1, 1, -1, -1, 1, -0.33333333333333337, 1, -0.4, 1, 0.19999999999999996, -1, -1, -1, -1, -1, -1, 1, -1, -0.39274254380873475, -0.11071002890982251],
     [0, -1, -1, 0.5, 1, 1, 1, -1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, -1, 1, -1, 1, -1, -0.8103938030698714, 0.01655631227780585],
@@ -70,55 +66,58 @@ let config = {
     [1, -1, 0, -1, -1, 1, 1, 1, 1, -1, 1, -1, 0, 1, 0.6000000000000001, 1, 1, 1, -1, 1, -1, -1, 1, -0.3501631540756531, 0.17654032249266405],
     [-0.5, -1, 1, 0.5, -1, 1, -1, -1, 1, -1, 0.33333333333333326, -1, -0.19999999999999996, 0, -0.6, 1, -1, -1, -1, -1, -1, 1, 1, -0.5370051222355319, -0.028387673608443964]
   ],
+  variablePixels: [],
+  bitmaps: [],
   feeds: [
     {
       label: "Sandbox",
       info: "Would you recommend the provision of a sandbox environment?",
-      variables: [
-        1
+      inputMask: [
+        0, 10, 20, 22, 24
       ],
-      bias: [ // variable indexes to be mapped to input variable by training
-        6, 18, 25
-      ],
-    },
-    {
+      outputs: [0, 10],
+      pixelMask: null,
+      map: []
+    }, {
       label: "B",
       info: '',
-      variables: [
-        13
+      inputMask: [
+        1, 3, 5
       ],
-      bias: [
-        14, 19, 21
-      ],
+      outputs: [1],
+      pixelMask: null,
+      map: []
     }, {
       label: "C",
       info: '',
-      variables: [
-        15
+      inputMask: [
+        2, 13, 17
       ],
-      bias: [
-        16, 21, 24
-      ],
+      outputs: [2],
+      pixelMask: null,
+      map: []
     }, {
       label: "D",
       info: '',
-      variables: [
-        16
+      inputMask: [
+        8, 16, 25
       ],
-      bias: [
-        4, 6, 18
-      ],
+      outputs: [4],
+      pixelMask: null,
+      map: []
     }, {
       label: "E",
       info: '',
-      variables: [
-        22
+      inputMask: [
+        7, 9,
       ],
-      bias: [
-        0, 1, 13
-      ],
+      outputs: [6],
+      pixelMask: null,
+      map: []
     }
   ],
+  squareSize: 10,
+  variableOffsets: []
 };
 
 export default config;

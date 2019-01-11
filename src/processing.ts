@@ -17,30 +17,18 @@ limitations under the License.
 
 
 import config from "./config";
-
-const maxSquareSize = 100;
-const variableCount = config.testData[0].length;
 let variablePixels = [];
 let variableOffsets = [];
-let squareSize;
-
-let trainBitmaps = [];
-let testBitmaps = [];
-
-let feedBitmaps = [];
+let squareSize = 5;
+let bitmaps = [];
 
 // todo: issue #12
 function determineSquareSize () {
-  if (config.debug.names) console.log('processing.determineSquareSize');
-  let size = 1;
-  for (; size < maxSquareSize; size++) {
-    if (Math.pow(size, 2) <= variableCount) break;
-  }
-  squareSize = size;
+  let square = 1;
+  squareSize = square;
 }
 
 function mapVariableOffsets() {
-  if (config.debug.names) console.log('processing.mapVariableOffsets');
   let variableOffset = 0;
   for (let i = 0; i < config.cardinalities.length; i++) {
     variableOffsets.push(variableOffset);
@@ -49,7 +37,6 @@ function mapVariableOffsets() {
 }
 
 function mapVariablePixels() {
-  if (config.debug.names) console.log('processing.mapVariablePixels');
   config.cardinalities.forEach((cardinality, v) => {
     const variableOffset = variableOffsets[v];
     const pixels = [];
@@ -66,12 +53,9 @@ function mapVariablePixels() {
 }
 
 function unpackVariables() {
-  if (config.debug.names) console.log('processing.unpackVariables');
-
-  function generateBitMap(set, map) {
+  function mapSet(set, map) {
     set.forEach((value, v) => {
       const cardinality = config.cardinalities[v];
-      let pixelSet = []
       for (let c = 0; c < cardinality; c++) {
         let pixel = {
           x: variablePixels[v][c].x,
@@ -79,41 +63,64 @@ function unpackVariables() {
           value: 0
         };
         pixel.value = getProportionalPixelValue(cardinality, value, c);
-        pixelSet.push(pixel);
+        map.push(pixel);
       }
-      map.push(pixelSet);
     })
   }
 
-  config.trainData.forEach((set) => {
-    let map = [];
-    trainBitmaps.push(map);
-    generateBitMap(set, map);
-  });
-  testBitmaps = [];
+  bitmaps = [];
   config.testData.forEach((set) => {
     let map = [];
-    testBitmaps.push(map);
-    generateBitMap(set, map);
+    bitmaps.push(map);
+    mapSet(set, map);
   });
 }
 
 function mapTestDataToPixels() {
-  if (config.debug.names) console.log('processing.mapTestDataToPixels');
-  config.feeds.forEach((feed, index) => {
-    feedBitmaps[index] = [];
+  config.feeds.forEach((feed) => {
+    feed.map = [];
     for (let idx = 0; idx < variablePixels.length; idx++) {
-      const isActivePixel = feed.variables.indexOf(idx) >= 0;
-      const pixelValue = isActivePixel ? 1 : 0;
+      const isActivePixel = feed.inputMask.indexOf(idx) >= 0;
+      const pixelValue = isActivePixel ? 1 : 0; //1 - data.meanBitMap[idx].value; // todo: review this weighting
       for (let p = 0; p < config.cardinalities[idx]; p++) {
         let pixel = {
           x: variablePixels[idx][p].x,
           y: variablePixels[idx][p].y,
           value: pixelValue
         };
-        feedBitmaps[index].push(pixel);
+        feed.map.push(pixel);
       }
     }
+  })
+}
+
+function mapPixelMasks() {
+  function isPixelInOutput(x: number, y: number, pixels: any[]): boolean {
+    let found = false;
+    for (let c = 0; c < pixels.length; c++) { // variable pixel coordinates (c)
+      let variablePixel = pixels[c];
+      found = variablePixel.x === x + 1 && variablePixel.y === y + 1; // todo: stinks 0- and 1-based indexes
+      if (found) break
+    }
+    return found;
+  }
+
+  config.feeds.forEach(feed => {
+    feed.pixelMask = [];
+    for (let y = 0; y < config.squareSize; y++) { // row (y)
+      feed.pixelMask[y] = [];
+      for (let x = 0; x < config.squareSize; x++) { // column (x)
+        feed.pixelMask[y][x] = 0;
+        for (let v = 0; v < feed.outputs.length; v++) {
+          const variableIndex = feed.outputs[v];
+          feed.pixelMask[y][x] = isPixelInOutput(x, y, config.variablePixels[variableIndex]) ? 1 : 0;
+          if (feed.pixelMask[y][x] === 1) {
+            break;
+          }
+        }
+      }
+    }
+    // console.log(feed.label, feed.pixelMask)
   })
 }
 
@@ -129,16 +136,12 @@ function getProportionalPixelValue(cardinality, value, index) {
 }
 
 function initialize () {
-  if (config.debug.names) console.log('processing.initialize');
-  if (!config.trainData.length) {
-    console.log('generating training data');
-    generateTrainData();
-  }
   determineSquareSize();
   mapVariableOffsets();
   mapVariablePixels();
   unpackVariables();
   mapTestDataToPixels();
+  mapPixelMasks();
 }
 
 initialize();
@@ -181,108 +184,35 @@ export type DataGenerator = (bitmaps: TwoD[][]) => TwoD[];
   functions to determine variable cardinality, squareSize, mapping input array to heatmap, generating pixelmap, ...
 */
 
-function mapDataToPoints(sets: number[][]): TwoD[] {
-  let array = []
-  sets.forEach((set, setIndex) => {
-    for (let x = 0; x < set.length; x++) {
-      array.push({
-        x,
-        y: setIndex,
-        value: set[x]
-      });
-    }
-  });
-  return array
-}
-function mapDataArrayToPoints(array: number[][]) {
-  let points = [];
-  let Ys = array.length;
-  for (let y = 0; y < Ys; y++) {
-    let Xs = array[y].length;
-    for (let x = 0; x < Xs; x++) {
-      let point = {
-        x: x,
-        y: y,
-        value: array[y][x]
-      };
-      points.push(point)
-    }
-  }
-  return points
-}
-
-export function getFeedPixelValue(feedIndex: number, y: number, x: number) {
-  if (config.debug.names) console.log('processing.getFeedPixelValue');
-  let pixels = feedBitmaps[feedIndex];
-  let value = 0;
-  for (let p = 0; p < pixels.length; p++) {
-    const pixel = pixels[p];
-    const sameRow = pixel.y - 1 <= y && y < pixel.y;
-    const sameCol = pixel.x - 1 <= x && x < pixel.x;
-    if (sameRow && sameCol) {
-      value = pixel.value;
-      break;
-    }
-  }
-  return value;
-}
-export function generateTrainData(): TwoD[] {
-  if (config.debug.names) console.log('processing.generateTrainData');
-  let trainData = [];
-  for (let x = 0; x < squareSize; x++) {
-    for (let y = 0; y < squareSize; y++) {
-      // todo: fix output
-      let pixelIsActive = false;
-      config.feeds.forEach(feed => {
-
-        // see if pixel is active
-
-      })
-      trainData.push(
-        // variable pixel values
-      );
-      trainBitmaps.push({
-        x,
-        y,
-        value: pixelIsActive
-      })
-    }
-  }
-  return trainBitmaps;
-}
-
-export function getTrainData(): TwoD[] {
-  if (config.debug.names) console.log('processing.getTrainData');
+export function getTrainingData(bitmaps: TwoD[][]):
+  TwoD[] {
   let points: TwoD[] = [];
   // todo: issue #11
-  for (let m = 0; m < trainBitmaps.length; m++) {
-    points.push({
-      x: trainBitmaps[m].x - 0.5,
-      y: trainBitmaps[m].y + 0.5,
-      value: trainBitmaps[m].value
-    })
-  }
-  console.log('gettrainData', points);
-  return points;
-}
-
-export function getTestData(): TwoD[] {
-  if (config.debug.names) console.log('processing.getTestData');
-  // todo: issue #11
-  let points: TwoD[] = [];
-  for (let m = 0; m < testBitmaps.length; m++) {
-    for (let p = 0; p < testBitmaps[m].length; p++) {
+  for (let m = 0; m < bitmaps.length; m++) {
+    for (let p = 0; p < bitmaps[m].length; p++) {
       points.push({
-        x: testBitmaps[m][p].x - 0.5,
-        y: testBitmaps[m][p].y + 0.5,
-        value: testBitmaps[m][p].value
+        x: bitmaps[m][p].x - 0.5,
+        y: bitmaps[m][p].y + 0.5,
+        value: bitmaps[m][p].value
       })
     }
   }
   return points;
 }
 
-export function getSquareSize() {
-  if (config.debug.names) console.log('processing.getSquareSize');
-  return squareSize;
+export function getTestData(bitmaps: TwoD[][]):
+  TwoD[] {
+  // todo: issue #11
+  let points: TwoD[] = [];
+  for (let m = 0; m < bitmaps.length; m++) {
+    for (let p = 0; p < bitmaps[m].length; p++) {
+      points.push({
+        x: bitmaps[m][p].x - 0.5,
+        y: bitmaps[m][p].y + 0.5,
+        value: bitmaps[m][p].value
+      })
+    }
+  }
+  return points;
 }
+

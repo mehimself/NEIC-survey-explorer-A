@@ -35,7 +35,7 @@ export let regularizations: {[key: string]: nn.RegularizationFunction} = {
 
 /** A map between trainData names and functions that generate classification data. */
 export let trainData: { [key: string]: dataset.DataGenerator } = {
-  "survey": dataset.getTrainData,
+  "survey": dataset.getTrainingData,
 };
 
 /** A map between feeds names and functions that generate classification data. */
@@ -137,7 +137,7 @@ export class State {
   D = false;
   E = false;
   // todo: set up default data source here
-  testData: dataset.DataGenerator = dataset.getTestData;
+  testData: dataset.DataGenerator = dataset.classifySurveyData;
   seed: string;
 
   /**
