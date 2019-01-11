@@ -19,7 +19,7 @@ import * as nn from "./nn";
 import config from './config';
 import {HeatMap, reduceMatrix} from "./heatmap";
 import {activations, colorRange, getKeyFromValue, regularizations, State} from "./state";
-import {shuffle, TwoD} from "./processing";
+import {shuffle, TwoD} from "./preformatting";
 import {AppendingLineChart} from "./linechart";
 import * as d3 from 'd3';
 
@@ -71,7 +71,7 @@ function feedBitMap(feed: any, x: number, y: number) {
 }
 
 let INPUTS: { [name: string]: InputFeature } = {};
-config.feeds.forEach(feed => {
+config.researchQuestionFeeds.forEach(feed => {
   INPUTS[feed.label] = {f: (x, y) => feedBitMap(feed, x, y), label: feed.label}
 });
 
@@ -360,8 +360,8 @@ function drawNode(cx: number, cy: number, nodeId: string, isInput: boolean, cont
         pixelMask: null,
         id: nodeId
       };
-      if (config.feeds[nodeId] !== undefined && config.feeds[nodeId].pixelMask) {
-        options.pixelMask = config.feeds[nodeId].pixelMask;
+      if (config.researchQuestionFeeds[nodeId] !== undefined && config.researchQuestionFeeds[nodeId].pixelMask) {
+        options.pixelMask = config.researchQuestionFeeds[nodeId].pixelMask;
       }
       heatMap.updateBackground(
         boundary[nodeId],
@@ -378,8 +378,8 @@ function drawNode(cx: number, cy: number, nodeId: string, isInput: boolean, cont
         pixelMask: null,
         id: nodeId
       };
-      if (config.feeds[nodeId] !== undefined && config.feeds[nodeId].pixelMask) {
-        options.pixelMask = config.feeds[nodeId].pixelMask;
+      if (config.researchQuestionFeeds[nodeId] !== undefined && config.researchQuestionFeeds[nodeId].pixelMask) {
+        options.pixelMask = config.researchQuestionFeeds[nodeId].pixelMask;
       }
       heatMap.updateBackground(
         boundary[nn.getOutputNode(network).id],
@@ -658,9 +658,9 @@ function drawLink(
 function compileOutputMask() {
   function getFeedByName(name: string) {
     let feed;
-    for (let f = 0; f < config.feeds.length; f++) {
-      if (config.feeds[f].label === name) {
-        feed = config.feeds[f];
+    for (let f = 0; f < config.researchQuestionFeeds.length; f++) {
+      if (config.researchQuestionFeeds[f].label === name) {
+        feed = config.researchQuestionFeeds[f];
         break;
       }
     }
@@ -679,7 +679,7 @@ function compileOutputMask() {
 }
 /**
  * Given a neural network, it asks the network for the output (prediction)
- * of every node in the network using feeds sampled on a square grid.
+ * of every node in the network using inputs sampled on a square grid.
  * It returns a map where each key is the node ID and the value is a square
  * matrix of the outputs of the network for each input in the grid respectively.
  */
@@ -703,7 +703,7 @@ function updateDecisionBoundary(network: nn.Node[][], firstTime: boolean) {
       nn.forEachNode(network, true, node => {
         boundary[node.id][i] = new Array(DENSITY);
       });
-      // Go through all predefined feeds.
+      // Go through all predefined inputs.
       for (let nodeId in INPUTS) {
         boundary[nodeId][i] = new Array(DENSITY);
       }
@@ -760,8 +760,8 @@ function updateUI(firstStep = false) {
     pixelMask: null,
     id: selectedId
   };
-  if (config.feeds[selectedId] !== undefined && config.feeds[selectedId].pixelMask) {
-    options.pixelMask = config.feeds[selectedId].pixelMask;
+  if (config.researchQuestionFeeds[selectedId] !== undefined && config.researchQuestionFeeds[selectedId].pixelMask) {
+    options.pixelMask = config.researchQuestionFeeds[selectedId].pixelMask;
   }
   heatMap.updateBackground(
     boundary[selectedId],
@@ -776,8 +776,8 @@ function updateUI(firstStep = false) {
         pixelMask: null,
         id: data.id
       };
-      if (config.feeds[data.id] !== undefined && config.feeds[data.id].pixelMask) {
-        options.pixelMask = config.feeds[data.id].pixelMask;
+      if (config.researchQuestionFeeds[data.id] !== undefined && config.researchQuestionFeeds[data.id].pixelMask) {
+        options.pixelMask = config.researchQuestionFeeds[data.id].pixelMask;
       }
       data.heatmap.updateBackground(
         reduceMatrix(boundary[data.id], 10),

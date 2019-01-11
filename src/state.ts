@@ -16,7 +16,7 @@ limitations under the License.
 // modified by Max Roald Eckardt mr.eckardt@gmail.com mehimself@github.com
 
 import * as nn from "./nn";
-import * as dataset from "./processing";
+import * as dataset from "./preformatting";
 
 /** A map between names and activation functions. */
 export let activations: {[key: string]: nn.ActivationFunction} = {
@@ -38,7 +38,7 @@ export let trainData: { [key: string]: dataset.DataGenerator } = {
   "survey": dataset.getTrainingData,
 };
 
-/** A map between feeds names and functions that generate classification data. */
+/** A map between testData names and functions that generate classification data. */
 export let testData: {[key: string]: dataset.DataGenerator} = {
   "survey": dataset.getTestData,
 };
