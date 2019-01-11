@@ -31,7 +31,7 @@ export let regularizations: {[key: string]: nn.RegularizationFunction} = {
   "L2": nn.RegularizationFunction.L2
 };
 
-/** A map between dataset names and functions that generate classification data. */
+/** A map between dataset names and functions that generate classification config. */
 export let datasets: {[key: string]: dataset.DataGenerator} = {
   "survey": dataset.classifySurveyData,
 };
@@ -46,7 +46,7 @@ export function getKeyFromValue(obj: any, value: any): string {
 }
 
 /**
- * The data type of a state variable. Used for determining the
+ * The config type of a state variable. Used for determining the
  * (de)serialization method.
  */
 export enum Type {
@@ -107,7 +107,7 @@ export class State {
   [key: string]: any;
   learningRate = 0.001;
   regularizationRate = 0.001;
-  // todo: toggle test data visibility here
+  // todo: toggle test config visibility here
   showTestData = false;
   noise = 20;
   batchSize = 10;
@@ -128,7 +128,7 @@ export class State {
   C = false;
   D = false;
   E = false;
-  // todo: set up default data source here
+  // todo: set up default config source here
   dataset: dataset.DataGenerator = dataset.classifySurveyData;
   seed: string;
 

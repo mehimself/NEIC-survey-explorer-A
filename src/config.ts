@@ -157,7 +157,7 @@ function mapResearchQuestions() {
     feed.map = [];
     for (let idx = 0; idx < config.pixelCoordinates.length; idx++) {
       const isActivePixel = feed.inputMask.indexOf(idx) >= 0;
-      const pixelValue = isActivePixel ? 1 : 0; //1 - data.meanBitMap[idx].value; // todo: review this weighting
+      const pixelValue = isActivePixel ? 1 : 0; //1 - config.meanBitMap[idx].value; // todo: review this weighting
       for (let p = 0; p < config.cardinalities[idx]; p++) {
         let pixel = {
           x: config.pixelCoordinates[idx][p].x,

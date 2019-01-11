@@ -14,7 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 import * as nn from "./nn";
-import data from './config';
+import config from './config';
 import {HeatMap, reduceMatrix} from "./heatmap";
 import {activations, colorRange, getKeyFromValue, regularizations, State} from "./state";
 import {shuffle, TwoD} from "./preformatting";
@@ -70,11 +70,11 @@ function feedBitMap(feed: any, x: number, y: number) {
 
 let INPUTS: { [name: string]: InputFeature } = {
   // todo: add survey seed functions here
-  "A": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[0], x, y), label: "A"},
-  "B": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[1], x, y), label: "B"},
-  "C": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[2], x, y), label: "C"},
-  "D": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[3], x, y), label: "D"},
-  "E": {f: (x, y) => feedBitMap(data.researchQuestionFeeds[3], x, y), label: "E"},
+  "A": {f: (x, y) => feedBitMap(config.researchQuestionFeeds[0], x, y), label: "A"},
+  "B": {f: (x, y) => feedBitMap(config.researchQuestionFeeds[1], x, y), label: "B"},
+  "C": {f: (x, y) => feedBitMap(config.researchQuestionFeeds[2], x, y), label: "C"},
+  "D": {f: (x, y) => feedBitMap(config.researchQuestionFeeds[3], x, y), label: "D"},
+  "E": {f: (x, y) => feedBitMap(config.researchQuestionFeeds[3], x, y), label: "E"},
 };
 
 class Player {
@@ -175,7 +175,7 @@ function makeGUI() {
     oneStep();
   });
 
-  d3.select("#data-regen-button").on("click", () => {
+  d3.select("#config-regen-button").on("click", () => {
     generateData();
     parametersChanged = true;
   });
@@ -826,7 +826,7 @@ function generateData(firstTime = false) {
   let generator = state.dataset;
   let data = generator(config.bitmaps);
   shuffle(data);
-  // Split into train and test data.
+  // Split into train and test config.
   let splitIndex = Math.floor(data.length * state.percTrainData / 100);
   trainData = data.slice(0, splitIndex);
   testData = data.slice(splitIndex);

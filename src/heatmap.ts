@@ -30,7 +30,7 @@ const NUM_SHADES = 120;
 
 /**
  * Draws a heatmap using canvas. Used for showing the learned decision
- * boundary of the classification algorithm. Can also draw data points
+ * boundary of the classification algorithm. Can also draw config points
  * using an svg overlayed on top of the canvas heatmap.
  */
 export class HeatMap {
@@ -160,7 +160,7 @@ export class HeatMap {
 
     if (dx !== this.numSamples || dy !== this.numSamples) {
       throw new Error(
-        "The provided data matrix must be of size " +
+        "The provided config matrix must be of size " +
         "numSamples X numSamples");
     }
 
@@ -193,7 +193,7 @@ export class HeatMap {
       return xDomain[0] <= p.x && p.x < xDomain[1]
         && yDomain[0] <= p.y && p.y < yDomain[1];
     });
-    // Attach data to initially empty selection.
+    // Attach config to initially empty selection.
     let selection = container.selectAll("circle").data(config.meanBitMap);//points);
 
     // Insert elements to match length of points array.

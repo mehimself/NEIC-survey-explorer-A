@@ -21,8 +21,8 @@ type DataPoint = {
 };
 
 /**
- * A multi-series line chart that allows you to append new data points
- * as data becomes available.
+ * A multi-series line chart that allows you to append new config points
+ * as config becomes available.
  */
 export class AppendingLineChart {
   private numLines: number;
