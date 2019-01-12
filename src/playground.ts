@@ -69,7 +69,7 @@ function feedBitMap(feed: any, x: number, y: number) {
 }
 
 let INPUTS: { [name: string]: InputFeature } = {};
-config.researchQuestionFeeds.forEach(feed => {
+config.feeds.forEach(feed => {
   INPUTS[feed.label] = {f: (x, y) => feedBitMap(feed, x, y), label: feed.label};
 });
 

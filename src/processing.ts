@@ -40,7 +40,7 @@ function mapMeanResponseSet() {
 }
 
 function mapResearchQuestions() {
-  config.researchQuestionFeeds.forEach((feed) => {
+  config.feeds.forEach((feed) => {
     feed.map = [];
     for (let idx = 0; idx < config.pixelCoordinates.length; idx++) {
       const isActivePixel = feed.inputMask.indexOf(idx) >= 0;
@@ -92,7 +92,7 @@ function mapPixelMasks() {
     return found;
   }
 
-  config.researchQuestionFeeds.forEach(feed => {
+  config.feeds.forEach(feed => {
     feed.pixelMask = [];
     for (let y = 0; y < config.squareSize; y++) { // row (y)
       feed.pixelMask[y] = [];

@@ -78,7 +78,7 @@ let config = {
   meanBitMap: [],
   pixelCoordinates: [],
   bitmaps: [],
-  researchQuestionFeeds: [
+  feeds: [
     {
       label: "Sandbox",
       info: "Would you recommend the provision of a sandbox environment?",

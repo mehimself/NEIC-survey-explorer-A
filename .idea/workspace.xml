@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a75aee0-cdf7-4410-8f57-e91522981b84" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/heatmap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/heatmap.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/playground.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/playground.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/preformatting.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/processing.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/processing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/processing.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/playground.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="706">
-              <caret line="75" column="14" lean-forward="true" selection-start-line="75" selection-start-column="14" selection-end-line="75" selection-end-column="14" />
+            <state relative-caret-position="806">
+              <caret line="75" column="14" selection-start-line="75" selection-start-column="14" selection-end-line="75" selection-end-column="14" />
               <folding>
                 <element signature="e#658#685#0" expanded="true" />
               </folding>
@@ -30,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/config.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1094">
-              <caret line="131" selection-start-line="131" selection-end-line="131" />
+            <state relative-caret-position="431">
+              <caret line="80" column="3" lean-forward="true" selection-start-line="80" selection-start-column="3" selection-end-line="80" selection-end-column="3" />
               <folding>
                 <element signature="e#881#1313#0" />
               </folding>
@@ -156,9 +156,9 @@
         <option value="$PROJECT_DIR$/dist/bundle.js" />
         <option value="$PROJECT_DIR$/src/data.ts" />
         <option value="$PROJECT_DIR$/src/heatmap.ts" />
-        <option value="$PROJECT_DIR$/src/config.ts" />
         <option value="$PROJECT_DIR$/src/preformatting.ts" />
         <option value="$PROJECT_DIR$/src/playground.ts" />
+        <option value="$PROJECT_DIR$/src/config.ts" />
       </list>
     </option>
   </component>
@@ -292,7 +292,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="186765000" />
+    <option name="totallyTimeSpent" value="186826000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -444,16 +444,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1094">
-          <caret line="131" selection-start-line="131" selection-end-line="131" />
-          <folding>
-            <element signature="e#881#1313#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/state.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-571">
@@ -489,10 +479,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/playground.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="706">
-          <caret line="75" column="14" lean-forward="true" selection-start-line="75" selection-start-column="14" selection-end-line="75" selection-end-column="14" />
+        <state relative-caret-position="806">
+          <caret line="75" column="14" selection-start-line="75" selection-start-column="14" selection-end-line="75" selection-end-column="14" />
           <folding>
             <element signature="e#658#685#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="431">
+          <caret line="80" column="3" lean-forward="true" selection-start-line="80" selection-start-column="3" selection-end-line="80" selection-end-column="3" />
+          <folding>
+            <element signature="e#881#1313#0" />
           </folding>
         </state>
       </provider>
