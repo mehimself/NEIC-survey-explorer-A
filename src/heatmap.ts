@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-import {TwoD} from "./preformatting";
+import {TwoD} from "./processing";
 import config from "./config";
 import {colorRange} from "./state";
 import * as d3 from 'd3';

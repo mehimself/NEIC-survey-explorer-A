@@ -17,7 +17,7 @@ import * as nn from "./nn";
 import config from './config';
 import {HeatMap, reduceMatrix} from "./heatmap";
 import {activations, colorRange, getKeyFromValue, regularizations, State} from "./state";
-import {shuffle, TwoD} from "./preformatting";
+import {shuffle, TwoD} from "./processing";
 import {AppendingLineChart} from "./linechart";
 import * as d3 from 'd3';
 
@@ -68,14 +68,10 @@ function feedBitMap(feed: any, x: number, y: number) {
   return value;
 }
 
-let INPUTS: { [name: string]: InputFeature } = {
-  // todo: add survey seed functions here
-  "A": {f: (x, y) => feedBitMap(config.researchQuestionFeeds[0], x, y), label: "A"},
-  "B": {f: (x, y) => feedBitMap(config.researchQuestionFeeds[1], x, y), label: "B"},
-  "C": {f: (x, y) => feedBitMap(config.researchQuestionFeeds[2], x, y), label: "C"},
-  "D": {f: (x, y) => feedBitMap(config.researchQuestionFeeds[3], x, y), label: "D"},
-  "E": {f: (x, y) => feedBitMap(config.researchQuestionFeeds[3], x, y), label: "E"},
-};
+let INPUTS: { [name: string]: InputFeature } = {};
+config.researchQuestionFeeds.forEach(feed => {
+  INPUTS[feed.label] = {f: (x, y) => feedBitMap(feed, x, y), label: feed.label};
+});
 
 class Player {
   private timerIndex = 0;
