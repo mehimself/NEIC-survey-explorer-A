@@ -16,7 +16,6 @@ limitations under the License.
 import config from "./config";
 
 
-
 function mapResultsMean() {
   config.packedVariableSets[0].forEach((v, i) => {
     let sum = 0;
@@ -156,9 +155,6 @@ function unpackVariables() {
     let map = [];
     config.bitmaps.push(map);
     mapSet(set, map);
-  });
-  config.contrastSets.forEach(contrast => {
-    mapSet(contrast.set, contrast.map);
   });
 }
 

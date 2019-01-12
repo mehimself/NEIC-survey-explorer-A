@@ -773,12 +773,6 @@ g.train circle {
   line-height: 1.7em;
 }
 
-/* Contrasts column */
-
-.contrasts.column {
-    width: 10%;
-}
-
 /* Article */
 
 article {

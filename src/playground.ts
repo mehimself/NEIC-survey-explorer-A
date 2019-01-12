@@ -128,11 +128,6 @@ let selectedNodeId: string = null;
 // Plot the heatmaps
 let xDomain: [number, number] = [0, config.squareSize];
 let heatMap = new HeatMap(300, DENSITY, xDomain, xDomain, d3.select("#heatmap"), {showAxes: true});
-// todo: add contrast model visualisations here
-let heatMap_bland = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_bland"), {showAxes: false});
-let heatMap_results = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_results"), {showAxes: false});
-let heatMap_nightmare = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_nightmare"), {showAxes: false});
-let heatMap_yesWeCan = new HeatMap(80, DENSITY, xDomain, xDomain, d3.select("#heatmap_yesWeCan"), {showAxes: false});
 let linkWidthScale = d3.scale.linear()
   .domain([0, 5])
   .range([1, 10])
@@ -788,28 +783,6 @@ function reset() {
   lossTest = getLoss(network, testData);
   drawNetwork(network);
   updateUI(true);
-  drawContrastModels();
-}
-
-function drawContrastModels() {
-  function renderThumbnail(canvas, pixels) {
-    let w = 150;
-    let h = 150;
-    canvas.setAttribute("width", w);
-    canvas.setAttribute("height", h);
-    let context = canvas.getContext("2d");
-    pixels.forEach(function (p) {
-      context.fillStyle = colorScale(p.value);
-      context.fillRect((w * p.x) / 10 - 15, h - (h * (p.y) / 10), 15, 15);
-    });
-    d3.select(canvas.parentNode).style("display", null);
-  }
-
-  renderThumbnail(d3.select("#heatmap_results canvas")[0][0], config.meanBitMap);
-  renderThumbnail(d3.select("#heatmap_bland canvas")[0][0], config.contrastSets[0].map);
-  renderThumbnail(d3.select("#heatmap_nightmare canvas")[0][0], config.contrastSets[1].map);
-  renderThumbnail(d3.select("#heatmap_yesWeCan canvas")[0][0], config.contrastSets[2].map);
-
 }
 
 function generateData(firstTime = false) {

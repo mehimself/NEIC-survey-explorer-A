@@ -2,23 +2,6 @@ let config = {
   headers: ['Organization', 'Practices addressing ethical challenges', 'Practice supporting communication/publication', 'Share resources (which)', 'CD at MA-level', 'Part of Curriculum', 'General/specialized', 'Other', 'DRM part of existing or separate course', 'Developed own material', 'Who developed it', 'Willingness to share course material', 'Support for DM', 'Online DH training', 'Awareness of following initiative ', 'Willingness to collaborate on resources', 'CD: EDA', 'CD: Statistics', 'CD: Ethics', 'CD: Data rights and protection', 'CD: Interdisciplinary dialogue', 'Interest in HPC', 'Course integrated/separate', 'DRM – Department', 'DRM – Faculty'],
   cardinalities: [5, 2, 3, 5, 2, 2, 2, 2, 2, 2, 4, 4, 11, 5, 6, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5],
   testSet: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  contrastSets: [
-    {
-      name: 'Bland',
-      set: [0.3, 1, 2, 0, 1, 0, 1, 0, 1, 0, 2, 2, 5, 1, 4, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0],
-      map: []
-    },
-    {
-      name: 'Nightmare',
-      set: [0.2, 0, 1, 0.2, 0, 0, 0, 0, 0, 0, 1, 2, 3, 0.2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0.3, 0.2],
-      map: []
-    },
-    {
-      name: 'YesWeCan',
-      set: [1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 3, 3, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      map: []
-    }
-  ],
   packedVariableSets: [
     [0, -1, 0, -0.5, -1, -1, 1, -1, -1, 1, -0.33333333333333337, 1, -0.4, 1, 0.19999999999999996, -1, -1, -1, -1, -1, -1, 1, -1, -0.39274254380873475, -0.11071002890982251],
     [0, -1, -1, 0.5, 1, 1, 1, -1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, -1, 1, -1, 1, -1, -0.8103938030698714, 0.01655631227780585],
