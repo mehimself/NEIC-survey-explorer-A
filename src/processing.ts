@@ -80,36 +80,6 @@ function mapVariableOffsets() {
   }
 }
 
-function mapPixelMasks() {
-  function isPixelIncluded(x: number, y: number, pixels: any[]): boolean {
-    let found = false;
-    for (let c = 0; c < pixels.length; c++) { // variable pixel coordinates (c)
-      let variablePixel = pixels[c];
-      found = variablePixel.x === x + 1 && variablePixel.y === y + 1; // todo: stinks 0- and 1-based indexes
-      if (found) break
-    }
-    return found;
-  }
-
-  config.feeds.forEach(feed => {
-    feed.pixelMask = [];
-    for (let y = 0; y < config.squareSize; y++) { // row (y)
-      feed.pixelMask[y] = [];
-      for (let x = 0; x < config.squareSize; x++) { // column (x)
-        feed.pixelMask[y][x] = 0;
-        for (let v = 0; v < feed.outputs.length; v++) {
-          const variableIndex = feed.outputs[v];
-          feed.pixelMask[y][x] = isPixelIncluded(x, y, config.pixelCoordinates[variableIndex]) ? 1 : 0;
-          if (feed.pixelMask[y][x] === 1) {
-            break;
-          }
-        }
-      }
-    }
-    // console.log(feed.label, feed.pixelMask)
-  })
-}
-
 function getAbsolutePixelValue(cardinality, value, index) {
   const variableValue = Math.round(value * 100) / 100;
   let pixelValue = (1 + index) / cardinality;
@@ -164,7 +134,6 @@ unpackVariables();
 mapResultsMean();
 mapMeanResponseSet();
 mapResearchQuestions();
-mapPixelMasks();
 
 /**
  * A two dimensional example: x and y coordinates with the label.

@@ -69,7 +69,6 @@ let config = {
         0, 10, 20, 22, 24
       ],
       outputs: [0, 10],
-      pixelMask: null,
       map: []
     }, {
       label: "B",
@@ -78,7 +77,6 @@ let config = {
         1, 3, 5
       ],
       outputs: [1],
-      pixelMask: null,
       map: []
     }, {
       label: "C",
@@ -87,7 +85,6 @@ let config = {
         2, 13, 17
       ],
       outputs: [2],
-      pixelMask: null,
       map: []
     }, {
       label: "D",
@@ -96,7 +93,6 @@ let config = {
         8, 16, 25
       ],
       outputs: [4],
-      pixelMask: null,
       map: []
     }, {
       label: "E",
@@ -105,7 +101,6 @@ let config = {
         7, 9,
       ],
       outputs: [6],
-      pixelMask: null,
       map: []
     }
   ],
