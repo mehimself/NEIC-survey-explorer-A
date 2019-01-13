@@ -38,7 +38,7 @@ function mapMeanResponseSet() {
   }
 }
 
-function mapResearchQuestions() {
+function mapFeeds() {
   config.feeds.forEach((feed) => {
     feed.map = [];
     for (let idx = 0; idx < config.pixelCoordinates.length; idx++) {
@@ -133,7 +133,7 @@ mapVariablePixels();
 unpackVariables();
 mapResultsMean();
 mapMeanResponseSet();
-mapResearchQuestions();
+mapFeeds();
 
 /**
  * A two dimensional example: x and y coordinates with the label.
