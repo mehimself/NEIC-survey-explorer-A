@@ -66,41 +66,41 @@ let config = {
       label: "Sandbox",
       info: "Would you recommend the provision of a sandbox environment?",
       inputMask: [
-        0, 10, 20, 22, 24
+        1
       ],
-      outputs: [0, 10],
+      trainBias: [6, 18, 25],
       map: []
     }, {
       label: "B",
       info: '',
       inputMask: [
-        1, 3, 5
+        13
       ],
-      outputs: [1],
+      trainBias: [14, 19, 21],
       map: []
     }, {
       label: "C",
       info: '',
       inputMask: [
-        2, 13, 17
+        15
       ],
-      outputs: [2],
+      trainBias: [16, 21, 24],
       map: []
     }, {
       label: "D",
       info: '',
       inputMask: [
-        8, 16, 25
+        16
       ],
-      outputs: [4],
+      trainBias: [4, 6, 18],
       map: []
     }, {
       label: "E",
       info: '',
       inputMask: [
-        7, 9,
+        22
       ],
-      outputs: [6],
+      trainBias: [0, 1, 13],
       map: []
     }
   ],
