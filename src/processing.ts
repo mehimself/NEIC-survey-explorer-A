@@ -13,42 +13,48 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
+// modified by Max R. Eckardt (mr.eckardt@gmail.com) 
+
 import config from "./config";
 
-let trainBitmaps = {};
+let pixelCoordinates = [];
 
-function mapResultsMean() {
-  config.packedVariableSets[0].forEach((v, i) => {
-    let sum = 0;
-    config.packedVariableSets.forEach(set => sum += set[i]);
-    config.meanResponseSet[i] = sum / config.packedVariableSets.length;
-  });
-}
+function mapMeanBitmap() {
+  function mapResultsMean() {
+    let set = [];
+    config.packedVariableSets[0].forEach((v, i) => {
+      let sum = 0;
+      config.packedVariableSets.forEach(set => sum += set[i]);
+      set[i] = sum / config.packedVariableSets.length;
+    });
+    return set;
+  }
 
-function mapMeanResponseSet() {
-  config.meanBitMap = [];
-  for (let idx = 0; idx < config.pixelCoordinates.length; idx++) {
+  let meanResponseSet = mapResultsMean();
+  let map = [];
+  for (let idx = 0; idx < pixelCoordinates.length; idx++) {
     for (let p = 0; p < config.cardinalities[idx]; p++) {
       let pixel = {
-        x: config.pixelCoordinates[idx][p].x,
-        y: config.pixelCoordinates[idx][p].y,
-        value: config.meanResponseSet[idx]
+        x: pixelCoordinates[idx][p].x,
+        y: pixelCoordinates[idx][p].y,
+        value: meanResponseSet[idx]
       };
-      config.meanBitMap.push(pixel);
+      map.push(pixel);
     }
   }
+  return map;
 }
 
 function mapFeeds() {
   config.feeds.forEach((feed) => {
     feed.map = [];
-    for (let idx = 0; idx < config.pixelCoordinates.length; idx++) {
+    for (let idx = 0; idx < pixelCoordinates.length; idx++) {
       const isActivePixel = feed.inputMask.indexOf(idx) >= 0;
-      const pixelValue = isActivePixel ? 1 : 0; //1 - config.meanBitMap[idx].value; // todo: review this weighting
+      const pixelValue = isActivePixel ? 1 : 0; //1 - meanBitmap[idx].value; // todo: review this weighting
       for (let p = 0; p < config.cardinalities[idx]; p++) {
         let pixel = {
-          x: config.pixelCoordinates[idx][p].x,
-          y: config.pixelCoordinates[idx][p].y,
+          x: pixelCoordinates[idx][p].x,
+          y: pixelCoordinates[idx][p].y,
           value: pixelValue
         };
         feed.map.push(pixel);
@@ -57,9 +63,29 @@ function mapFeeds() {
   })
 }
 
+function getSquareSize() {
+  let pixelCount = 0;
+  for (let i = 0; i < config.cardinalities.length; i++) {
+    pixelCount += config.cardinalities[i];
+  }
+  return Math.ceil(Math.sqrt(pixelCount))
+}
+
 function mapVariablePixels() {
+  function mapVariableOffsets() {
+    let variableOffset = 0;
+    for (let i = 0; i < config.cardinalities.length; i++) {
+      variableOffsets.push(variableOffset);
+      variableOffset = variableOffsets[i] + config.cardinalities[i];
+    }
+  }
+
+  let variableOffsets = [];
+
+  mapVariableOffsets();
+
   config.cardinalities.forEach((cardinality, v) => {
-    const variableOffset = config.variableOffsets[v];
+    const variableOffset = variableOffsets[v];
     const pixels = [];
     for (let c = 0; c < cardinality; c++) {
       const pixelOffset = variableOffset + c;
@@ -69,67 +95,51 @@ function mapVariablePixels() {
       };
       pixels.push(coordinates);
     }
-    config.pixelCoordinates.push(pixels);
+    pixelCoordinates.push(pixels);
   })
 }
 
-function mapVariableOffsets() {
-  let variableOffset = 0;
-  for (let i = 0; i < config.cardinalities.length; i++) {
-    config.variableOffsets.push(variableOffset);
-    variableOffset = config.variableOffsets[i] + config.cardinalities[i];
+function mapTestBitmaps() {
+  function getAbsolutePixelValue(cardinality, value, index) {
+    const variableValue = Math.round(value * 100) / 100;
+    let pixelValue = (1 + index) / cardinality;
+    pixelValue = Math.round(pixelValue * 100) / 100;
+    return pixelValue == variableValue ? 1 : 0;
   }
-}
-
-function getAbsolutePixelValue(cardinality, value, index) {
-  const variableValue = Math.round(value * 100) / 100;
-  let pixelValue = (1 + index) / cardinality;
-  pixelValue = Math.round(pixelValue * 100) / 100;
-  return pixelValue == variableValue ? 1 : 0;
-}
-
-function getProportionalPixelValue(cardinality, value, index) {
-  const pixelValueProportion = 1 / cardinality;
-  const valueThreshold = index * pixelValueProportion;
-  let pixelValue = (value - valueThreshold) * cardinality;
-  pixelValue = Math.round(pixelValue * 100) / 100;
-  if (pixelValue < 0) {
-    pixelValue = 0;
+  function getProportionalPixelValue(cardinality, value, index) {
+    const pixelValueProportion = 1 / cardinality;
+    const valueThreshold = index * pixelValueProportion;
+    let pixelValue = (value - valueThreshold) * cardinality;
+    pixelValue = Math.round(pixelValue * 100) / 100;
+    if (pixelValue < 0) {
+      pixelValue = 0;
+    }
+    return pixelValue;
   }
-  return pixelValue;
-}
-
-function unpackVariables() {
   function mapSet(set, map) {
     set.forEach((value, v) => {
       const cardinality = config.cardinalities[v];
-      const isUnpackable = [2, 5].indexOf(cardinality) >= 0;
-      const isQualitativeValue = !isUnpackable;
       for (let c = 0; c < cardinality; c++) {
         let pixel = {
-          x: config.pixelCoordinates[v][c].x,
-          y: config.pixelCoordinates[v][c].y,
+          x: pixelCoordinates[v][c].x,
+          y: pixelCoordinates[v][c].y,
           value: 0
         };
-        if (isUnpackable) {
-          pixel.value = getProportionalPixelValue(cardinality, value, c);
-        } else if (isQualitativeValue) {
-          pixel.value = getProportionalPixelValue(cardinality, value, c); //getAbsolutePixelValue(cardinality, value, c);
-        }
+        pixel.value = getProportionalPixelValue(cardinality, value, c);
         map.push(pixel);
       }
     })
   }
-
-  // todo: get variableCount
-  // todo: move bitmaps to this module
-  config.bitmaps = [];
-  config.packedVariableSets.forEach((set) => {
+  let maps = [];
+  config.packedVariableSets.forEach(set => {
     let map = [];
-    config.bitmaps.push(map);
+    maps.push(map);
     mapSet(set, map);
   });
+  return maps;
+}
 
+/*function mapTrainBitmaps() {
   config.feeds.forEach(feed => { // => trainBitmaps
     trainBitmaps[feed.label] = [];
     feed.trainBias
@@ -139,7 +149,7 @@ function unpackVariables() {
 
 
   })
-}
+}*/
 
 /**
  * A two dimensional example: x and y coordinates with the label.
@@ -150,7 +160,14 @@ export type TwoD = {
   value: number
 };
 
-export const squareSize = config.packedVariableSets[0].length;
+export const squareSize = getSquareSize();
+
+mapVariablePixels();
+mapFeeds();
+
+export const meanBitmap = mapMeanBitmap();
+export const testBitmaps = mapTestBitmaps();
+//export const trainBitmaps = mapTrainBitmaps();
 
 /**
  * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
@@ -173,10 +190,11 @@ export function shuffle(array: any[]): void {
   }
 }
 
-export type DataGenerator = (bitmaps: TwoD[][]) => TwoD[];
+export type DataGenerator = () => TwoD[];
 
-export function classifySurveyData(bitmaps: TwoD[][]):
+export function classifySurveyData():
   TwoD[] {
+  let bitmaps = testBitmaps;
   let points: TwoD[] = [];
   for (let m = 0; m < bitmaps.length; m++) {
     for (let p = 0; p < bitmaps[m].length; p++) {
@@ -190,9 +208,3 @@ export function classifySurveyData(bitmaps: TwoD[][]):
   return points;
 }
 
-mapVariableOffsets();
-mapVariablePixels();
-unpackVariables();
-mapResultsMean();
-mapMeanResponseSet();
-mapFeeds();

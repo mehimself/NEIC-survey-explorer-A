@@ -793,12 +793,13 @@ function generateData(firstTime = false) {
   }
   Math.seedrandom(state.seed);
   let generator = state.dataset;
-  let data = generator(config.bitmaps);
+  let data = generator();
   processing.shuffle(data);
   // Split into train and test config.
   let splitIndex = Math.floor(data.length * state.percTrainData / 100);
   trainData = data.slice(0, splitIndex);
   testData = data.slice(splitIndex);
+  console.log('traindata', trainData);
   heatMap.updatePoints(trainData);
 }
 

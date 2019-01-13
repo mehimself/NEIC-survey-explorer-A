@@ -129,7 +129,7 @@ export class State {
   D = false;
   E = false;
   // todo: set up default config source here
-  dataset: processing.DataGenerator = processing.classifySurveyData;
+  dataset: processing.DataGenerator = processing.classifySurveyData; // todo: rename: getTestDatasets
   seed: string;
 
   /**

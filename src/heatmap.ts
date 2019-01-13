@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-import {TwoD} from "./processing";
+import {TwoD, meanBitmap} from "./processing";
 import config from "./config";
 import {colorRange} from "./state";
 import * as d3 from 'd3';
@@ -194,7 +194,7 @@ export class HeatMap {
         && yDomain[0] <= p.y && p.y < yDomain[1];
     });
     // Attach config to initially empty selection.
-    let selection = container.selectAll("circle").data(config.meanBitMap);//points);
+    let selection = container.selectAll("circle").data(meanBitmap);//points);
 
     // Insert elements to match length of points array.
     selection.enter().append("circle").attr("r", 3);
