@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-// modified by Max R. Eckardt (mr.eckardt@gmail.com) 
+// modified by Max R. Eckardt (mr.eckardt@gmail.com)
 
 import config from "./config";
 
@@ -139,17 +139,17 @@ function mapTestBitmaps() {
   return maps;
 }
 
-/*function mapTrainBitmaps() {
+function mapTrainBitmaps() {
+  let maps = {};
   config.feeds.forEach(feed => { // => trainBitmaps
-    trainBitmaps[feed.label] = [];
-    feed.trainBias
-
-
-
-
-
-  })
-}*/
+    let map = [];
+    config.cardinalities.forEach((cardinality, variableIndex) => {
+      map.push(feed.trainBias.indexOf(variableIndex) >= 0 ? 1 : -1);
+    });
+    maps[feed.label] = map;
+  });
+  return maps;
+}
 
 /**
  * A two dimensional example: x and y coordinates with the label.
@@ -167,7 +167,7 @@ mapFeeds();
 
 export const meanBitmap = mapMeanBitmap();
 export const testBitmaps = mapTestBitmaps();
-//export const trainBitmaps = mapTrainBitmaps();
+export const trainBitmaps = mapTrainBitmaps();
 
 /**
  * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
@@ -192,7 +192,7 @@ export function shuffle(array: any[]): void {
 
 export type DataGenerator = () => TwoD[];
 
-export function classifySurveyData():
+export function getTestData():
   TwoD[] {
   let bitmaps = testBitmaps;
   let points: TwoD[] = [];

@@ -69,7 +69,7 @@ function feedBitMap(feed: any, x: number, y: number) {
 }
 
 let INPUTS: { [name: string]: InputFeature } = {};
-config.feeds.forEach(feed => {
+config.feeds.forEach(feed => { // todo: import feed label list from processing
   INPUTS[feed.label] = {f: (x, y) => feedBitMap(feed, x, y), label: feed.label};
 });
 
@@ -792,10 +792,12 @@ function generateData(firstTime = false) {
     state.serialize();
   }
   Math.seedrandom(state.seed);
-  let generator = state.dataset;
-  let data = generator();
+  //let generator = state.dataset;
+  let data = processing.getTestData();
   processing.shuffle(data);
-  // Split into train and test config.
+
+  // todo: get data directly from processing
+
   let splitIndex = Math.floor(data.length * state.percTrainData / 100);
   trainData = data.slice(0, splitIndex);
   testData = data.slice(splitIndex);

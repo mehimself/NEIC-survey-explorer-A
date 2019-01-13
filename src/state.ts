@@ -14,7 +14,6 @@ limitations under the License.
 ==============================================================================*/
 
 import * as nn from "./nn";
-import * as processing from "./processing";
 
 /** A map between names and activation functions. */
 export let activations: {[key: string]: nn.ActivationFunction} = {
@@ -29,11 +28,6 @@ export let regularizations: {[key: string]: nn.RegularizationFunction} = {
   "none": null,
   "L1": nn.RegularizationFunction.L1,
   "L2": nn.RegularizationFunction.L2
-};
-
-/** A map between processing names and functions that generate classification config. */
-export let datasets: {[key: string]: processing.DataGenerator} = {
-  "survey": processing.classifySurveyData,
 };
 
 export function getKeyFromValue(obj: any, value: any): string {
@@ -82,7 +76,6 @@ export class State {
     {name: "activation", type: Type.OBJECT, keyMap: activations},
     {name: "regularization", type: Type.OBJECT, keyMap: regularizations},
     {name: "batchSize", type: Type.NUMBER},
-    {name: "dataset", type: Type.OBJECT, keyMap: datasets},
     {name: "learningRate", type: Type.NUMBER},
     {name: "regularizationRate", type: Type.NUMBER},
     {name: "noise", type: Type.NUMBER},
@@ -128,8 +121,6 @@ export class State {
   C = false;
   D = false;
   E = false;
-  // todo: set up default config source here
-  dataset: processing.DataGenerator = processing.classifySurveyData; // todo: rename: getTestDatasets
   seed: string;
 
   /**
