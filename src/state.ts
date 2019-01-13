@@ -83,8 +83,7 @@ export class State {
     {name: "seed", type: Type.STRING},
     {name: "showTestData", type: Type.BOOLEAN},
     {name: "discretize", type: Type.BOOLEAN},
-    {name: "percTrainData", type: Type.NUMBER},
-      // todo: add survey seed variable names (for serializing it in the url)
+    // todo: add survey seed variable names here (for serializing it in the url)
     {name: "A", type: Type.BOOLEAN},
     {name: "B", type: Type.BOOLEAN},
     {name: "C", type: Type.BOOLEAN},
@@ -106,7 +105,6 @@ export class State {
   batchSize = 10;
   discretize = false;
   tutorial: string = null;
-  percTrainData = 50;
   activation = nn.Activations.TANH;
   regularization: nn.RegularizationFunction = nn.RegularizationFunction.L2;
   problem = Problem.CLASSIFICATION;

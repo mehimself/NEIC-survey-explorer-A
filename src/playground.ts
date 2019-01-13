@@ -792,16 +792,26 @@ function generateData(firstTime = false) {
     state.serialize();
   }
   Math.seedrandom(state.seed);
-  //let generator = state.dataset;
-  let data = processing.getTestData();
-  processing.shuffle(data);
 
-  // todo: get data directly from processing
 
-  let splitIndex = Math.floor(data.length * state.percTrainData / 100);
-  trainData = data.slice(0, splitIndex);
-  testData = data.slice(splitIndex);
+
+
+  // todo: get dynamic list of active feeds?
+
+
+
+
+
+
+
+
+  let activeFeedLabels =
+
+  trainData = processing.getTrainData(activeFeedLabels);
+  testData = processing.getTestData();
+
   console.log('traindata', trainData);
+
   heatMap.updatePoints(trainData);
 }
 

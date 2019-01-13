@@ -18,6 +18,8 @@ limitations under the License.
 import config from "./config";
 
 let pixelCoordinates = [];
+let variableCount = config.cardinalities.length;
+let packedTrainSets = expandTrainSets();
 
 function mapMeanBitmap() {
   function mapResultsMean() {
@@ -65,7 +67,7 @@ function mapFeeds() {
 
 function getSquareSize() {
   let pixelCount = 0;
-  for (let i = 0; i < config.cardinalities.length; i++) {
+  for (let i = 0; i < variableCount; i++) {
     pixelCount += config.cardinalities[i];
   }
   return Math.ceil(Math.sqrt(pixelCount))
@@ -74,7 +76,7 @@ function getSquareSize() {
 function mapVariablePixels() {
   function mapVariableOffsets() {
     let variableOffset = 0;
-    for (let i = 0; i < config.cardinalities.length; i++) {
+    for (let i = 0; i < variableCount; i++) {
       variableOffsets.push(variableOffset);
       variableOffset = variableOffsets[i] + config.cardinalities[i];
     }
@@ -99,13 +101,14 @@ function mapVariablePixels() {
   })
 }
 
-function mapTestBitmaps() {
+function mapSetValuesToPixels(sets: number [][]) {
   function getAbsolutePixelValue(cardinality, value, index) {
     const variableValue = Math.round(value * 100) / 100;
     let pixelValue = (1 + index) / cardinality;
     pixelValue = Math.round(pixelValue * 100) / 100;
     return pixelValue == variableValue ? 1 : 0;
   }
+
   function getProportionalPixelValue(cardinality, value, index) {
     const pixelValueProportion = 1 / cardinality;
     const valueThreshold = index * pixelValueProportion;
@@ -116,7 +119,8 @@ function mapTestBitmaps() {
     }
     return pixelValue;
   }
-  function mapSet(set, map) {
+
+  function mapVariableValueToPixelValues(set, map) {
     set.forEach((value, v) => {
       const cardinality = config.cardinalities[v];
       for (let c = 0; c < cardinality; c++) {
@@ -131,24 +135,24 @@ function mapTestBitmaps() {
     })
   }
   let maps = [];
-  config.packedVariableSets.forEach(set => {
+  sets.forEach(set => {
     let map = [];
     maps.push(map);
-    mapSet(set, map);
+    mapVariableValueToPixelValues(set, map);
   });
   return maps;
 }
 
-function mapTrainBitmaps() {
-  let maps = {};
+function expandTrainSets(): number[][] {
+  let sets = [];
   config.feeds.forEach(feed => { // => trainBitmaps
-    let map = [];
+    let set = [];
     config.cardinalities.forEach((cardinality, variableIndex) => {
-      map.push(feed.trainBias.indexOf(variableIndex) >= 0 ? 1 : -1);
+      set.push(feed.trainBias.indexOf(variableIndex) >= 0 ? 1 : -1);
     });
-    maps[feed.label] = map;
+    sets.push(set);
   });
-  return maps;
+  return sets;
 }
 
 /**
@@ -166,8 +170,9 @@ mapVariablePixels();
 mapFeeds();
 
 export const meanBitmap = mapMeanBitmap();
-export const testBitmaps = mapTestBitmaps();
-export const trainBitmaps = mapTrainBitmaps();
+export const testBitmaps = mapSetValuesToPixels(config.packedVariableSets);
+export const trainBitmaps = mapSetValuesToPixels(packedTrainSets);
+console.log('trainBitmaps', trainBitmaps);
 
 /**
  * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
@@ -190,10 +195,7 @@ export function shuffle(array: any[]): void {
   }
 }
 
-export type DataGenerator = () => TwoD[];
-
-export function getTestData():
-  TwoD[] {
+export function getTestData(): TwoD[] {
   let bitmaps = testBitmaps;
   let points: TwoD[] = [];
   for (let m = 0; m < bitmaps.length; m++) {
@@ -208,3 +210,30 @@ export function getTestData():
   return points;
 }
 
+export function getTrainData(activeFeedLabels: string[]): TwoD[] {
+  let combinedMap = [];
+
+  // for each pixel
+  // OR active feed values => map
+  // return trainData
+
+
+  // repeat map setSize times => trainData
+  const setSize = 50; // todo: move to config
+  let bitmaps = [];
+  for (let i = 0; i < setSize; i++) {
+    bitmaps.push(combinedMap);
+  }
+
+  let points: TwoD[] = [];
+  for (let m = 0; m < bitmaps.length; m++) {
+    for (let p = 0; p < bitmaps[m].length; p++) {
+      points.push({
+        x: bitmaps[m][p].x - 0.5,
+        y: bitmaps[m][p].y + 0.5,
+        value: bitmaps[m][p].value
+      })
+    }
+  }
+  return points;
+}
