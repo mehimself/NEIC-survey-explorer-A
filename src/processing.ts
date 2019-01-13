@@ -15,6 +15,7 @@ limitations under the License.
 
 import config from "./config";
 
+let trainBitmaps = {};
 
 function mapResultsMean() {
   config.packedVariableSets[0].forEach((v, i) => {
@@ -63,8 +64,8 @@ function mapVariablePixels() {
     for (let c = 0; c < cardinality; c++) {
       const pixelOffset = variableOffset + c;
       const coordinates = {
-        x: pixelOffset % config.squareSize + 1,
-        y: Math.floor(pixelOffset / config.squareSize) + 1
+        x: pixelOffset % squareSize + 1,
+        y: Math.floor(pixelOffset / squareSize) + 1
       };
       pixels.push(coordinates);
     }
@@ -120,20 +121,25 @@ function unpackVariables() {
     })
   }
 
+  // todo: get variableCount
+  // todo: move bitmaps to this module
   config.bitmaps = [];
   config.packedVariableSets.forEach((set) => {
     let map = [];
     config.bitmaps.push(map);
     mapSet(set, map);
   });
-}
 
-mapVariableOffsets();
-mapVariablePixels();
-unpackVariables();
-mapResultsMean();
-mapMeanResponseSet();
-mapFeeds();
+  config.feeds.forEach(feed => { // => trainBitmaps
+    trainBitmaps[feed.label] = [];
+    feed.trainBias
+
+
+
+
+
+  })
+}
 
 /**
  * A two dimensional example: x and y coordinates with the label.
@@ -143,6 +149,8 @@ export type TwoD = {
   y: number,
   value: number
 };
+
+export const squareSize = config.packedVariableSets[0].length;
 
 /**
  * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
@@ -182,3 +190,9 @@ export function classifySurveyData(bitmaps: TwoD[][]):
   return points;
 }
 
+mapVariableOffsets();
+mapVariablePixels();
+unpackVariables();
+mapResultsMean();
+mapMeanResponseSet();
+mapFeeds();

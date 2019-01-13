@@ -17,7 +17,7 @@ import * as nn from "./nn";
 import config from './config';
 import {HeatMap, reduceMatrix} from "./heatmap";
 import {activations, colorRange, getKeyFromValue, regularizations, State} from "./state";
-import {shuffle, TwoD} from "./processing";
+import * as processing from "./processing";
 import {AppendingLineChart} from "./linechart";
 import * as d3 from 'd3';
 
@@ -126,7 +126,7 @@ let state = State.deserializeState();
 let boundary: { [id: string]: number[][] } = {};
 let selectedNodeId: string = null;
 // Plot the heatmaps
-let xDomain: [number, number] = [0, config.squareSize];
+let xDomain: [number, number] = [0, processing.squareSize];
 let heatMap = new HeatMap(300, DENSITY, xDomain, xDomain, d3.select("#heatmap"), {showAxes: true});
 let linkWidthScale = d3.scale.linear()
   .domain([0, 5])
@@ -137,8 +137,8 @@ const colorScale = d3.scale.linear<string, number>()
   .range(colorRange.colors)
   .clamp(true);
 let iter = 0;
-let trainData: TwoD[] = [];
-let testData: TwoD[] = [];
+let trainData: processing.TwoD[] = [];
+let testData: processing.TwoD[] = [];
 let network: nn.Node[][] = null;
 let lossTrain = 0;
 let lossTest = 0;
@@ -681,7 +681,7 @@ function updateDecisionBoundary(network: nn.Node[][], firstTime: boolean) {
   }
 }
 
-function getLoss(network: nn.Node[][], dataPoints: TwoD[]): number {
+function getLoss(network: nn.Node[][], dataPoints: processing.TwoD[]): number {
   let loss = 0;
   for (let i = 0; i < dataPoints.length; i++) {
     let dataPoint = dataPoints[i];
@@ -794,7 +794,7 @@ function generateData(firstTime = false) {
   Math.seedrandom(state.seed);
   let generator = state.dataset;
   let data = generator(config.bitmaps);
-  shuffle(data);
+  processing.shuffle(data);
   // Split into train and test config.
   let splitIndex = Math.floor(data.length * state.percTrainData / 100);
   trainData = data.slice(0, splitIndex);

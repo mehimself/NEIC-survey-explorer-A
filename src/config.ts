@@ -104,7 +104,6 @@ let config = {
       map: []
     }
   ],
-  squareSize: 10,
   variableOffsets: []
 };
 
