@@ -217,8 +217,8 @@ export function getTestData(): TwoD[] {
   for (let m = 0; m < bitmaps.length; m++) { // todo: make loops more descriptive
     for (let p = 0; p < bitmaps[m].length; p++) {
       points.push({
-        x: bitmaps[m][p].x,// - 0.5,
-        y: bitmaps[m][p].y,// + 0.5,
+        x: bitmaps[m][p].x - 0.5,
+        y: bitmaps[m][p].y + 0.5,
         value: bitmaps[m][p].value
       })
     }
@@ -245,8 +245,8 @@ export function getTrainData(activeFeedLabels: string[], setSize: number = 20): 
       let n = 0;
       do { // append training points [setSize] times
         points.push({
-          y: y,// - 0.5,
-          x: x,// + 0.5,
+          y: y - 0.5,
+          x: x + 0.5,
           value: combinedValue ? 1 : -1
         });
         n++;
