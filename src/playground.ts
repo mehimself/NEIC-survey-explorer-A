@@ -54,7 +54,7 @@ interface InputFeature {
   label?: string;
 }
 
-function feedBitMap(feed: any, x: number, y: number) {
+function getFeedPixelValue(feed: any, x: number, y: number) {
   let value = 0;
   for (let p = 0; p < feed.map.length; p++) {
     const pixel = feed.map[p];
@@ -70,7 +70,7 @@ function feedBitMap(feed: any, x: number, y: number) {
 
 let INPUTS: { [name: string]: InputFeature } = {};
 config.feeds.forEach(feed => { // todo: import feed label list from processing
-  INPUTS[feed.label] = {f: (x, y) => feedBitMap(feed, x, y), label: feed.label};
+  INPUTS[feed.label] = {f: (x, y) => getFeedPixelValue(feed, x, y), label: feed.label};
 });
 
 class Player {
@@ -750,6 +750,16 @@ function constructInput(x: number, y: number): number[] {
   return input;
 }
 
+function getActiveInputLabels(): string[] {
+  let labels: string[] = [];
+  for (let inputName in INPUTS) {
+    if (state[inputName]) {
+      labels.push(inputName);
+    }
+  }
+  return labels;
+}
+
 function oneStep(): void {
   iter++;
   trainData.forEach((point, i) => {
@@ -766,13 +776,17 @@ function oneStep(): void {
   updateUI();
 }
 
-function reset() {
+function reset(firstTime: boolean = false) {
   lineChart.reset();
+
+  generateData(firstTime);
+
   state.serialize();
   player.pause();
   let suffix = state.numHiddenLayers !== 1 ? "s" : "";
   d3.select("#layers-label").text("Hidden layer" + suffix);
   d3.select("#num-layers").text(state.numHiddenLayers);
+
   // Make a simple network.
   iter = 0;
   let numInputs = constructInput(0, 0).length;
@@ -785,7 +799,7 @@ function reset() {
   updateUI(true);
 }
 
-function generateData(firstTime = false) {
+function generateData(firstTime:boolean = false) {
   if (!firstTime) {
     // Change the seed.
     state.seed = Math.random().toFixed(5);
@@ -793,21 +807,7 @@ function generateData(firstTime = false) {
   }
   Math.seedrandom(state.seed);
 
-
-
-
-  // todo: get dynamic list of active feeds?
-
-
-
-
-
-
-
-
-  let activeFeedLabels =
-
-  trainData = processing.getTrainData(activeFeedLabels);
+  trainData = processing.getTrainData(getActiveInputLabels());
   testData = processing.getTestData();
 
   console.log('traindata', trainData);
@@ -818,5 +818,4 @@ function generateData(firstTime = false) {
 let parametersChanged = false;
 
 makeGUI();
-generateData(true);
 reset();

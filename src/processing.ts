@@ -20,6 +20,7 @@ import config from "./config";
 let pixelCoordinates = [];
 let variableCount = config.cardinalities.length;
 let packedTrainSets = expandTrainSets();
+let feedBitmaps = {};
 
 function mapMeanBitmap() {
   function mapResultsMean() {
@@ -47,22 +48,25 @@ function mapMeanBitmap() {
   return map;
 }
 
-function mapFeeds() {
+function mapFeedBitmaps() {
   config.feeds.forEach((feed) => {
     feed.map = [];
+    feedBitmaps[feed.label] = [];
     for (let idx = 0; idx < pixelCoordinates.length; idx++) {
       const isActivePixel = feed.inputMask.indexOf(idx) >= 0;
-      const pixelValue = isActivePixel ? 1 : 0; //1 - meanBitmap[idx].value; // todo: review this weighting
+      const pixelValue = isActivePixel ? 1 : -1; // todo: set pixel training weighting
       for (let p = 0; p < config.cardinalities[idx]; p++) {
         let pixel = {
           x: pixelCoordinates[idx][p].x,
           y: pixelCoordinates[idx][p].y,
           value: pixelValue
         };
+        feedBitmaps[feed.label].push(pixel);
         feed.map.push(pixel);
       }
     }
-  })
+  });
+  console.log('feedBitmaps', feedBitmaps);
 }
 
 function getSquareSize() {
@@ -167,7 +171,7 @@ export type TwoD = {
 export const squareSize = getSquareSize();
 
 mapVariablePixels();
-mapFeeds();
+mapFeedBitmaps();
 
 export const meanBitmap = mapMeanBitmap();
 export const testBitmaps = mapSetValuesToPixels(config.packedVariableSets);
@@ -198,7 +202,7 @@ export function shuffle(array: any[]): void {
 export function getTestData(): TwoD[] {
   let bitmaps = testBitmaps;
   let points: TwoD[] = [];
-  for (let m = 0; m < bitmaps.length; m++) {
+  for (let m = 0; m < bitmaps.length; m++) { // todo: make loops more descriptive
     for (let p = 0; p < bitmaps[m].length; p++) {
       points.push({
         x: bitmaps[m][p].x - 0.5,
@@ -210,29 +214,27 @@ export function getTestData(): TwoD[] {
   return points;
 }
 
-export function getTrainData(activeFeedLabels: string[]): TwoD[] {
-  let combinedMap = [];
-
-  // for each pixel
-  // OR active feed values => map
-  // return trainData
-
-
-  // repeat map setSize times => trainData
-  const setSize = 50; // todo: move to config
-  let bitmaps = [];
-  for (let i = 0; i < setSize; i++) {
-    bitmaps.push(combinedMap);
-  }
-
-  let points: TwoD[] = [];
-  for (let m = 0; m < bitmaps.length; m++) {
-    for (let p = 0; p < bitmaps[m].length; p++) {
-      points.push({
-        x: bitmaps[m][p].x - 0.5,
-        y: bitmaps[m][p].y + 0.5,
-        value: bitmaps[m][p].value
-      })
+export function getTrainData(activeFeedLabels: string[], setSize: number = 1): TwoD[] {
+  let points = [];
+  for(let y = 0; y < squareSize; y++) { // iterate through each pixel row
+    for (let x = 0; x < squareSize; x++) { // iterate through each pixel
+      let combinedValue = false;
+      activeFeedLabels.forEach(label => { // boolean OR current pixel values of active feeds
+        let feedPixel = feedBitmaps[label].find(pixel => { // get current pixel by its coordinates
+          return pixel.y == y && pixel.x == x;
+        });
+        let feedPixelValue = feedPixel && feedPixel.value == 1;
+        combinedValue = combinedValue || feedPixelValue;
+      });
+      let n = 0;
+      do { // append training points [setSize] times
+        points.push({
+          y: y - 0.5,
+          x: x + 0.5,
+          value: combinedValue ? 1 : -1
+        });
+        n++;
+      } while(n < setSize);
     }
   }
   return points;
