@@ -806,10 +806,17 @@ function generateData(firstTime:boolean = false) {
     state.serialize();
   }
   Math.seedrandom(state.seed);
+  let data = processing.getTestData();
+  processing.shuffle(data);
 
-  trainData = processing.getTrainData(getActiveInputLabels());
-  testData = processing.getTestData();
-  console.log('trainData', trainData);
+  // todo: get data directly from processing
+
+  let splitIndex = Math.floor(data.length * 50 / 100);
+  trainData = data.slice(0, splitIndex);
+  testData = data.slice(splitIndex);
+
+  //trainData = processing.getTrainData(getActiveInputLabels()); // use feed bias to train network (escalating error)
+
   heatMap.updatePoints(trainData);
 }
 
