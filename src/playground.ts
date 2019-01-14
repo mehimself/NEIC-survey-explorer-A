@@ -809,9 +809,7 @@ function generateData(firstTime:boolean = false) {
 
   trainData = processing.getTrainData(getActiveInputLabels());
   testData = processing.getTestData();
-
-  console.log('traindata', trainData);
-
+  console.log('trainData', trainData);
   heatMap.updatePoints(trainData);
 }
 

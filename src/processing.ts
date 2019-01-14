@@ -19,7 +19,9 @@ import config from "./config";
 
 let pixelCoordinates = [];
 let variableCount = config.cardinalities.length;
-let packedTrainSets = expandTrainSets();
+let trainData = [];
+let trainBitmaps = [];
+
 let feedBitmaps = {};
 
 function mapMeanBitmap() {
@@ -54,7 +56,7 @@ function mapFeedBitmaps() {
     feedBitmaps[feed.label] = [];
     for (let idx = 0; idx < pixelCoordinates.length; idx++) {
       const isActivePixel = feed.inputMask.indexOf(idx) >= 0;
-      const pixelValue = isActivePixel ? 1 : -1; // todo: set pixel training weighting
+      const pixelValue = isActivePixel ? 1 : 0; // todo: set pixel training weighting
       for (let p = 0; p < config.cardinalities[idx]; p++) {
         let pixel = {
           x: pixelCoordinates[idx][p].x,
@@ -113,7 +115,7 @@ function mapSetValuesToPixels(sets: number [][]) {
     return pixelValue == variableValue ? 1 : 0;
   }
 
-  function getProportionalPixelValue(cardinality, value, index) {
+  function getProportionalPixelValue_old(cardinality, value, index) {
     const pixelValueProportion = 1 / cardinality;
     const valueThreshold = index * pixelValueProportion;
     let pixelValue = (value - valueThreshold) * cardinality;
@@ -123,11 +125,18 @@ function mapSetValuesToPixels(sets: number [][]) {
     }
     return pixelValue;
   }
+  function getProportionalPixelValue(cardinality, value, index) {
+    const pixelValueProportion = 1 / cardinality;
+    const pixelValue = value / cardinality >= pixelValueProportion * (index + 1);
+    return pixelValue ? 1: 0; // todo: set bias values
+  }
+
 
   function mapVariableValueToPixelValues(set, map) {
     set.forEach((value, v) => {
       const cardinality = config.cardinalities[v];
       for (let c = 0; c < cardinality; c++) {
+        if (!pixelCoordinates[v]) console.log('undefined', v, c);
         let pixel = {
           x: pixelCoordinates[v][c].x,
           y: pixelCoordinates[v][c].y,
@@ -147,15 +156,16 @@ function mapSetValuesToPixels(sets: number [][]) {
   return maps;
 }
 
-function expandTrainSets(): number[][] {
+function expandFeedTrainBias(): number[][] {
   let sets = [];
-  config.feeds.forEach(feed => { // => trainBitmaps
+  config.feeds.forEach(feed => {
     let set = [];
     config.cardinalities.forEach((cardinality, variableIndex) => {
       set.push(feed.trainBias.indexOf(variableIndex) >= 0 ? 1 : -1);
     });
     sets.push(set);
   });
+  console.log('trainData', sets);
   return sets;
 }
 
@@ -172,11 +182,13 @@ export const squareSize = getSquareSize();
 
 mapVariablePixels();
 mapFeedBitmaps();
+trainData = expandFeedTrainBias();
+trainBitmaps = mapSetValuesToPixels(trainData);
+console.log('trainBitmaps', trainBitmaps);
 
 export const meanBitmap = mapMeanBitmap();
-export const testBitmaps = mapSetValuesToPixels(config.packedVariableSets);
-export const trainBitmaps = mapSetValuesToPixels(packedTrainSets);
-console.log('trainBitmaps', trainBitmaps);
+
+const testBitmaps = mapSetValuesToPixels(config.packedVariableSets);
 
 /**
  * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
@@ -205,8 +217,8 @@ export function getTestData(): TwoD[] {
   for (let m = 0; m < bitmaps.length; m++) { // todo: make loops more descriptive
     for (let p = 0; p < bitmaps[m].length; p++) {
       points.push({
-        x: bitmaps[m][p].x - 0.5,
-        y: bitmaps[m][p].y + 0.5,
+        x: bitmaps[m][p].x,// - 0.5,
+        y: bitmaps[m][p].y,// + 0.5,
         value: bitmaps[m][p].value
       })
     }
@@ -214,23 +226,27 @@ export function getTestData(): TwoD[] {
   return points;
 }
 
-export function getTrainData(activeFeedLabels: string[], setSize: number = 1): TwoD[] {
+export function getTrainData(activeFeedLabels: string[], setSize: number = 20): TwoD[] {
   let points = [];
   for(let y = 0; y < squareSize; y++) { // iterate through each pixel row
     for (let x = 0; x < squareSize; x++) { // iterate through each pixel
       let combinedValue = false;
       activeFeedLabels.forEach(label => { // boolean OR current pixel values of active feeds
-        let feedPixel = feedBitmaps[label].find(pixel => { // get current pixel by its coordinates
-          return pixel.y == y && pixel.x == x;
+        let feedIndex = 0;
+        config.feeds.forEach((feed, index) => { // find feed by label
+          if (feed.label == label) {
+            feedIndex = index;
+          }
         });
+        let feedPixel = trainBitmaps[feedIndex].find(pixel => pixel.y == y && pixel.x == x); // find same pixel in feed trainBias
         let feedPixelValue = feedPixel && feedPixel.value == 1;
         combinedValue = combinedValue || feedPixelValue;
       });
       let n = 0;
       do { // append training points [setSize] times
         points.push({
-          y: y - 0.5,
-          x: x + 0.5,
+          y: y,// - 0.5,
+          x: x,// + 0.5,
           value: combinedValue ? 1 : -1
         });
         n++;
