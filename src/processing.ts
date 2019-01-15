@@ -23,6 +23,7 @@ let trainBitmaps = [];
 
 let feedBitmaps = {};
 
+export const squareSize = getSquareSize();
 export const variablePixels = mapVariablePixels();
 
 function mapMeanBitmap() {
@@ -181,8 +182,6 @@ export type TwoD = {
   y: number,
   value: number
 };
-
-export const squareSize = getSquareSize();
 
 mapVariablePixels();
 mapFeedBitmaps();
