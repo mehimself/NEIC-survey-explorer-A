@@ -985,7 +985,7 @@ function generateData(firstTime:boolean = false) {
 
     let data = processing.testData;
     processing.shuffle(data);
-    let splitIndex = Math.floor(data.length * 50 / 100);
+    let splitIndex = Math.floor(data.length * config.trainDataPercentage / 100);
     trainData = data.slice(0, splitIndex);
     testData = data.slice(splitIndex);
   }
