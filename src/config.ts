@@ -5,7 +5,32 @@ interface config {
   feeds: string[]
 }
 let config = {
-  headers: ['Organization', 'Practices addressing ethical challenges', 'Practice supporting communication/publication', 'Share resources (which)', 'CD at MA-level', 'Part of Curriculum', 'General/specialized', 'Other', 'DRM part of existing or separate course', 'Developed own material', 'Who developed it', 'Willingness to share course material', 'Support for DM', 'Online DH training', 'Awareness of following initiative ', 'Willingness to collaborate on resources', 'CD: EDA', 'CD: Statistics', 'CD: Ethics', 'CD: Data rights and protection', 'CD: Interdisciplinary dialogue', 'Interest in HPC', 'Course integrated/separate', 'DRM – Department', 'DRM – Faculty'],
+  headers: [
+    'Organization',
+    'Practices addressing ethical challenges',
+    'Practice supporting communication/publication',
+    'Share resources (which)',
+    'CD at MA-level',
+    'Part of Curriculum',
+    'General/specialized',
+    'Other',
+    'DRM part of existing or separate course',
+    'Developed own material',
+    'Who developed it',
+    'Willingness to share course material',
+    'Support for DM',
+    'Online DH training',
+    'Awareness of following initiative',
+    'Willingness to collaborate on resources',
+    'CD: EDA',
+    'CD: Statistics',
+    'CD: Ethics',
+    'CD: Data rights and protection',
+    'CD: Interdisciplinary dialogue',
+    'Interest in HPC',
+    'Course integrated/separate',
+    'DRM – Department',
+    'DRM – Faculty'],
   cardinalities: [5, 1, 3, 5, 1, 1, 1, 1, 1, 1, 4, 4, 11, 5, 6, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5],
   packedVariableSets: [
     [0, -1, 0, -0.5, -1, -1, 1, -1, -1, 1, -0.33333333333333337, 1, -0.4, 1, 0.19999999999999996, -1, -1, -1, -1, -1, -1, 1, -1, -0.39274254380873475, -0.11071002890982251],
@@ -62,6 +87,36 @@ let config = {
     [1, -1, 0, -1, -1, 1, 1, 1, 1, -1, 1, -1, 0, 1, 0.6000000000000001, 1, 1, 1, -1, 1, -1, -1, 1, -0.3501631540756531, 0.17654032249266405],
     [-0.5, -1, 1, 0.5, -1, 1, -1, -1, 1, -1, 0.33333333333333326, -1, -0.19999999999999996, 0, -0.6, 1, -1, -1, -1, -1, -1, 1, 1, -0.5370051222355319, -0.028387673608443964]
   ],
+  descriptions: {
+    default: `The heatmap shows the average over all responses of the survey. Colors visualize trends towards <span class="negative highlight">negating answers</span>, <span class="neutral highlight">neutral answers</span>, and <span class="affirmative highlight">affirmative answers</span>.
+        Point over the heatmap to see information about individual variables and results`,
+    // variable descriptions indexed by survey variable index
+    '0': `Variable label: Organization`,
+    '1': `Variable label: Practices addressing ethical challenges`,
+    '2': `Variable label: Practice supporting communication/publication`,
+    '3': `Variable label: Share resources (which)`,
+    '4': `Variable label: CD at MA-level`,
+    '5': `Variable label: Part of Curriculum`,
+    '6': `Variable label: General/specialized`,
+    '7': `Variable label: Other`,
+    '8': `Variable label: DRM part of existing or separate course`,
+    '9': `Variable label: Developed own material`,
+    '10': `Variable label: Who developed it`,
+    '11': `Variable label: Willingness to share course material`,
+    '12': `Variable label: Support for DM`,
+    '13': `Variable label: Online DH training`,
+    '14': `Variable label: Awareness of following initiative`,
+    '15': `Variable label: Willingness to collaborate on resources`,
+    '16': `Variable label: CD: EDA`,
+    '17': `Variable label: CD: Statistics`,
+    '18': `Variable label: CD: Ethics`,
+    '19': `Variable label: CD: Data rights and protection`,
+    '20': `Variable label: CD: Interdisciplinary dialogue`,
+    '21': `Variable label: Interest in HPC`,
+    '22': `Variable label: Course integrated/separate`,
+    '23': `Variable label: DRM – Department`,
+    '24': `Variable label: DRM – Faculty`
+  },
   feeds: [
     {
       label: "Sandbox",

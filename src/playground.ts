@@ -145,6 +145,7 @@ let lossTrain = 0;
 let lossTest = 0;
 let player = new Player();
 let lineChart = new AppendingLineChart(d3.select("#linechart"), ["#777", "black"]);
+let highlightTimer = null;
 
 function makeGUI() {
   d3.select("#reset-button").on("click", () => {
@@ -298,11 +299,7 @@ function makeGUI() {
           rowFrames.push(frame);
         }
 
-        // remove earlier highlights
-        while (document.getElementsByClassName('frame').length) {
-          let node = document.getElementsByClassName('frame')[0];
-          node.parentNode.removeChild(node);
-        }
+        removeHighlights();
 
         // draw rectangles around variable rows
         for (let f = 0; f < rowFrames.length; f++) {
@@ -327,11 +324,43 @@ function makeGUI() {
         }
 
         // display variable info
-
-        // todo: info column in layout
+        displayInfo(variable.toString());
       }
     }
   });
+
+  // fade out highlight, when mouse not over heatmap or in info column
+  resetInfoOnMouseLeave();
+  resetInfoHighlights();
+}
+
+function resetInfoOnMouseLeave () {
+  const focusAreas = ['.output.column', '.description.column'];
+  let mouseInHighlightArea = false;
+  let triggerAreas = [];
+  focusAreas.forEach(selector => {
+    d3.select(selector).on('mouseleave', resetInfoHighlights);
+    d3.select(selector).on('mouseenter', cancelInfoReset);
+  });
+}
+function cancelInfoReset() {
+  clearTimeout(highlightTimer);
+}
+function resetInfoHighlights () {
+  cancelInfoReset();
+  highlightTimer = setTimeout(() => {
+    removeHighlights();
+    displayInfo();
+  }, 1500);
+}
+function displayInfo(label:string = 'default') {
+  d3.select('#info').html(config.descriptions[label]);
+}
+function removeHighlights() {
+  while (document.getElementsByClassName('frame').length) {
+    let node = document.getElementsByClassName('frame')[0];
+    node.parentNode.removeChild(node);
+  }
 }
 
 function renderColorRange() {

@@ -528,7 +528,7 @@ g.column rect {
 /* Features column */
 
 .features.column {
-  width: 50%;
+  width: 30%;
   position: relative;
 }
 
@@ -684,7 +684,7 @@ g.column rect {
 /* Hidden layers column */
 
 .hidden-layers.column {
-  width: 40%;
+  width: 30%;
 }
 
 #main-part .hidden-layers h4 {
@@ -771,6 +771,12 @@ g.train circle {
 
 #main-part .output .mdl-checkbox__label.label {
   line-height: 1.7em;
+}
+
+/* Output column */
+
+.description.column {
+    width: 30%;
 }
 
 /* Article */
