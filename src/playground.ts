@@ -139,6 +139,7 @@ const colorScale = d3.scale.linear<string, number>()
   .clamp(true);
 let iter = 0;
 let lastLossTest = 1;
+let continueCalculating = false;
 let trainData: processing.TwoD[] = [];
 let testData: processing.TwoD[] = [];
 let network: nn.Node[][] = null;
@@ -930,8 +931,9 @@ function oneStep(): void {
   // Compute the loss.
   lossTrain = getLoss(network, trainData);
   lossTest = getLoss(network, testData);
-  if (lastLossTest - lossTest < 1e-5 || iter > 1000) {
+  if (continueCalculating == false && lastLossTest - lossTest < 1e-5 || iter > 1000) {
     player.pause();
+    continueCalculating = true;
   }
   lastLossTest = lossTest;
   updateUI();
@@ -940,6 +942,7 @@ function oneStep(): void {
 function reset(firstTime: boolean = false) {
   lineChart.reset();
   lastLossTest = 1;
+  continueCalculating = false;
   generateData(firstTime);
   updateFeedInfo();
   resetInfoHighlights();

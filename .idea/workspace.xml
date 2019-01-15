@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a75aee0-cdf7-4410-8f57-e91522981b84" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/playground.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/playground.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -23,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/playground.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1016">
-              <caret line="933" column="36" selection-start-line="933" selection-start-column="36" selection-end-line="933" selection-end-column="36" />
+            <state relative-caret-position="904">
+              <caret line="935" column="31" selection-start-line="935" selection-start-column="31" selection-end-line="935" selection-end-column="31" />
               <folding>
                 <element signature="e#658#685#0" expanded="true" />
                 <element signature="e#1081#1189#0" />
@@ -397,7 +395,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="240422000" />
+    <option name="totallyTimeSpent" value="240749000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -464,7 +462,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/playground.ts</url>
-          <line>510</line>
+          <line>511</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
@@ -621,8 +619,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/playground.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1016">
-          <caret line="933" column="36" selection-start-line="933" selection-start-column="36" selection-end-line="933" selection-end-column="36" />
+        <state relative-caret-position="904">
+          <caret line="935" column="31" selection-start-line="935" selection-start-column="31" selection-end-line="935" selection-end-column="31" />
           <folding>
             <element signature="e#658#685#0" expanded="true" />
             <element signature="e#1081#1189#0" />
