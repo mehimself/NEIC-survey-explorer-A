@@ -19,7 +19,6 @@ import config from "./config";
 
 let variableCount = config.cardinalities.length;
 let trainData = [];
-let trainBitmaps = [];
 
 let feedBitmaps = {};
 
@@ -120,16 +119,6 @@ function mapSetValuesToPixels(sets: number [][]) {
     return pixelValue == variableValue ? 1 : 0;
   }
 
-  function getProportionalPixelValue_old(cardinality, value, index) {
-    const pixelValueProportion = 1 / cardinality;
-    const valueThreshold = index * pixelValueProportion;
-    let pixelValue = (value - valueThreshold) * cardinality;
-    pixelValue = Math.round(pixelValue * 100) / 100;
-    if (pixelValue < 0) {
-      pixelValue = 0;
-    }
-    return pixelValue;
-  }
   function getProportionalPixelValue(cardinality, value, index) {
     const pixelValueProportion = 1 / cardinality;
     const pixelValue = value / cardinality >= pixelValueProportion * (index + 1);
@@ -183,10 +172,10 @@ export type TwoD = {
   value: number
 };
 
-mapVariablePixels();
 mapFeedBitmaps();
+
 trainData = expandFeedTrainBias();
-trainBitmaps = mapSetValuesToPixels(trainData);
+const trainBitmaps = mapSetValuesToPixels(trainData);
 console.log('trainBitmaps', trainBitmaps);
 
 export const meanBitmap = mapMeanBitmap();
