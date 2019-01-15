@@ -143,8 +143,7 @@ let network: nn.Node[][] = null;
 let lossTrain = 0;
 let lossTest = 0;
 let player = new Player();
-let lineChart = new AppendingLineChart(d3.select("#linechart"),
-  ["#777", "black"]);
+let lineChart = new AppendingLineChart(d3.select("#linechart"), ["#777", "black"]);
 
 function makeGUI() {
   d3.select("#reset-button").on("click", () => {
@@ -221,8 +220,6 @@ function makeGUI() {
     d3.select("header").style("display", "none");
   }
 
-  // todo: render color ranges here
-  d3.select("header")
 }
 
 function renderColorRange() {
