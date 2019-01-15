@@ -97,7 +97,7 @@ export class State {
   ];
 
   [key: string]: any;
-  learningRate = 0.001;
+  learningRate = 0.003;
   regularizationRate = 0.001;
   // todo: toggle test config visibility here
   showTestData = false;
