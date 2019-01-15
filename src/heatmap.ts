@@ -46,8 +46,11 @@ export class HeatMap {
   private svg;
 
   constructor(
-    width: number, numSamples: number, xDomain: [number, number],
-    yDomain: [number, number], container,
+    width: number,
+    numSamples: number,
+    xDomain: [number, number],
+    yDomain: [number, number],
+    container,
     userSettings?: HeatMapSettings) {
     this.numSamples = numSamples;
     let height = width;
