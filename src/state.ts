@@ -84,7 +84,7 @@ export class State {
     {name: "showTestData", type: Type.BOOLEAN},
     {name: "discretize", type: Type.BOOLEAN},
     // todo: add survey seed variable names here (for serializing it in the url)
-    {name: "A", type: Type.BOOLEAN},
+    {name: "A", type: Type.BOOLEAN}, // todo add these dynamically
     {name: "B", type: Type.BOOLEAN},
     {name: "C", type: Type.BOOLEAN},
     {name: "D", type: Type.BOOLEAN},
