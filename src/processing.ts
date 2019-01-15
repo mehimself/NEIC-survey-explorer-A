@@ -37,12 +37,12 @@ function mapMeanBitmap() {
 
   let meanResponseSet = mapResultsMean();
   let map = [];
-  for (let idx = 0; idx < pixelCoordinates.length; idx++) {
-    for (let p = 0; p < config.cardinalities[idx]; p++) {
+  for (let v = 0; v < variablePixels.length; v++) {
+    for (let p = 0; p < config.cardinalities[v]; p++) {
       let pixel = {
-        x: pixelCoordinates[idx][p].x,
-        y: pixelCoordinates[idx][p].y,
-        value: meanResponseSet[idx]
+        x: variablePixels[v][p].x,
+        y: variablePixels[v][p].y,
+        value: meanResponseSet[v]
       };
       map.push(pixel);
     }
@@ -54,13 +54,13 @@ function mapFeedBitmaps() {
   config.feeds.forEach((feed) => {
     feed.map = [];
     feedBitmaps[feed.label] = [];
-    for (let idx = 0; idx < pixelCoordinates.length; idx++) {
-      const isActivePixel = feed.inputMask.indexOf(idx) >= 0;
+    for (let v = 0; v < variablePixels.length; v++) {
+      const isActivePixel = feed.inputMask.indexOf(v) >= 0;
       const pixelValue = isActivePixel ? 1 : 0; // todo: set pixel training weighting
-      for (let p = 0; p < config.cardinalities[idx]; p++) {
+      for (let p = 0; p < config.cardinalities[v]; p++) {
         let pixel = {
-          x: pixelCoordinates[idx][p].x,
-          y: pixelCoordinates[idx][p].y,
+          x: variablePixels[v][p].x,
+          y: variablePixels[v][p].y,
           value: pixelValue
         };
         feedBitmaps[feed.label].push(pixel);
@@ -136,10 +136,10 @@ function mapSetValuesToPixels(sets: number [][]) {
     set.forEach((value, v) => {
       const cardinality = config.cardinalities[v];
       for (let c = 0; c < cardinality; c++) {
-        if (!pixelCoordinates[v]) console.log('undefined', v, c);
+        if (!variablePixels[v]) console.log('undefined', v, c);
         let pixel = {
-          x: pixelCoordinates[v][c].x,
-          y: pixelCoordinates[v][c].y,
+          x: variablePixels[v][c].x,
+          y: variablePixels[v][c].y,
           value: 0
         };
         pixel.value = getProportionalPixelValue(cardinality, value, c);
