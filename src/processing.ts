@@ -18,59 +18,11 @@ limitations under the License.
 import config from "./config";
 
 let variableCount = config.cardinalities.length;
-let trainData = [];
-
-let feedBitmaps = {};
-
 export const squareSize = getSquareSize();
 export const variablePixels = mapVariablePixels();
 
-function mapMeanBitmap() {
-  function mapResultsMean() {
-    let set = [];
-    config.packedVariableSets[0].forEach((v, i) => {
-      let sum = 0;
-      config.packedVariableSets.forEach(set => sum += set[i]);
-      set[i] = sum / config.packedVariableSets.length;
-    });
-    return set;
-  }
-
-  let meanResponseSet = mapResultsMean();
-  let map = [];
-  for (let v = 0; v < variablePixels.length; v++) {
-    for (let p = 0; p < config.cardinalities[v]; p++) {
-      let pixel = {
-        x: variablePixels[v][p].x,
-        y: variablePixels[v][p].y,
-        value: meanResponseSet[v]
-      };
-      map.push(pixel);
-    }
-  }
-  return map;
-}
-
-function mapFeedBitmaps() {
-  config.feeds.forEach((feed) => {
-    feed.map = [];
-    feedBitmaps[feed.label] = [];
-    for (let v = 0; v < variablePixels.length; v++) {
-      const isActivePixel = feed.inputMask.indexOf(v) >= 0;
-      const pixelValue = isActivePixel ? 1 : 0; // todo: set pixel training weighting
-      for (let p = 0; p < config.cardinalities[v]; p++) {
-        let pixel = {
-          x: variablePixels[v][p].x,
-          y: variablePixels[v][p].y,
-          value: pixelValue
-        };
-        feedBitmaps[feed.label].push(pixel);
-        feed.map.push(pixel);
-      }
-    }
-  });
-  console.log('feedBitmaps', feedBitmaps);
-}
+let trainData = [];
+let feedBitmaps = {};
 
 function getSquareSize() {
   let pixelCount = 0;
@@ -111,6 +63,18 @@ function mapVariablePixels() {
   return variablePixels;
 }
 
+function expandFeedTrainBias(): number[][] {
+  let sets = [];
+  config.feeds.forEach(feed => {
+    let set = [];
+    config.cardinalities.forEach((cardinality, variableIndex) => {
+      set.push(feed.trainBias.indexOf(variableIndex) >= 0 ? 1 : -1);
+    });
+    sets.push(set);
+  });
+  return sets;
+}
+
 function mapSetValuesToPixels(sets: number [][]) {
   function getAbsolutePixelValue(cardinality, value, index) {
     const variableValue = Math.round(value * 100) / 100;
@@ -122,9 +86,8 @@ function mapSetValuesToPixels(sets: number [][]) {
   function getProportionalPixelValue(cardinality, value, index) {
     const pixelValueProportion = 1 / cardinality;
     const pixelValue = value / cardinality >= pixelValueProportion * (index + 1);
-    return pixelValue ? 1: 0; // todo: set bias values
+    return pixelValue ? 1 : 0; // todo: set bias range here
   }
-
 
   function mapVariableValueToPixelValues(set, map) {
     set.forEach((value, v) => {
@@ -141,6 +104,7 @@ function mapSetValuesToPixels(sets: number [][]) {
       }
     })
   }
+
   let maps = [];
   sets.forEach(set => {
     let map = [];
@@ -150,22 +114,54 @@ function mapSetValuesToPixels(sets: number [][]) {
   return maps;
 }
 
-function expandFeedTrainBias(): number[][] {
-  let sets = [];
-  config.feeds.forEach(feed => {
+function mapMeanBitmap() {
+  function mapResultsMean() {
     let set = [];
-    config.cardinalities.forEach((cardinality, variableIndex) => {
-      set.push(feed.trainBias.indexOf(variableIndex) >= 0 ? 1 : -1);
+    config.packedVariableSets[0].forEach((v, i) => {
+      let sum = 0;
+      config.packedVariableSets.forEach(set => sum += set[i]);
+      set[i] = sum / config.packedVariableSets.length;
     });
-    sets.push(set);
-  });
-  console.log('trainData', sets);
-  return sets;
+    return set;
+  }
+
+  let meanResponseSet = mapResultsMean();
+  let map = [];
+  for (let v = 0; v < variablePixels.length; v++) {
+    for (let p = 0; p < config.cardinalities[v]; p++) {
+      let pixel = {
+        x: variablePixels[v][p].x,
+        y: variablePixels[v][p].y,
+        value: meanResponseSet[v]
+      };
+      map.push(pixel);
+    }
+  }
+  return map;
 }
 
-/**
- * A two dimensional example: x and y coordinates with the label.
- */
+function mapFeedBitmaps() {
+  config.feeds.forEach((feed) => {
+    feed.map = [];
+    feedBitmaps[feed.label] = [];
+    for (let v = 0; v < variablePixels.length; v++) {
+      const isActivePixel = feed.inputMask.indexOf(v) >= 0;
+      // todo: issue #8 - discrete input mask
+      const pixelValue = isActivePixel ? 1 : 0; // todo: set pixel feed weighting here
+      for (let p = 0; p < config.cardinalities[v]; p++) {
+        let pixel = {
+          x: variablePixels[v][p].x,
+          y: variablePixels[v][p].y,
+          value: pixelValue
+        };
+        feedBitmaps[feed.label].push(pixel);
+        feed.map.push(pixel);
+      }
+    }
+  });
+  console.log('feedBitMaps', feedBitmaps);
+}
+
 export type TwoD = {
   x: number,
   y: number,
@@ -174,7 +170,9 @@ export type TwoD = {
 
 mapFeedBitmaps();
 
+// todo: issue #8
 trainData = expandFeedTrainBias();
+
 const trainBitmaps = mapSetValuesToPixels(trainData);
 console.log('trainBitmaps', trainBitmaps);
 
@@ -182,43 +180,22 @@ export const meanBitmap = mapMeanBitmap();
 
 const testBitmaps = mapSetValuesToPixels(config.packedVariableSets);
 
-/**
- * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
- * library as the random generator.
- */
-export function shuffle(array: any[]): void {
-  let counter = array.length;
-  let temp = 0;
-  let index = 0;
-  // While there are elements in the array
-  while (counter > 0) {
-    // Pick a random index
-    index = Math.floor(Math.random() * counter);
-    // Decrease counter by 1
-    counter--;
-    // And swap the last element with it
-    temp = array[counter];
-    array[counter] = array[index];
-    array[index] = temp;
-  }
-}
-
 export function getTestData(): TwoD[] {
   let bitmaps = testBitmaps;
   let points: TwoD[] = [];
-  for (let m = 0; m < bitmaps.length; m++) { // todo: make loops more descriptive
-    for (let p = 0; p < bitmaps[m].length; p++) {
+  for (let s = 0; s < bitmaps.length; s++) { // for each set
+    for (let p = 0; p < bitmaps[s].length; p++) { // for each pixel
       points.push({
-        x: bitmaps[m][p].x - 0.5,
-        y: bitmaps[m][p].y + 0.5,
-        value: bitmaps[m][p].value
+        x: bitmaps[s][p].x - 0.5,
+        y: bitmaps[s][p].y + 0.5,
+        value: bitmaps[s][p].value
       })
     }
   }
   return points;
 }
 
-export function getTrainData(activeFeedLabels: string[], setSize: number = 20): TwoD[] {
+export function getTrainData(activeFeedLabels: string[], setSize: number = 0): TwoD[] {
   let points = [];
   for(let y = 0; y < squareSize; y++) { // iterate through each pixel row
     for (let x = 0; x < squareSize; x++) { // iterate through each pixel
@@ -239,6 +216,7 @@ export function getTrainData(activeFeedLabels: string[], setSize: number = 20): 
         points.push({
           y: y - 0.5,
           x: x + 0.5,
+          // todo: issue #8 - test data bias with combined bit weighting
           value: combinedValue ? 1 : -1
         });
         n++;
@@ -247,3 +225,26 @@ export function getTrainData(activeFeedLabels: string[], setSize: number = 20): 
   }
   return points;
 }
+
+export function shuffle(array: any[]): void {
+  /**
+   * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
+   * library as the random generator.
+   */
+
+  let counter = array.length;
+  let temp = 0;
+  let index = 0;
+  // While there are elements in the array
+  while (counter > 0) {
+    // Pick a random index
+    index = Math.floor(Math.random() * counter);
+    // Decrease counter by 1
+    counter--;
+    // And swap the last element with it
+    temp = array[counter];
+    array[counter] = array[index];
+    array[index] = temp;
+  }
+}
+

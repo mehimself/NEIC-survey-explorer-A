@@ -970,16 +970,27 @@ function generateData(firstTime:boolean = false) {
     state.serialize();
   }
   Math.seedrandom(state.seed);
-  let data = processing.getTestData();
-  processing.shuffle(data);
 
-  // todo: get data directly from processing
+  if (config.useTrainBias) {
 
-  let splitIndex = Math.floor(data.length * 50 / 100);
-  trainData = data.slice(0, splitIndex);
-  testData = data.slice(splitIndex);
+    // todo: issue #8: use feed bias to train network (escalating error) #wontfix
+    let activeFeedLabels = [];
+    for (let label in INPUTS) {
+      if (state[label]) {
+        activeFeedLabels.push(label);
+      }
+    }
+    trainData = processing.getTrainData(activeFeedLabels, config.biasSetSize);
+    testData = processing.getTestData();
 
-  //trainData = processing.getTrainData(getActiveInputLabels()); // use feed bias to train network (escalating error)
+  } else {
+
+    let data = processing.getTestData();
+    processing.shuffle(data);
+    let splitIndex = Math.floor(data.length * 50 / 100);
+    trainData = data.slice(0, splitIndex);
+    testData = data.slice(splitIndex);
+  }
 
   heatMap.updatePoints(trainData);
 }
