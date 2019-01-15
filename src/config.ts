@@ -140,6 +140,10 @@ Point over the heatmap to see information about individual variables and results
       map: []
     }
   ],
+  maxIterations: 1000,
+  finalIncrement: 1e-6, // pause calculation at this loss increment
+  useTrainBias: true,
+  biasSetSize: 20
 };
 
 export default config;

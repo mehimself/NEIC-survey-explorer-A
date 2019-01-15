@@ -931,7 +931,7 @@ function oneStep(): void {
   // Compute the loss.
   lossTrain = getLoss(network, trainData);
   lossTest = getLoss(network, testData);
-  if (continueCalculating == false && lastLossTest - lossTest < 1e-5 || iter > 1000) {
+  if (continueCalculating == false && lastLossTest - lossTest < config.finalIncrement || iter > config.maxIterations) {
     player.pause();
     continueCalculating = true;
   }
