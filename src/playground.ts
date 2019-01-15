@@ -203,6 +203,7 @@ function makeGUI() {
   regularRate.property("value", state.regularizationRate);
 
   renderColorRange();
+  resetInfoHighlights();
 
   // Listen for css-responsive changes and redraw the svg network.
   window.addEventListener("resize", () => {
@@ -331,7 +332,6 @@ function makeGUI() {
 
   // fade out highlight, when mouse not over heatmap or in info column
   resetInfoOnMouseLeave();
-  resetInfoHighlights();
 }
 
 function resetInfoOnMouseLeave () {

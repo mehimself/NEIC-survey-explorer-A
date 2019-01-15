@@ -88,9 +88,12 @@ let config = {
     [-0.5, -1, 1, 0.5, -1, 1, -1, -1, 1, -1, 0.33333333333333326, -1, -0.19999999999999996, 0, -0.6, 1, -1, -1, -1, -1, -1, 1, 1, -0.5370051222355319, -0.028387673608443964]
   ],
   descriptions: {
-    default: `The heatmap shows the average over all responses of the survey. Colors visualize trends towards <span class="negative highlight">negating answers</span>, <span class="neutral highlight">neutral answers</span>, and <span class="affirmative highlight">affirmative answers</span>.
-        Point over the heatmap to see information about individual variables and results`,
-    // variable descriptions indexed by survey variable index
+    default: `
+The heatmap shows the average over all responses of the survey. 
+Colors visualize trends towards <span class="negative highlight">negating answers</span>, <span class="neutral highlight">neutral answers</span>, and <span class="affirmative highlight">affirmative answers</span>.
+The bullets reflect the mean variable value in the training data (50% of the survey results).
+Point over the heatmap to see information about individual variables and results`,
+    // variable descriptions by survey variable index
     '0': `Variable label: Organization`,
     '1': `Variable label: Practices addressing ethical challenges`,
     '2': `Variable label: Practice supporting communication/publication`,
@@ -119,8 +122,8 @@ let config = {
   },
   feeds: [
     {
-      label: "Sandbox",
-      info: "Would you recommend the provision of a sandbox environment?",
+      label: "A",
+      description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
       inputMask: [
         1
       ],
@@ -128,7 +131,7 @@ let config = {
       map: []
     }, {
       label: "B",
-      info: '',
+      description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
       inputMask: [
         13
       ],
@@ -136,7 +139,7 @@ let config = {
       map: []
     }, {
       label: "C",
-      info: '',
+      description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
       inputMask: [
         15
       ],
@@ -144,7 +147,7 @@ let config = {
       map: []
     }, {
       label: "D",
-      info: '',
+      description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
       inputMask: [
         16
       ],
@@ -152,7 +155,7 @@ let config = {
       map: []
     }, {
       label: "E",
-      info: '',
+      description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
       inputMask: [
         22
       ],
