@@ -204,7 +204,6 @@ function makeGUI() {
   regularRate.property("value", state.regularizationRate);
 
   renderColorRange();
-  resetInfoHighlights();
 
   // Listen for css-responsive changes and redraw the svg network.
   window.addEventListener("resize", () => {
@@ -326,7 +325,7 @@ function makeGUI() {
         }
 
         // display variable info
-        displayInfo(variable.toString());
+        displayInfo('default', variable.toString());
       }
     }
   });
@@ -354,8 +353,43 @@ function resetInfoHighlights () {
     displayInfo();
   }, 1500);
 }
-function displayInfo(label:string = 'default') {
-  d3.select('#info').html(config.descriptions[label]);
+function updateFeedInfo() {
+  let infoMarkup = '';
+  for (let feedLabel in INPUTS) {
+    if (state[feedLabel]) {
+      config.feeds.forEach(feed => {
+        if (feed.label == feedLabel) {
+          infoMarkup += `<h5>${feed.label}</h5>`
+          infoMarkup += feed.description;
+        }
+      });
+    }
+    if (infoMarkup) {
+      infoMarkup += '<br>';
+    }
+  }
+  if (infoMarkup) {
+    infoMarkup = '<br><h4>Active Feeds</h4>' + infoMarkup;
+  }
+  d3.select('#feedInfo').html(infoMarkup);
+}
+function displayInfo(heatMapLabel:string = 'default', variableLabel:string = '') {
+
+  // set heatmap description
+  let infoMarkup = '';
+  if (config.descriptions[heatMapLabel]) {
+    infoMarkup = config.descriptions[heatMapLabel]
+  }
+  d3.select('#heatmapInfo').html(infoMarkup);
+
+  // set variable description
+  infoMarkup = '';
+  if (config.descriptions[variableLabel]) {
+    infoMarkup = '<br><h4>Highlighted Variable</h4>';
+    infoMarkup += config.descriptions[variableLabel];
+  }
+  d3.select('#variableInfo').html(infoMarkup);
+
 }
 function removeHighlights() {
   while (document.getElementsByClassName('frame').length) {
@@ -919,6 +953,8 @@ function reset(firstTime: boolean = false) {
   lineChart.reset();
   lastLossTest = 1;
   generateData(firstTime);
+  updateFeedInfo();
+  resetInfoHighlights();
 
   state.serialize();
   player.pause();
