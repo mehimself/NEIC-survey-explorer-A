@@ -336,8 +336,6 @@ function makeGUI() {
 
 function resetInfoOnMouseLeave () {
   const focusAreas = ['.output.column', '.description.column'];
-  let mouseInHighlightArea = false;
-  let triggerAreas = [];
   focusAreas.forEach(selector => {
     d3.select(selector).on('mouseleave', resetInfoHighlights);
     d3.select(selector).on('mouseenter', cancelInfoReset);
@@ -917,16 +915,6 @@ function constructInput(x: number, y: number): number[] {
     }
   }
   return input;
-}
-
-function getActiveInputLabels(): string[] {
-  let labels: string[] = [];
-  for (let inputName in INPUTS) {
-    if (state[inputName]) {
-      labels.push(inputName);
-    }
-  }
-  return labels;
 }
 
 function oneStep(): void {
