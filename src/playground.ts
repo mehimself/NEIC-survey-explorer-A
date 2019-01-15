@@ -43,7 +43,7 @@ function scrollTween(offset) {
 
 const RECT_SIZE = 30;
 const BIAS_SIZE = 5;
-const DENSITY = 100;
+const DENSITY = 300;
 
 enum HoverType {
   BIAS, WEIGHT
@@ -145,7 +145,6 @@ let lossTrain = 0;
 let lossTest = 0;
 let player = new Player();
 let lineChart = new AppendingLineChart(d3.select("#linechart"), ["#777", "black"]);
-let lastVariableHighlight;
 
 function makeGUI() {
   d3.select("#reset-button").on("click", () => {
@@ -240,8 +239,9 @@ function makeGUI() {
       let position = d3.mouse(d3.event['target']);
 
       // extrapolate clicked pixel
-      const y = processing.squareSize - Math.floor(position[1] / pixelSize);
-      const x = Math.floor(position[0] / pixelSize);
+      const halfAPixel = pixelSize / 2;
+      const y = processing.squareSize - Math.floor((position[1] - halfAPixel) / pixelSize);
+      const x = Math.floor((position[0] - halfAPixel) / pixelSize);
 
       // determine clicked variable
       let variable: number;
@@ -307,15 +307,19 @@ function makeGUI() {
         // draw rectangles around variable rows
         for (let f = 0; f < rowFrames.length; f++) {
           const frame = rowFrames[f];
-          const y = canvasSize - frame.bottom - pixelSize - 1;
+          const y = canvasSize - frame.bottom - pixelSize;
           const x = frame.left;
-          const width = frame.right - frame.left;
+          const width = frame.right - frame.left - 3;
           const height = pixelSize - 1;
           //console.log('x', x, 'y', y, 'width', width, 'height', height);
           container.append('span')
             .style("width", width + "px")
             .style("height", height + "px")
-            .style("border", "1px solid black")
+            .style("border", "1px solid")
+            .style("border-color", "#6ea90f")
+            .style("border-radius", "0.2em")
+            .style("background-color", "#8dd914")
+            .style("opacity", "0.2")
             .style("position", "absolute")
             .style("top", `${y}px`)
             .style("left", `${x}px`)

@@ -115,7 +115,7 @@ export class HeatMap {
         "left": "0",
         "top": "0"
       }).append("g")
-        .attr("transform", `translate(${padding},${padding})`);
+        .attr("transform", `translate(${padding - 1},${padding + 2})`);
 
       this.svg.append("g").attr("class", "train");
       this.svg.append("g").attr("class", "test");
@@ -132,7 +132,7 @@ export class HeatMap {
 
       this.svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", `translate(0,${height - 2 * padding})`)
+        .attr("transform", `translate(0, ${height - 2 * padding})`)
         .call(xAxis);
 
       this.svg.append("g")
