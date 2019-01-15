@@ -127,7 +127,8 @@ let boundary: { [id: string]: number[][] } = {};
 let selectedNodeId: string = null;
 // Plot the heatmaps
 let xDomain: [number, number] = [0, processing.squareSize];
-let heatMap = new HeatMap(300, DENSITY, xDomain, xDomain, d3.select("#heatmap"), {showAxes: true});
+const showCanvasAxes = true;
+let heatMap = new HeatMap(300, DENSITY, xDomain, xDomain, d3.select("#heatmap"), {showAxes: showCanvasAxes});
 let linkWidthScale = d3.scale.linear()
   .domain([0, 5])
   .range([1, 10])
@@ -144,6 +145,7 @@ let lossTrain = 0;
 let lossTest = 0;
 let player = new Player();
 let lineChart = new AppendingLineChart(d3.select("#linechart"), ["#777", "black"]);
+let lastVariableHighlight;
 
 function makeGUI() {
   d3.select("#reset-button").on("click", () => {
@@ -219,7 +221,113 @@ function makeGUI() {
     d3.select("div.more").style("display", "none");
     d3.select("header").style("display", "none");
   }
+  const container = d3.select("#heatmap");
+  let heatmap = container.on('mousemove', function (e) {
 
+    // get heatmap canvas element and context
+    let canvas = heatmap.select('canvas').node(); //[0][0];
+
+    // measure its size
+    const canvasSize = canvas['scrollHeight'];
+
+    // determine pixel size
+    const pixelSize = Math.round(canvasSize / processing.squareSize);
+
+    // determine click position
+    //let position = d3.mouse(this);
+    const eventTarget = d3.event['target'];
+    if (eventTarget.className !== 'frame') {
+      let position = d3.mouse(d3.event['target']);
+
+      // extrapolate clicked pixel
+      const y = processing.squareSize - Math.floor(position[1] / pixelSize);
+      const x = Math.floor(position[0] / pixelSize);
+
+      // determine clicked variable
+      let variable: number;
+      processing.variablePixels.forEach((pixels, variableIndex) => {
+        let pixel = pixels.find(pixel => pixel.x == (x + 1) && pixel.y == y);
+        if (pixel) {
+          variable = variableIndex;
+        }
+      });
+
+      // handle moving cursor moving over variable
+      if (variable != undefined) { // highlight variable pixels
+
+        let pixels = processing.variablePixels[variable];
+
+        // divide pixels into rows
+        let rows = []; // [firstRowPixel, lastRowPixel?]
+        for (let p = 0; p < pixels.length; p++) {
+          const lastRow = rows[rows.length - 1];
+          const isNewRow = lastRow == undefined || lastRow[0].y + 1 != pixels[p].y;
+          if (isNewRow) {
+            const firstRowPixel = {
+              y: pixels[p].y - 1,
+              x: pixels[p].x - 1
+            };
+            rows.push([
+              firstRowPixel
+            ]);
+          } else {
+            const lastRowPixel = {
+              y: pixels[p].y - 1,
+              x: pixels[p].x - 1
+            };
+            lastRow[1] = lastRowPixel;
+          }
+        }
+
+        // get pixel row offsets (in screen pixels)
+        let rowFrames = [];
+        for (let r = 0; r < rows.length; r++) {
+          const isLastRow = r == rows.length - 1;
+          let frame = {
+            left: 0,
+            right: 0,
+            bottom: 0
+          };
+          frame.left = rows[r][0].x * pixelSize;
+          frame.right = processing.squareSize * pixelSize;
+          if (isLastRow) { // left offset
+            const lastRowPixel = rows[r][rows[r].length - 1];
+            frame.right = (lastRowPixel.x + 1) * pixelSize;
+          }
+          frame.bottom = rows[r][0].y * pixelSize;
+          rowFrames.push(frame);
+        }
+
+        // remove earlier highlights
+        while (document.getElementsByClassName('frame').length) {
+          let node = document.getElementsByClassName('frame')[0];
+          node.parentNode.removeChild(node);
+        }
+
+        // draw rectangles around variable rows
+        for (let f = 0; f < rowFrames.length; f++) {
+          const frame = rowFrames[f];
+          const y = canvasSize - frame.bottom - pixelSize - 1;
+          const x = frame.left;
+          const width = frame.right - frame.left;
+          const height = pixelSize - 1;
+          //console.log('x', x, 'y', y, 'width', width, 'height', height);
+          container.append('span')
+            .style("width", width + "px")
+            .style("height", height + "px")
+            .style("border", "1px solid black")
+            .style("position", "absolute")
+            .style("top", `${y}px`)
+            .style("left", `${x}px`)
+            .attr('class', 'frame');
+        }
+
+        // display variable info
+
+        // todo: info column in layout
+      }
+    }
+  });
 }
 
 function renderColorRange() {
