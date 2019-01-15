@@ -54,26 +54,10 @@ interface InputFeature {
   label?: string;
 }
 
-function getFeedPixelValue(feed: any, x: number, y: number) {
-  let value = 0;
-  // todo: issue #8 -> bias * meanMap input source
-
-  for (let p = 0; p < feed.map.length; p++) {
-    const pixel = feed.map[p];
-    const sameRow = pixel.y - 1 <= y && y < pixel.y;
-    const sameCol = pixel.x - 1 <= x && x < pixel.x;
-    if (sameRow && sameCol) {
-      value = pixel.value;
-      break;
-    }
-  }
-  return value;
-}
-
 let INPUTS: { [name: string]: InputFeature } = {};
-config.feeds.forEach(feed => {
-  INPUTS[feed.label] = {f: (x, y) => getFeedPixelValue(feed, x, y), label: feed.label};
-});
+for (let label in processing.feedBitmaps) {
+  INPUTS[label] = {f: (x, y) => processing.getFeedPixelValue(label, x, y), label: label};
+}
 
 class Player {
   private timerIndex = 0;
@@ -359,12 +343,8 @@ function updateFeedInfo() {
   for (let feedLabel in INPUTS) {
     const isActiveFeed = state[feedLabel];
     if (isActiveFeed) {
-      config.feeds.forEach(feed => { // get feed by label
-        if (feed.label == feedLabel) {
-          if (infoMarkup) infoMarkup += '<br><br>';
-          infoMarkup += feed.description;
-        }
-      });
+      if (infoMarkup) infoMarkup += '<br><br>';
+      infoMarkup += config.feeds[feedLabel].description;
     }
   }
   if (infoMarkup) {
@@ -396,6 +376,7 @@ function removeHighlights() {
     node.parentNode.removeChild(node);
   }
 }
+
 
 function renderColorRange() {
   let x = d3.scale.linear()
@@ -862,15 +843,25 @@ function getLoss(network: nn.Node[][], dataPoints: processing.TwoD[]): number {
   return loss / dataPoints.length;
 }
 
+function zeroPad(n: number): string {
+  let pad = "0000";
+  return (pad + n).slice(-pad.length);
+}
+
+function humanReadable(n: number): string {
+  return n.toFixed(3);
+}
+
 function updateUI(firstStep = false) {
   // Update the links visually.
   updateWeightsUI(network, d3.select("g.core"));
   // Update the bias values visually.
   updateBiasesUI(network);
   // Get the decision boundary of the network.
+  let t2 = Date.now();
   updateDecisionBoundary(network, firstStep);
-  let selectedId = selectedNodeId != null ?
-    selectedNodeId : nn.getOutputNode(network).id;
+  let t3 = Date.now();
+  let selectedId = selectedNodeId != null ? selectedNodeId : nn.getOutputNode(network).id;
   heatMap.updateBackground(boundary[selectedId], state.discretize);
 
   // Update all decision boundaries.
@@ -880,20 +871,13 @@ function updateUI(firstStep = false) {
         state.discretize);
     });
 
-  function zeroPad(n: number): string {
-    let pad = "0000";
-    return (pad + n).slice(-pad.length);
-  }
-
-  function humanReadable(n: number): string {
-    return n.toFixed(3);
-  }
-
   // Update loss and iteration number.
   d3.select("#loss-train").text(humanReadable(lossTrain));
   d3.select("#loss-test").text(humanReadable(lossTest));
   d3.select("#iter-number").text(zeroPad(iter));
   lineChart.addDataPoint([lossTrain, lossTest]);
+  console.log('updateDecisionBoundary ms', t3 - t2);
+
 }
 
 function constructInputIds(): string[] {
@@ -934,7 +918,10 @@ function oneStep(): void {
     continueCalculating = true;
   }
   lastLossTest = lossTest;
+  let t3 = Date.now();
   updateUI();
+  let t4 = Date.now();
+  console.log('updateUI ms', t4 - t3);
 }
 
 function reset(firstTime: boolean = false) {
@@ -981,11 +968,11 @@ function generateData(firstTime:boolean = false) {
       }
     }
     trainData = processing.getTrainData(activeFeedLabels, config.biasSetSize);
-    testData = processing.getTestData();
+    testData = processing.testData;
 
   } else {
 
-    let data = processing.getTestData();
+    let data = processing.testData;
     processing.shuffle(data);
     let splitIndex = Math.floor(data.length * 50 / 100);
     trainData = data.slice(0, splitIndex);

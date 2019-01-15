@@ -15,15 +15,22 @@ limitations under the License.
 
 // modified by Max R. Eckardt (mr.eckardt@gmail.com)
 
+
+// general work flow: expand into sets of variable values (number[][]) > export as bitmap: TwoD[]
+
+
 import config from "./config";
 
-let variableCount = config.cardinalities.length;
-export const squareSize = getSquareSize();
-export const variablePixels = mapVariablePixels();
+const pixelRowOffset = 0//0.5;
+const pixelColumnOffset = 0//-0.5;
 
-let trainData = [];
-let feedBitmaps = {};
+// number of variables in data
 
+const variableCount = config.cardinalities.length;
+
+if (config.debug.processing) console.log('variableCount', variableCount);
+
+// pixel square side length
 function getSquareSize() {
   let pixelCount = 0;
   for (let i = 0; i < variableCount; i++) {
@@ -31,6 +38,12 @@ function getSquareSize() {
   }
   return Math.ceil(Math.sqrt(pixelCount))
 }
+
+export const squareSize = getSquareSize();
+
+if (config.debug.processing) console.log('squareSize', squareSize);
+
+// variable pixel map
 
 function mapVariablePixels() {
   function mapVariableOffsets() {
@@ -42,6 +55,7 @@ function mapVariablePixels() {
   }
 
   let variableOffsets = [];
+  if (config.debug.processing) console.log('variableOffsets', variableOffsets);
 
   mapVariableOffsets();
 
@@ -63,17 +77,11 @@ function mapVariablePixels() {
   return variablePixels;
 }
 
-function expandFeedTrainBias(): number[][] {
-  let sets = [];
-  config.feeds.forEach(feed => {
-    let set = [];
-    config.cardinalities.forEach((cardinality, variableIndex) => {
-      set.push(feed.trainBias.indexOf(variableIndex) >= 0 ? 1 : -1);
-    });
-    sets.push(set);
-  });
-  return sets;
-}
+export const variablePixels = mapVariablePixels();
+
+if (config.debug.processing) console.log('variablePixels', variablePixels);
+
+// map value[][] to TwoD[]
 
 function mapSetValuesToPixels(sets: number [][]) {
   function getAbsolutePixelValue(cardinality, value, index) {
@@ -97,9 +105,8 @@ function mapSetValuesToPixels(sets: number [][]) {
         let pixel = {
           x: variablePixels[v][c].x,
           y: variablePixels[v][c].y,
-          value: 0
+          value: getProportionalPixelValue(cardinality, value, c)
         };
-        pixel.value = getProportionalPixelValue(cardinality, value, c);
         map.push(pixel);
       }
     })
@@ -114,7 +121,8 @@ function mapSetValuesToPixels(sets: number [][]) {
   return maps;
 }
 
-function mapMeanBitmap() {
+// mean value bitmap
+function mapMeanBitmap(): TwoD[] {
   function mapResultsMean() {
     let set = [];
     config.packedVariableSets[0].forEach((v, i) => {
@@ -140,60 +148,48 @@ function mapMeanBitmap() {
   return map;
 }
 
-function mapFeedBitmaps() {
-  config.feeds.forEach((feed) => {
-    feed.map = [];
-    feedBitmaps[feed.label] = [];
-    for (let v = 0; v < variablePixels.length; v++) {
-      const isActivePixel = feed.inputMask.indexOf(v) >= 0;
-      // todo: issue #8 - discrete input mask
-      const pixelValue = isActivePixel ? 1 : 0; // todo: set pixel feed weighting here
-      for (let p = 0; p < config.cardinalities[v]; p++) {
-        let pixel = {
-          x: variablePixels[v][p].x,
-          y: variablePixels[v][p].y,
-          value: pixelValue
-        };
-        feedBitmaps[feed.label].push(pixel);
-        feed.map.push(pixel);
-      }
-    }
-  });
-  console.log('feedBitMaps', feedBitmaps);
-}
-
-export type TwoD = {
-  x: number,
-  y: number,
-  value: number
-};
-
-mapFeedBitmaps();
-
-// todo: issue #8
-trainData = expandFeedTrainBias();
-
-const trainBitmaps = mapSetValuesToPixels(trainData);
-console.log('trainBitmaps', trainBitmaps);
-
 export const meanBitmap = mapMeanBitmap();
 
-const testBitmaps = mapSetValuesToPixels(config.packedVariableSets);
+if (config.debug.processing) console.log('meanBitmap', meanBitmap);
 
-export function getTestData(): TwoD[] {
+// test data
+function getTestData(): TwoD[] {
   let bitmaps = testBitmaps;
   let points: TwoD[] = [];
   for (let s = 0; s < bitmaps.length; s++) { // for each set
     for (let p = 0; p < bitmaps[s].length; p++) { // for each pixel
       points.push({
-        x: bitmaps[s][p].x - 0.5,
-        y: bitmaps[s][p].y + 0.5,
+        y: bitmaps[s][p].y + pixelRowOffset,
+        x: bitmaps[s][p].x + pixelColumnOffset,
         value: bitmaps[s][p].value
       })
     }
   }
   return points;
 }
+const testBitmaps = mapSetValuesToPixels(config.packedVariableSets);
+
+export const testData = getTestData();
+
+if (config.debug.processing) console.log('testData', testData);
+
+// train data
+// todo: issue #8
+function expandFeedTrainBias(): number[][] {
+  let sets = [];
+  for (let label in config.feeds) {
+    let feed = config.feeds[label];
+    let set = [];
+    config.cardinalities.forEach((cardinality, variableIndex) => {
+      set.push(feed.trainBias.indexOf(variableIndex) >= 0 ? 1 : -1);
+    });
+    sets.push(set);
+  }
+  return sets;
+}
+
+const trainData = expandFeedTrainBias();
+const trainBitmaps = mapSetValuesToPixels(trainData);
 
 export function getTrainData(activeFeedLabels: string[], setSize: number = 0): TwoD[] {
   let points = [];
@@ -201,12 +197,7 @@ export function getTrainData(activeFeedLabels: string[], setSize: number = 0): T
     for (let x = 0; x < squareSize; x++) { // iterate through each pixel
       let combinedValue = false;
       activeFeedLabels.forEach(label => { // boolean OR current pixel values of active feeds
-        let feedIndex = 0;
-        config.feeds.forEach((feed, index) => { // find feed by label
-          if (feed.label == label) {
-            feedIndex = index;
-          }
-        });
+        let feedIndex = label.toUpperCase().charCodeAt(0) - 65;
         let feedPixel = trainBitmaps[feedIndex].find(pixel => pixel.y == y && pixel.x == x); // find same pixel in feed trainBias
         let feedPixelValue = feedPixel && feedPixel.value == 1;
         combinedValue = combinedValue || feedPixelValue;
@@ -214,9 +205,10 @@ export function getTrainData(activeFeedLabels: string[], setSize: number = 0): T
       let n = 0;
       do { // append training points [setSize] times
         points.push({
-          y: y - 0.5,
-          x: x + 0.5,
+          y: y + pixelRowOffset,
+          x: x + pixelColumnOffset,
           // todo: issue #8 - test data bias with combined bit weighting
+          // renders all variable pixels either active
           value: combinedValue ? 1 : -1
         });
         n++;
@@ -226,6 +218,50 @@ export function getTrainData(activeFeedLabels: string[], setSize: number = 0): T
   return points;
 }
 
+// feature feed
+function mapFeedBitmaps() {
+  let feedBitmaps = {};
+  for (let label in config.feeds) {
+    let feed = config.feeds[label];
+    feedBitmaps[label] = [];
+    for (let v = 0; v < variablePixels.length; v++) {
+      const isActivePixel = feed.inputMask.indexOf(v) >= 0;
+      // todo: issue #8 - discrete input mask
+      const pixelValue = isActivePixel ? 1 : 0; // todo: set pixel feed weighting here
+      for (let p = 0; p < config.cardinalities[v]; p++) {
+        let pixel = {
+          y: variablePixels[v][p].y + pixelRowOffset,
+          x: variablePixels[v][p].x + pixelColumnOffset,
+          value: pixelValue
+        };
+        feedBitmaps[label].push(pixel);
+      }
+    }
+  }
+  return feedBitmaps;
+}
+
+export const feedBitmaps = mapFeedBitmaps();
+
+export function getFeedPixelValue(label: any, x: number, y: number) {
+  let value = 0;
+  // todo: issue #8 -> bias * meanMap input source
+
+  for (let p = 0; p < feedBitmaps[label].length; p++) {
+    const pixel = feedBitmaps[label][p];
+    const sameRow = pixel.y - 1 <= y && y < pixel.y;
+    const sameCol = pixel.x - 1 <= x && x < pixel.x;
+    if (sameRow && sameCol) {
+      value = pixel.value;
+      break;
+    }
+  }
+  return value;
+}
+
+if (config.debug.processing) console.log('feedBitmaps', feedBitmaps);
+
+// Fisher-Yates
 export function shuffle(array: any[]): void {
   /**
    * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
@@ -247,4 +283,10 @@ export function shuffle(array: any[]): void {
     array[index] = temp;
   }
 }
+
+export type TwoD = {
+  x: number,
+  y: number,
+  value: number
+};
 

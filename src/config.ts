@@ -97,41 +97,45 @@ Point over the heatmap to see information about individual variables and results
     '23': `label: DRM – Department`,
     '24': `label: DRM – Faculty`
   },
-  feeds: [ // todo: turn into object with named index
-    {
-      label: "A",
+  feeds: {
+    A: {
+      //label: "A",
       description: `<em>A</em>: "Would you recommend the provision of a sandbox environment?"`,
       inputMask: [
         1
       ],
       trainBias: [6, 18, 25],
       map: [] // todo: outsource to processing
-    }, {
-      label: "B",
+    },
+    B: {
+      //label: "B",
       description: `<em>B</em>: "Question 2 Text?"`,
       inputMask: [
         13
       ],
       trainBias: [14, 19, 21],
       map: []
-    }, {
-      label: "C",
+    },
+    C: {
+      //label: "C",
       description: `<em>C</em>: "Question 3 Text?"`,
       inputMask: [
         15
       ],
       trainBias: [16, 21, 24],
       map: []
-    }, {
-      label: "D",
+    },
+    D: {
+      //label: "D",
       description: `<em>D</em>: "Question 4 Text?"`,
       inputMask: [
         16
       ],
       trainBias: [4, 6, 18],
       map: []
-    }, {
-      label: "E",
+    },
+    E: {
+      //label: "E",
       description: `<em>E</em>: "Question 5 Text?"`,
       inputMask: [
         22
@@ -139,11 +143,14 @@ Point over the heatmap to see information about individual variables and results
       trainBias: [0, 1, 13],
       map: []
     }
-  ],
+  },
   maxIterations: 1000,
   finalIncrement: 1e-6, // pause calculation at this loss increment
-  useTrainBias: true,
-  biasSetSize: 20
+  useTrainBias: false,
+  biasSetSize: 20,
+  debug: {
+    processing: false
+  }
 };
 
 export default config;
