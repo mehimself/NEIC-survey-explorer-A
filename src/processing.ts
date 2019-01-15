@@ -17,12 +17,13 @@ limitations under the License.
 
 import config from "./config";
 
-let pixelCoordinates = [];
 let variableCount = config.cardinalities.length;
 let trainData = [];
 let trainBitmaps = [];
 
 let feedBitmaps = {};
+
+export const variablePixels = mapVariablePixels();
 
 function mapMeanBitmap() {
   function mapResultsMean() {
@@ -92,6 +93,8 @@ function mapVariablePixels() {
 
   mapVariableOffsets();
 
+  let variablePixels = [];
+
   config.cardinalities.forEach((cardinality, v) => {
     const variableOffset = variableOffsets[v];
     const pixels = [];
@@ -103,8 +106,9 @@ function mapVariablePixels() {
       };
       pixels.push(coordinates);
     }
-    pixelCoordinates.push(pixels);
-  })
+    variablePixels.push(pixels);
+  });
+  return variablePixels;
 }
 
 function mapSetValuesToPixels(sets: number [][]) {
