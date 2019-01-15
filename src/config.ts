@@ -5,7 +5,10 @@ interface config {
   feeds: string[]
 }
 let config = {
+  // todo: add 26th variable
+  // pixels to use to resolve variable values
   cardinalities: [5, 1, 3, 5, 1, 1, 1, 1, 1, 1, 4, 4, 11, 5, 6, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5],
+  // variable values (normalized between -1 and 1)
   packedVariableSets: [
     [0, -1, 0, -0.5, -1, -1, 1, -1, -1, 1, -0.33333333333333337, 1, -0.4, 1, 0.19999999999999996, -1, -1, -1, -1, -1, -1, 1, -1, -0.39274254380873475, -0.11071002890982251],
     [0, -1, -1, 0.5, 1, 1, 1, -1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, -1, 1, -1, 1, -1, -0.8103938030698714, 0.01655631227780585],
@@ -97,7 +100,7 @@ Point over the heatmap to see information about individual variables and results
   feeds: [ // todo: turn into object with named index
     {
       label: "A",
-      description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
+      description: `<em>A</em>: "Would you recommend the provision of a sandbox environment?"`,
       inputMask: [
         1
       ],
@@ -105,7 +108,7 @@ Point over the heatmap to see information about individual variables and results
       map: [] // todo: outsource to processing
     }, {
       label: "B",
-      description: `Original text: "Question 2 Text?"`,
+      description: `<em>B</em>: "Question 2 Text?"`,
       inputMask: [
         13
       ],
@@ -113,7 +116,7 @@ Point over the heatmap to see information about individual variables and results
       map: []
     }, {
       label: "C",
-      description: `Original text: "Question 3 Text?"`,
+      description: `<em>C</em>: "Question 3 Text?"`,
       inputMask: [
         15
       ],
@@ -121,7 +124,7 @@ Point over the heatmap to see information about individual variables and results
       map: []
     }, {
       label: "D",
-      description: `Original text: "Question 4 Text?"`,
+      description: `<em>D</em>: "Question 4 Text?"`,
       inputMask: [
         16
       ],
@@ -129,7 +132,7 @@ Point over the heatmap to see information about individual variables and results
       map: []
     }, {
       label: "E",
-      description: `Original text: "Question 5 Text?"`,
+      description: `<em>E</em>: "Question 5 Text?"`,
       inputMask: [
         22
       ],
