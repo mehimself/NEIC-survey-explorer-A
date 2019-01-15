@@ -545,10 +545,8 @@ function drawNode(cx: number, cy: number, nodeId: string, isInput: boolean, cont
   if (isInput) {
     div.classed(activeOrNotClass, true);
   }
-  let nodeHeatMap = new HeatMap(RECT_SIZE, DENSITY / 10, xDomain,
-    xDomain, div, {noSvg: true});
+  let nodeHeatMap = new HeatMap(RECT_SIZE, DENSITY / 10, xDomain, xDomain, div, {noSvg: true});
   div.datum({heatmap: nodeHeatMap, id: nodeId});
-
 }
 
 function drawNetwork(network: nn.Node[][]): void {
