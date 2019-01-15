@@ -24,11 +24,13 @@ import config from "./config";
 const pixelRowOffset = 0//0.5;
 const pixelColumnOffset = 0//-0.5;
 
+
 // number of variables in data
 
 const variableCount = config.cardinalities.length;
 
 if (config.debug.processing) console.log('variableCount', variableCount);
+
 
 // pixel square side length
 function getSquareSize() {
@@ -43,8 +45,8 @@ export const squareSize = getSquareSize();
 
 if (config.debug.processing) console.log('squareSize', squareSize);
 
-// variable pixel map
 
+// variable pixel map
 function mapVariablePixels() {
   function mapVariableOffsets() {
     let variableOffset = 0;
@@ -81,8 +83,8 @@ export const variablePixels = mapVariablePixels();
 
 if (config.debug.processing) console.log('variablePixels', variablePixels);
 
-// map value[][] to TwoD[]
 
+// map value[][] to TwoD[]
 function mapSetValuesToPixels(sets: number [][]) {
   function getAbsolutePixelValue(cardinality, value, index) {
     const variableValue = Math.round(value * 100) / 100;
@@ -121,6 +123,7 @@ function mapSetValuesToPixels(sets: number [][]) {
   return maps;
 }
 
+
 // mean value bitmap
 function mapMeanBitmap(): TwoD[] {
   function mapResultsMean() {
@@ -152,6 +155,7 @@ export const meanBitmap = mapMeanBitmap();
 
 if (config.debug.processing) console.log('meanBitmap', meanBitmap);
 
+
 // test data
 function getTestData(): TwoD[] {
   let bitmaps = testBitmaps;
@@ -173,6 +177,7 @@ export const testData = getTestData();
 
 if (config.debug.processing) console.log('testData', testData);
 
+
 // train data
 // todo: issue #8
 function expandFeedTrainBias(): number[][] {
@@ -188,7 +193,7 @@ function expandFeedTrainBias(): number[][] {
   return sets;
 }
 
-const trainData = expandFeedTrainBias();
+const trainData: number[][] = expandFeedTrainBias();
 const trainBitmaps = mapSetValuesToPixels(trainData);
 
 export function getTrainData(activeFeedLabels: string[], setSize: number = 0): TwoD[] {
@@ -198,7 +203,13 @@ export function getTrainData(activeFeedLabels: string[], setSize: number = 0): T
       let combinedValue = false;
       activeFeedLabels.forEach(label => { // boolean OR current pixel values of active feeds
         let feedIndex = label.toUpperCase().charCodeAt(0) - 65;
-        let feedPixel = trainBitmaps[feedIndex].find(pixel => pixel.y == y && pixel.x == x); // find same pixel in feed trainBias
+        let feedPixel;
+        for (let p = 0; p < trainBitmaps[feedIndex].length; p++) {
+          const isSamePixel = trainBitmaps[feedIndex][p].y == y && trainBitmaps[feedIndex][p].x == x;
+          if (isSamePixel) {
+            feedPixel = trainBitmaps[feedIndex][p];
+          }
+        }
         let feedPixelValue = feedPixel && feedPixel.value == 1;
         combinedValue = combinedValue || feedPixelValue;
       });
@@ -218,7 +229,8 @@ export function getTrainData(activeFeedLabels: string[], setSize: number = 0): T
   return points;
 }
 
-// feature feed
+
+// feature feed - hash map of with feed labels pointing at TwoD[]
 function mapFeedBitmaps() {
   let feedBitmaps = {};
   for (let label in config.feeds) {
@@ -261,7 +273,8 @@ export function getFeedPixelValue(label: any, x: number, y: number) {
 
 if (config.debug.processing) console.log('feedBitmaps', feedBitmaps);
 
-// Fisher-Yates
+
+// Fisher-Yates shuffle
 export function shuffle(array: any[]): void {
   /**
    * Shuffles the array using Fisher-Yates algorithm. Uses the seedrandom
@@ -289,4 +302,3 @@ export type TwoD = {
   y: number,
   value: number
 };
-

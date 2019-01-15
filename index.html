@@ -30,6 +30,14 @@ limitations under the License.
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" rel="stylesheet" type="text/css">
   <script src="lib.js"></script>
   <style>
+    .info {
+      margin-top: 1em!important;
+    }
+    #variableInfo {
+      background-color: white;
+      padding: 0.5em;
+      border: 1px solid grey;border-radius: .3em;
+    }
     .highlight {
       padding: 1px 2px;
       border-radius: 0.2em;
@@ -203,8 +211,8 @@ limitations under the License.
     <div class="column description">
       <h4>The Heatmap</h4>
       <p id="heatmapInfo"></p>
-      <p id="feedInfo"></p>
-      <p id="variableInfo"></p>
+      <p id="feedInfo" class="info"></p>
+      <p id="variableInfo" class="info" style="display: none"></p>
     </div>
 
   </div>

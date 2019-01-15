@@ -43,7 +43,7 @@ function scrollTween(offset) {
 
 const RECT_SIZE = 30;
 const BIAS_SIZE = 5;
-const DENSITY = 300;
+const DENSITY = 90;
 
 enum HoverType {
   BIAS, WEIGHT
@@ -348,7 +348,7 @@ function updateFeedInfo() {
     }
   }
   if (infoMarkup) {
-    infoMarkup = '<br><h4>Active Feeds</h4>' + infoMarkup;
+    infoMarkup = '<h4>Active Feeds</h4>' + infoMarkup;
   }
   d3.select('#feedInfo').html(infoMarkup);
 }
@@ -363,12 +363,24 @@ function displayInfo(heatMapLabel:string = 'default', variableLabel:string = '')
 
   // set variable description
   infoMarkup = '';
+  let element = d3.select('#variableInfo')
   if (config.descriptions[variableLabel]) {
-    infoMarkup = '<br><h4>Highlighted Variable</h4>';
+    infoMarkup = '<h4>Highlighted Variable</h4>';
     infoMarkup += config.descriptions[variableLabel];
+    element
+      .html(infoMarkup)
+      .transition()
+      .ease('easeBack')
+      .duration(500)
+      .style('display', 'block');
+  } else {
+    element
+      .transition()
+      .ease('easeBack')
+      .duration(1000)
+      .style('display', 'none');
+      //.on("end", removeHighlights);
   }
-  d3.select('#variableInfo').html(infoMarkup);
-
 }
 function removeHighlights() {
   while (document.getElementsByClassName('frame').length) {
@@ -376,7 +388,6 @@ function removeHighlights() {
     node.parentNode.removeChild(node);
   }
 }
-
 
 function renderColorRange() {
   let x = d3.scale.linear()
