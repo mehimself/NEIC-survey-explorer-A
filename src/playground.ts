@@ -56,6 +56,8 @@ interface InputFeature {
 
 function getFeedPixelValue(feed: any, x: number, y: number) {
   let value = 0;
+  // todo: issue #8 -> bias * meanMap input source
+
   for (let p = 0; p < feed.map.length; p++) {
     const pixel = feed.map[p];
     const sameRow = pixel.y - 1 <= y && y < pixel.y;
@@ -69,7 +71,7 @@ function getFeedPixelValue(feed: any, x: number, y: number) {
 }
 
 let INPUTS: { [name: string]: InputFeature } = {};
-config.feeds.forEach(feed => { // todo: import feed label list from processing
+config.feeds.forEach(feed => {
   INPUTS[feed.label] = {f: (x, y) => getFeedPixelValue(feed, x, y), label: feed.label};
 });
 
@@ -355,16 +357,14 @@ function resetInfoHighlights () {
 function updateFeedInfo() {
   let infoMarkup = '';
   for (let feedLabel in INPUTS) {
-    if (state[feedLabel]) {
-      config.feeds.forEach(feed => {
+    const isActiveFeed = state[feedLabel];
+    if (isActiveFeed) {
+      config.feeds.forEach(feed => { // get feed by label
         if (feed.label == feedLabel) {
-          infoMarkup += `<h5>${feed.label}</h5>`
+          if (infoMarkup) infoMarkup += '<br><br>';
           infoMarkup += feed.description;
         }
       });
-    }
-    if (infoMarkup) {
-      infoMarkup += '<br>';
     }
   }
   if (infoMarkup) {
