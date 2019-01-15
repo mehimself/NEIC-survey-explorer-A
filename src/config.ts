@@ -94,33 +94,33 @@ Colors visualize trends towards <span class="negative highlight">negating answer
 The bullets reflect the mean variable value in the training data (50% of the survey results).
 Point over the heatmap to see information about individual variables and results`,
     // variable descriptions by survey variable index
-    '0': `Variable label: Organization`,
-    '1': `Variable label: Practices addressing ethical challenges`,
-    '2': `Variable label: Practice supporting communication/publication`,
-    '3': `Variable label: Share resources (which)`,
-    '4': `Variable label: CD at MA-level`,
-    '5': `Variable label: Part of Curriculum`,
-    '6': `Variable label: General/specialized`,
-    '7': `Variable label: Other`,
-    '8': `Variable label: DRM part of existing or separate course`,
-    '9': `Variable label: Developed own material`,
-    '10': `Variable label: Who developed it`,
-    '11': `Variable label: Willingness to share course material`,
-    '12': `Variable label: Support for DM`,
-    '13': `Variable label: Online DH training`,
-    '14': `Variable label: Awareness of following initiative`,
-    '15': `Variable label: Willingness to collaborate on resources`,
-    '16': `Variable label: CD: EDA`,
-    '17': `Variable label: CD: Statistics`,
-    '18': `Variable label: CD: Ethics`,
-    '19': `Variable label: CD: Data rights and protection`,
-    '20': `Variable label: CD: Interdisciplinary dialogue`,
-    '21': `Variable label: Interest in HPC`,
-    '22': `Variable label: Course integrated/separate`,
-    '23': `Variable label: DRM – Department`,
-    '24': `Variable label: DRM – Faculty`
+    '0': `label: Organization`,
+    '1': `label: Practices addressing ethical challenges`,
+    '2': `label: Practice supporting communication/publication`,
+    '3': `label: Share resources (which)`,
+    '4': `label: CD at MA-level`,
+    '5': `label: Part of Curriculum`,
+    '6': `label: General/specialized`,
+    '7': `label: Other`,
+    '8': `label: DRM part of existing or separate course`,
+    '9': `label: Developed own material`,
+    '10': `label: Who developed it`,
+    '11': `label: Willingness to share course material`,
+    '12': `label: Support for DM`,
+    '13': `label: Online DH training`,
+    '14': `label: Awareness of following initiative`,
+    '15': `label: Willingness to collaborate on resources`,
+    '16': `label: CD: EDA`,
+    '17': `label: CD: Statistics`,
+    '18': `label: CD: Ethics`,
+    '19': `label: CD: Data rights and protection`,
+    '20': `label: CD: Interdisciplinary dialogue`,
+    '21': `label: Interest in HPC`,
+    '22': `label: Course integrated/separate`,
+    '23': `label: DRM – Department`,
+    '24': `label: DRM – Faculty`
   },
-  feeds: [
+  feeds: [ // todo: turn into object with named index
     {
       label: "A",
       description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
@@ -128,10 +128,10 @@ Point over the heatmap to see information about individual variables and results
         1
       ],
       trainBias: [6, 18, 25],
-      map: []
+      map: [] // todo: outsource to processing
     }, {
       label: "B",
-      description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
+      description: `Original text: "Question 2 Text?"`,
       inputMask: [
         13
       ],
@@ -139,7 +139,7 @@ Point over the heatmap to see information about individual variables and results
       map: []
     }, {
       label: "C",
-      description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
+      description: `Original text: "Question 3 Text?"`,
       inputMask: [
         15
       ],
@@ -147,7 +147,7 @@ Point over the heatmap to see information about individual variables and results
       map: []
     }, {
       label: "D",
-      description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
+      description: `Original text: "Question 4 Text?"`,
       inputMask: [
         16
       ],
@@ -155,7 +155,7 @@ Point over the heatmap to see information about individual variables and results
       map: []
     }, {
       label: "E",
-      description: `Original text: "Would you recommend the provision of a sandbox environment?"`,
+      description: `Original text: "Question 5 Text?"`,
       inputMask: [
         22
       ],

@@ -138,6 +138,7 @@ const colorScale = d3.scale.linear<string, number>()
   .range(colorRange.colors)
   .clamp(true);
 let iter = 0;
+let lastLossTest = 1;
 let trainData: processing.TwoD[] = [];
 let testData: processing.TwoD[] = [];
 let network: nn.Node[][] = null;
@@ -849,12 +850,8 @@ function updateUI(firstStep = false) {
     });
 
   function zeroPad(n: number): string {
-    let pad = "000000";
+    let pad = "0000";
     return (pad + n).slice(-pad.length);
-  }
-
-  function addCommas(s: string): string {
-    return s.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   function humanReadable(n: number): string {
@@ -864,7 +861,7 @@ function updateUI(firstStep = false) {
   // Update loss and iteration number.
   d3.select("#loss-train").text(humanReadable(lossTrain));
   d3.select("#loss-test").text(humanReadable(lossTest));
-  d3.select("#iter-number").text(addCommas(zeroPad(iter)));
+  d3.select("#iter-number").text(zeroPad(iter));
   lineChart.addDataPoint([lossTrain, lossTest]);
 }
 
@@ -911,12 +908,16 @@ function oneStep(): void {
   // Compute the loss.
   lossTrain = getLoss(network, trainData);
   lossTest = getLoss(network, testData);
+  if (lastLossTest - lossTest < 1e-5 || iter > 1000) {
+    player.pause();
+  }
+  lastLossTest = lossTest;
   updateUI();
 }
 
 function reset(firstTime: boolean = false) {
   lineChart.reset();
-
+  lastLossTest = 1;
   generateData(firstTime);
 
   state.serialize();

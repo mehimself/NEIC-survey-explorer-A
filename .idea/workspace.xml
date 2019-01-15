@@ -15,13 +15,16 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="surveyExplorer" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/playground.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="758">
-              <caret line="206" selection-start-line="206" selection-end-line="206" />
+            <state relative-caret-position="1016">
+              <caret line="933" column="36" selection-start-line="933" selection-start-column="36" selection-end-line="933" selection-end-column="36" />
               <folding>
                 <element signature="e#658#685#0" expanded="true" />
                 <element signature="e#1081#1189#0" />
@@ -55,6 +58,8 @@
                 <element signature="e#5279#5371#0" />
                 <element signature="e#5566#5783#0" />
                 <element signature="e#5694#5779#0" />
+                <element signature="e#10031#10151#0" />
+                <element signature="e#10511#10517#0" />
                 <element signature="e#6129#6467#0" />
                 <element signature="e#6515#6642#0" />
                 <element signature="e#6557#6638#0" />
@@ -80,7 +85,6 @@
                 <element signature="e#9431#9494#0" />
                 <element signature="e#9628#9858#0" />
                 <element signature="e#10172#10340#0" />
-                <element signature="e#10206#10298#0" />
                 <element signature="e#10356#10402#0" />
                 <element signature="e#10605#14876#0" />
                 <element signature="e#12084#12219#0" />
@@ -131,28 +135,22 @@
                 <element signature="e#20395#20465#0" />
                 <element signature="e#20565#20874#0" />
                 <element signature="e#20629#20837#0" />
-                <element signature="e#20913#22124#0" />
                 <element signature="e#21463#21570#0" />
-                <element signature="e#21612#21682#0" />
-                <element signature="e#21724#21781#0" />
                 <element signature="e#21827#21857#0" />
                 <element signature="e#22165#22316#0" />
                 <element signature="e#22228#22297#0" />
                 <element signature="e#22256#22293#0" />
                 <element signature="e#22374#22538#0" />
-                <element signature="e#22626#22790#0" />
-                <element signature="e#22565#23012#0" />
-                <element signature="e#23031#23747#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/config.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1138">
-              <caret line="93" column="93" lean-forward="true" selection-start-line="93" selection-start-column="93" selection-end-line="93" selection-end-column="93" />
+            <state relative-caret-position="1019">
+              <caret line="130" column="23" selection-start-line="130" selection-start-column="23" selection-end-line="130" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -160,8 +158,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="759">
-              <caret line="201" selection-start-line="201" selection-end-line="201" />
+            <state relative-caret-position="1840">
+              <caret line="206" selection-start-line="206" selection-end-line="206" />
               <folding>
                 <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
                 <element signature="n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
@@ -173,30 +171,6 @@
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#rect#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/styles.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="530" column="10" selection-start-line="530" selection-start-column="10" selection-end-line="530" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/heatmap.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1394">
-              <caret line="183" column="33" selection-start-line="183" selection-start-column="32" selection-end-line="183" selection-end-column="33" />
-              <folding>
-                <element signature="n#!!block;n#updateTestPoints#0;n#HeatMap#0" />
-                <element signature="n#!!block;n#updatePoints#0;n#HeatMap#0" />
-                <element signature="n#!!block;n#updateCircles#0;n#HeatMap#0" />
-                <element signature="n#!!block;n#reduceMatrix#0" />
               </folding>
             </state>
           </provider>
@@ -214,12 +188,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>config.bitmaps</find>
-      <find>config.meanResponseSet</find>
-      <find>meanBitMap</find>
-      <find>config.meanBitMap</find>
-      <find>shuffle</find>
-      <find>meanResponseSet</find>
       <find>updatepoints</find>
       <find>updatePoints</find>
       <find>generat</find>
@@ -244,6 +212,12 @@
       <find>column</find>
       <find>NUM_SHADES</find>
       <find>(\d+):</find>
+      <find>seriali</find>
+      <find>state</find>
+      <find>feeds</find>
+      <find>Variable label</find>
+      <find>features</find>
+      <find>click</find>
     </findStrings>
     <replaceStrings>
       <replace>'$1': 0</replace>
@@ -257,6 +231,7 @@
       <replace>meanResponseSet</replace>
       <replace>processing.shuffle</replace>
       <replace>meanBitmap</replace>
+      <replace>label</replace>
       <replace>'$1':</replace>
     </replaceStrings>
     <dirStrings>
@@ -285,9 +260,9 @@
         <option value="$PROJECT_DIR$/src/state.ts" />
         <option value="$PROJECT_DIR$/src/heatmap.ts" />
         <option value="$PROJECT_DIR$/styles.css" />
+        <option value="$PROJECT_DIR$/src/config.ts" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/playground.ts" />
-        <option value="$PROJECT_DIR$/src/config.ts" />
       </list>
     </option>
   </component>
@@ -422,7 +397,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="236699000" />
+    <option name="totallyTimeSpent" value="240422000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -437,10 +412,10 @@
     <frame x="-1007" y="-2137" width="2022" height="2071" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12843578" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4993895" visible="true" weight="0.12843578" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Favorites" order="3" sideWeight="0.50061053" side_tool="true" weight="0.12843578" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.20212229" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -489,15 +464,9 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/playground.ts</url>
-          <line>477</line>
+          <line>510</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/playground.ts</url>
-          <line>225</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -570,18 +539,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/state.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1314">
-          <caret line="116" column="10" selection-start-line="116" selection-start-column="10" selection-end-line="116" selection-end-column="10" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#!!block;n#deserializeState#0;n#State#0" />
-            <element signature="n#!!block;n#serialize#0;n#State#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/processing.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="464">
@@ -624,10 +581,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/state.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1638">
+          <caret line="126" column="35" selection-start-line="126" selection-start-column="35" selection-end-line="126" selection-end-column="35" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#deserializeState#0;n#State#0" />
+            <element signature="n#!!block;n#serialize#0;n#State#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1019">
+          <caret line="130" column="23" selection-start-line="130" selection-start-column="23" selection-end-line="130" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1840">
+          <caret line="206" selection-start-line="206" selection-end-line="206" />
+          <folding>
+            <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#5;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#div#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#rect#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/playground.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="758">
-          <caret line="206" selection-start-line="206" selection-end-line="206" />
+        <state relative-caret-position="1016">
+          <caret line="933" column="36" selection-start-line="933" selection-start-column="36" selection-end-line="933" selection-end-column="36" />
           <folding>
             <element signature="e#658#685#0" expanded="true" />
             <element signature="e#1081#1189#0" />
@@ -661,6 +656,8 @@
             <element signature="e#5279#5371#0" />
             <element signature="e#5566#5783#0" />
             <element signature="e#5694#5779#0" />
+            <element signature="e#10031#10151#0" />
+            <element signature="e#10511#10517#0" />
             <element signature="e#6129#6467#0" />
             <element signature="e#6515#6642#0" />
             <element signature="e#6557#6638#0" />
@@ -686,7 +683,6 @@
             <element signature="e#9431#9494#0" />
             <element signature="e#9628#9858#0" />
             <element signature="e#10172#10340#0" />
-            <element signature="e#10206#10298#0" />
             <element signature="e#10356#10402#0" />
             <element signature="e#10605#14876#0" />
             <element signature="e#12084#12219#0" />
@@ -737,45 +733,13 @@
             <element signature="e#20395#20465#0" />
             <element signature="e#20565#20874#0" />
             <element signature="e#20629#20837#0" />
-            <element signature="e#20913#22124#0" />
             <element signature="e#21463#21570#0" />
-            <element signature="e#21612#21682#0" />
-            <element signature="e#21724#21781#0" />
             <element signature="e#21827#21857#0" />
             <element signature="e#22165#22316#0" />
             <element signature="e#22228#22297#0" />
             <element signature="e#22256#22293#0" />
             <element signature="e#22374#22538#0" />
-            <element signature="e#22626#22790#0" />
-            <element signature="e#22565#23012#0" />
-            <element signature="e#23031#23747#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="759">
-          <caret line="201" selection-start-line="201" selection-end-line="201" />
-          <folding>
-            <element signature="n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#5;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#rect#0;n#g#0;n#svg#0;n#div#0;n#div#0;n#div#2;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/config.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1138">
-          <caret line="93" column="93" lean-forward="true" selection-start-line="93" selection-start-column="93" selection-end-line="93" selection-end-column="93" />
         </state>
       </provider>
     </entry>
