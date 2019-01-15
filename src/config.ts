@@ -5,32 +5,6 @@ interface config {
   feeds: string[]
 }
 let config = {
-  headers: [
-    'Organization',
-    'Practices addressing ethical challenges',
-    'Practice supporting communication/publication',
-    'Share resources (which)',
-    'CD at MA-level',
-    'Part of Curriculum',
-    'General/specialized',
-    'Other',
-    'DRM part of existing or separate course',
-    'Developed own material',
-    'Who developed it',
-    'Willingness to share course material',
-    'Support for DM',
-    'Online DH training',
-    'Awareness of following initiative',
-    'Willingness to collaborate on resources',
-    'CD: EDA',
-    'CD: Statistics',
-    'CD: Ethics',
-    'CD: Data rights and protection',
-    'CD: Interdisciplinary dialogue',
-    'Interest in HPC',
-    'Course integrated/separate',
-    'DRM – Department',
-    'DRM – Faculty'],
   cardinalities: [5, 1, 3, 5, 1, 1, 1, 1, 1, 1, 4, 4, 11, 5, 6, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5],
   packedVariableSets: [
     [0, -1, 0, -0.5, -1, -1, 1, -1, -1, 1, -0.33333333333333337, 1, -0.4, 1, 0.19999999999999996, -1, -1, -1, -1, -1, -1, 1, -1, -0.39274254380873475, -0.11071002890982251],
